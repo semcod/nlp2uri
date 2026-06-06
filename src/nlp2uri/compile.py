@@ -128,6 +128,87 @@ def _compile_launch_app(host: HostPlatform, name: str) -> list[OSAction]:
     return [OSAction(host, "echo", [name])]
 
 
+def _capture_outfile(target: str) -> str:
+    out_dir = Path(os.environ.get("NLP2URI_CAPTURE_DIR", "/tmp/nlp2uri-captures"))
+    return str(out_dir / f"capture-{target}.png")
+
+
+def _linux_screen_capture(host: HostPlatform, outfile: str) -> OSAction:
+    for tool, args in (
+        ("grim", [outfile]),
+        ("scrot", [outfile]),
+        ("import", ["-window", "root", outfile]),
+    ):
+        if _first_available((tool,)):
+            return OSAction(host, tool, args)
+    return OSAction(host, "bash", ["-lc", f"echo portal-screenshot > {outfile}"])
+
+
+def _macos_screen_capture(host: HostPlatform, outfile: str) -> OSAction:
+    return OSAction(host, "screencapture", ["-x", outfile])
+
+
+def _windows_screen_capture(host: HostPlatform) -> OSAction:
+    ps = (
+        "Add-Type -AssemblyName System.Windows.Forms; "
+        "[System.Windows.Forms.Screen]::PrimaryScreen.Bounds"
+    )
+    return OSAction(host, "powershell", ["-NoProfile", "-Command", ps])
+
+
+def _compile_screen_capture(host: HostPlatform, outfile: str) -> OSAction:
+    if host == HostPlatform.LINUX:
+        return _linux_screen_capture(host, outfile)
+    if host == HostPlatform.MACOS:
+        return _macos_screen_capture(host, outfile)
+    if host == HostPlatform.WINDOWS:
+        return _windows_screen_capture(host)
+    raise ValueError(f"unsupported screen capture host: {host.value}")
+
+
+def _linux_window_capture(
+    host: HostPlatform,
+    outfile: str,
+    *,
+    title: str,
+    mode: str,
+) -> OSAction:
+    if _first_available(("import",)) and title:
+        return OSAction(host, "import", ["-window", title, outfile])
+    if _first_available(("grim",)):
+        return OSAction(host, "grim", ["-g", "0,0 100x100", outfile])
+    return OSAction(host, "bash", ["-lc", f"echo window-capture:{title}:{mode} > {outfile}"])
+
+
+def _macos_window_capture(host: HostPlatform, outfile: str, *, title: str) -> OSAction:
+    if title:
+        return OSAction(host, "screencapture", ["-l", title, outfile])
+    return OSAction(host, "screencapture", ["-w", outfile])
+
+
+def _windows_window_capture(host: HostPlatform, outfile: str, *, title: str) -> OSAction:
+    if title:
+        ps = f"Write-Output 'window:{title}' | Out-File -FilePath '{outfile}'"
+        return OSAction(host, "powershell", ["-NoProfile", "-Command", ps])
+    return OSAction(host, "snippingtool", ["/clip"])
+
+
+def _compile_window_capture(
+    host: HostPlatform,
+    outfile: str,
+    params: dict[str, str],
+) -> OSAction:
+    title = params.get("title", "")
+    mode = params.get("mode", "active")
+    if host == HostPlatform.LINUX:
+        return _linux_window_capture(host, outfile, title=title, mode=mode)
+    if host == HostPlatform.MACOS:
+        return _macos_window_capture(host, outfile, title=title)
+    if host == HostPlatform.WINDOWS:
+        return _windows_window_capture(host, outfile, title=title)
+    raise ValueError(f"unsupported window capture host: {host.value}")
+
+
 def _compile_screenshot(
     host: HostPlatform,
     authority: str,
@@ -135,45 +216,11 @@ def _compile_screenshot(
     uri: str,
 ) -> list[OSAction]:
     target = authority or "screen"
-    out_dir = Path(os.environ.get("NLP2URI_CAPTURE_DIR", "/tmp/nlp2uri-captures"))
-    outfile = str(out_dir / f"capture-{target}.png")
-
+    outfile = _capture_outfile(target)
     if target == "screen":
-        if host == HostPlatform.LINUX:
-            if _first_available(("grim",)):
-                return [OSAction(host, "grim", [outfile])]
-            if _first_available(("scrot",)):
-                return [OSAction(host, "scrot", [outfile])]
-            if _first_available(("import",)):
-                return [OSAction(host, "import", ["-window", "root", outfile])]
-            return [OSAction(host, "bash", ["-lc", f"echo portal-screenshot > {outfile}"])]
-        if host == HostPlatform.MACOS:
-            return [OSAction(host, "screencapture", ["-x", outfile])]
-        if host == HostPlatform.WINDOWS:
-            ps = (
-                "Add-Type -AssemblyName System.Windows.Forms; "
-                "[System.Windows.Forms.Screen]::PrimaryScreen.Bounds"
-            )
-            return [OSAction(host, "powershell", ["-NoProfile", "-Command", ps])]
-
-    title = params.get("title", "")
-    mode = params.get("mode", "active")
-    if host == HostPlatform.LINUX:
-        if _first_available(("import",)) and title:
-            return [OSAction(host, "import", ["-window", title, outfile])]
-        if _first_available(("grim",)):
-            return [OSAction(host, "grim", ["-g", "0,0 100x100", outfile])]
-        return [OSAction(host, "bash", ["-lc", f"echo window-capture:{title}:{mode} > {outfile}"])]
-    if host == HostPlatform.MACOS:
-        if title:
-            return [OSAction(host, "screencapture", ["-l", title, outfile])]
-        return [OSAction(host, "screencapture", ["-w", outfile])]
-    if host == HostPlatform.WINDOWS:
-        if title:
-            ps = f"Write-Output 'window:{title}' | Out-File -FilePath '{outfile}'"
-            return [OSAction(host, "powershell", ["-NoProfile", "-Command", ps])]
-        return [OSAction(host, "snippingtool", ["/clip"])]
-
+        return [_compile_screen_capture(host, outfile)]
+    if target == "window":
+        return [_compile_window_capture(host, outfile, params)]
     raise ValueError(f"unsupported screenshot uri: {uri}")
 
 

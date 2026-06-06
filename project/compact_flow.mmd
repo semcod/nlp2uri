@@ -1,0 +1,9 @@
+flowchart TD
+%% generated in 0.01s
+    examples__execute["examples.execute<br/>1 funcs"]
+    examples__mcp["examples.mcp<br/>1 funcs"]
+    examples__resolve["examples.resolve<br/>1 funcs"]
+    src__nlp2uri["src.nlp2uri<br/>145 funcs"]
+    examples__execute -->|2| src__nlp2uri
+    examples__mcp -->|2| src__nlp2uri
+    examples__resolve -->|1| src__nlp2uri

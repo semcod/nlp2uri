@@ -1,0 +1,318 @@
+# nlp2uri | 58f 3886L | python:47,shell:10,less:1 | 2026-06-06
+# stats: 141 func | 21 cls | 58 mod | CC̄=3.3 | critical:3 | cycles:0
+# alerts[5]: CC _compile_app=11; CC build_uri=11; CC _compile_window=10; CC execute_uri=9; CC abstract_url=9
+# hotspots[5]: _compile_app fan=13; _compile_legacy_nlp2uri fan=12; test_xdg_custom_scheme_handler fan=12; _run_config fan=10; _run_execute fan=10
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[58]:
+  app.doql.less,29
+  examples/execute/dry-run/e2e.sh,12
+  examples/execute/dry-run/main.py,30
+  examples/integrators/mcp-stdio/e2e.sh,11
+  examples/integrators/rest-api/e2e.sh,24
+  examples/integrators/shell-export/e2e.sh,13
+  examples/mcp/tool-handoff/e2e.sh,12
+  examples/mcp/tool-handoff/main.py,28
+  examples/resolve/nl-to-uri/e2e.sh,12
+  examples/resolve/nl-to-uri/main.py,43
+  examples/run-e2e.sh,40
+  project.sh,59
+  scripts/testapp-handler.sh,7
+  src/nlp2uri/__init__.py,29
+  src/nlp2uri/adapters/__init__.py,18
+  src/nlp2uri/adapters/base.py,60
+  src/nlp2uri/adapters/cli.py,40
+  src/nlp2uri/adapters/mcp.py,184
+  src/nlp2uri/adapters/rest.py,88
+  src/nlp2uri/adapters/shell.py,67
+  src/nlp2uri/cli.py,200
+  src/nlp2uri/compile.py,306
+  src/nlp2uri/config.py,231
+  src/nlp2uri/integrators/__init__.py,23
+  src/nlp2uri/integrators/mcp_server.py,129
+  src/nlp2uri/integrators/rest_server.py,91
+  src/nlp2uri/mcp.py,82
+  src/nlp2uri/models.py,175
+  src/nlp2uri/parse_nl.py,275
+  src/nlp2uri/platform_detect.py,19
+  src/nlp2uri/platforms/__init__.py,7
+  src/nlp2uri/platforms/base.py,131
+  src/nlp2uri/platforms/linux.py,146
+  src/nlp2uri/platforms/macos.py,95
+  src/nlp2uri/platforms/registry.py,25
+  src/nlp2uri/platforms/windows.py,95
+  src/nlp2uri/resolve.py,41
+  src/nlp2uri/runtime.py,93
+  src/nlp2uri/schemes/__init__.py,6
+  src/nlp2uri/schemes/build.py,60
+  src/nlp2uri/schemes/desktop.py,95
+  src/nlp2uri/schemes/file.py,26
+  src/nlp2uri/schemes/http.py,23
+  src/nlp2uri/schemes/ide.py,36
+  src/nlp2uri/schemes/util.py,48
+  src/nlp2uri/service.py,72
+  tests/conftest.py,18
+  tests/integration/test_xdg_handler.py,99
+  tests/test_adapters.py,76
+  tests/test_cli.py,31
+  tests/test_compile.py,34
+  tests/test_config.py,65
+  tests/test_mcp.py,25
+  tests/test_platforms.py,48
+  tests/test_resolve.py,77
+  tests/test_rest_server.py,48
+  tests/test_service.py,27
+  tree.sh,2
+D:
+  examples/execute/dry-run/main.py:
+    e: main
+    main()
+  examples/mcp/tool-handoff/main.py:
+    e: main
+    main()
+  examples/resolve/nl-to-uri/main.py:
+    e: main
+    main()
+  src/nlp2uri/__init__.py:
+  src/nlp2uri/adapters/__init__.py:
+  src/nlp2uri/adapters/base.py:
+    e: AdapterRequest,AdapterResponse,BaseAdapter
+    AdapterRequest:
+    AdapterResponse: to_dict(0)
+    BaseAdapter: __init__(1),with_platform(1),handle(1),_service_for(1)
+  src/nlp2uri/adapters/cli.py:
+    e: CliAdapter
+    CliAdapter: handle(1)
+  src/nlp2uri/adapters/mcp.py:
+    e: McpAdapter
+    McpAdapter: handle(1),call_tool(2),tool_dispatch(0),_args_from_request(1),_args_to_request(2),mcp_content(1),_tool_plan(1),_tool_resolve(1),_tool_compile(1),_tool_execute(1),_tool_handle(1)
+  src/nlp2uri/adapters/rest.py:
+    e: RestAdapter
+    RestAdapter: handle(1),dispatch(2),body_to_request(1),match_route(2)
+  src/nlp2uri/adapters/shell.py:
+    e: ShellAdapter
+    ShellAdapter: handle(1),_export_script(0)
+  src/nlp2uri/cli.py:
+    e: _add_common_args,_build_parser,_platform,_emit,_request_from_args,_with_platform,_run_config,_run_shell,_run_adapter_command,_run_execute,main
+    _add_common_args(parser)
+    _build_parser()
+    _platform(raw)
+    _emit(payload)
+    _request_from_args(args)
+    _with_platform(payload)
+    _run_config(args)
+    _run_shell(args)
+    _run_adapter_command(args)
+    _run_execute(args)
+    main(argv)
+  src/nlp2uri/compile.py:
+    e: compile_uri_to_actions,_query_params,_first_available,_open_uri,_compile_app,_compile_settings,_compile_launch_app,_capture_outfile,_linux_screen_capture,_macos_screen_capture,_windows_screen_capture,_compile_screen_capture,_linux_window_capture,_macos_window_capture,_windows_window_capture,_compile_window_capture,_compile_screenshot,_compile_window,_compile_legacy_nlp2uri,_desktop_id_for_app
+    compile_uri_to_actions(uri;os)
+    _query_params(parsed)
+    _first_available(names)
+    _open_uri(host;uri)
+    _compile_app(host;authority;path;params;uri)
+    _compile_settings(host)
+    _compile_launch_app(host;name)
+    _capture_outfile(target)
+    _linux_screen_capture(host;outfile)
+    _macos_screen_capture(host;outfile)
+    _windows_screen_capture(host)
+    _compile_screen_capture(host;outfile)
+    _linux_window_capture(host;outfile)
+    _macos_window_capture(host;outfile)
+    _windows_window_capture(host;outfile)
+    _compile_window_capture(host;outfile;params)
+    _compile_screenshot(host;authority;params;uri)
+    _compile_window(host;authority;params;uri)
+    _compile_legacy_nlp2uri(host;uri)
+    _desktop_id_for_app(name)
+  src/nlp2uri/config.py:
+    e: payload_keys,_yaml_scalar,_parse_scalar,_parse_simple_yaml,config_search_paths,find_config_path,default_config,_load_from_path,load_config,save_config,ensure_config,get_effective_platform,reset_config_cache,NLP2URIConfig
+    NLP2URIConfig: resolved_platform(0),apply_runtime_env(0),to_dict(0),to_yaml(0)  # Persisted defaults (nlp2uri.yaml).
+    payload_keys()
+    _yaml_scalar(value)
+    _parse_scalar(raw)
+    _parse_simple_yaml(text)
+    config_search_paths()
+    find_config_path()
+    default_config()
+    _load_from_path(path)
+    load_config()
+    save_config(cfg;path)
+    ensure_config(path)
+    get_effective_platform(override)
+    reset_config_cache()
+  src/nlp2uri/integrators/__init__.py:
+    e: __getattr__
+    __getattr__(name)
+  src/nlp2uri/integrators/mcp_server.py:
+    e: _jsonrpc_response,_jsonrpc_error,_write_json,_log,_handle_initialize,_handle_tools_list,_handle_tools_call,handle_message,run_stdio,main
+    _jsonrpc_response(req_id;result)
+    _jsonrpc_error(req_id;code;message;data)
+    _write_json(payload)
+    _log(message)
+    _handle_initialize(_params)
+    _handle_tools_list(_params)
+    _handle_tools_call(params)
+    handle_message(msg)
+    run_stdio()
+    main(argv)
+  src/nlp2uri/integrators/rest_server.py:
+    e: run_server,main,NLP2URIRequestHandler
+    NLP2URIRequestHandler: log_message(1),_read_json(0),_send(2),do_GET(0),do_POST(0)
+    run_server(host;port)
+    main(argv)
+  src/nlp2uri/mcp.py:
+    e: text_uri_list,ui_resource,tool_resolve_desktop_action,tool_execute_desktop_uri,mcp_handoff_payload
+    text_uri_list(uris)
+    ui_resource(uri)
+    tool_resolve_desktop_action(text)
+    tool_execute_desktop_uri(uri)
+    mcp_handoff_payload(text)
+  src/nlp2uri/models.py:
+    e: HostPlatform,IntentKind,UriIntent,UriSpec,OSAction,NLP2URIResult,ActionResult
+    HostPlatform:
+    IntentKind:
+    UriIntent: with_params(0),intent_name(0),to_slots(0)  # Structured intent parsed from natural language.
+    UriSpec: to_dict(0)  # Resolved abstract URI ready for execution or MCP handoff.
+    OSAction: argv(0),to_dict(0)  # Concrete host command derived from an abstract URI.
+    NLP2URIResult: to_dict(0)  # Full compiler output: NL → URI + OS action plan.
+    ActionResult: to_dict(0)
+  src/nlp2uri/parse_nl.py:
+    e: _strip_quotes,_normalize_aliases,_parse_absolute_uri,_parse_http_url,_parse_ide_project,_parse_file_open,_parse_settings,_parse_active_window,_capture_target,_parse_capture,_parse_focus,_parse_app_open,_parse_path,_parse_open_prefix,_parse_fallback,parse_text
+    _strip_quotes(value)
+    _normalize_aliases(text)
+    _parse_absolute_uri(raw;_lowered)
+    _parse_http_url(raw;_lowered)
+    _parse_ide_project(raw;_lowered)
+    _parse_file_open(raw;_lowered)
+    _parse_settings(_raw;lowered)
+    _parse_active_window(raw;_lowered)
+    _capture_target(lowered;title)
+    _parse_capture(raw;lowered)
+    _parse_focus(raw;_lowered)
+    _parse_app_open(raw;_lowered)
+    _parse_path(raw;_lowered)
+    _parse_open_prefix(raw;lowered)
+    _parse_fallback(raw;_lowered)
+    parse_text(text)
+  src/nlp2uri/platform_detect.py:
+    e: detect_platform
+    detect_platform()
+  src/nlp2uri/platforms/__init__.py:
+  src/nlp2uri/platforms/base.py:
+    e: slugify_app_name,UriExecutor
+    UriExecutor: execute(1),_result(0),_dry(2),_run(2),_first_available(1),_open_with_browser(1),_parse_nlp2uri(1),_desktop_id_for_app(1)
+    slugify_app_name(name)
+  src/nlp2uri/platforms/linux.py:
+    e: LinuxExecutor
+    LinuxExecutor: execute(1),_open_generic(1),_open_settings(0),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/macos.py:
+    e: MacOSExecutor
+    MacOSExecutor: execute(1),_open(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/registry.py:
+    e: get_executor
+    get_executor(platform)
+  src/nlp2uri/platforms/windows.py:
+    e: WindowsExecutor
+    WindowsExecutor: execute(1),_start(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/resolve.py:
+    e: resolve_text,nlp2uri
+    resolve_text(text)
+    nlp2uri(prompt)
+  src/nlp2uri/runtime.py:
+    e: get_executor,execute_uri
+    get_executor(platform)
+    execute_uri(uri)
+  src/nlp2uri/schemes/__init__.py:
+  src/nlp2uri/schemes/build.py:
+    e: build_uri,_build_navigate
+    build_uri(intent)
+    _build_navigate(intent)
+  src/nlp2uri/schemes/desktop.py:
+    e: build_capture,build_focus,build_app_open,build_settings
+    build_capture(intent)
+    build_focus(intent)
+    build_app_open(intent)
+    build_settings()
+  src/nlp2uri/schemes/file.py:
+    e: build_file
+    build_file(intent)
+  src/nlp2uri/schemes/http.py:
+    e: build_http
+    build_http(intent)
+  src/nlp2uri/schemes/ide.py:
+    e: build_ide
+    build_ide(intent)
+  src/nlp2uri/schemes/util.py:
+    e: abstract_url,nlp2uri_url,normalize_path,file_uri,percent_encode_segment
+    abstract_url(scheme;authority;path;params)
+    nlp2uri_url(path;params)
+    normalize_path(path)
+    file_uri(path)
+    percent_encode_segment(value)
+  src/nlp2uri/service.py:
+    e: NLP2URIService
+    NLP2URIService: default(1),for_platform(2),_cfg(0),_host(0),from_prompt(1),resolve(1),compile(1),execute(1),handle_prompt(1),handle_uri(1)  # Reusable facade: prompt → URI → compile → execute.
+  tests/conftest.py:
+    e: isolated_config
+    isolated_config(tmp_path;monkeypatch)
+  tests/integration/test_xdg_handler.py:
+    e: test_xdg_custom_scheme_handler
+    test_xdg_custom_scheme_handler(tmp_path)
+  tests/test_adapters.py:
+    e: test_cli_adapter_plan,test_rest_adapter_plan,test_shell_adapter_export,test_mcp_adapter_tools,test_mcp_stdio_initialize,test_mcp_stdio_tools_call
+    test_cli_adapter_plan()
+    test_rest_adapter_plan()
+    test_shell_adapter_export()
+    test_mcp_adapter_tools()
+    test_mcp_stdio_initialize()
+    test_mcp_stdio_tools_call()
+  tests/test_cli.py:
+    e: test_cli_resolve_json,test_cli_execute_dry_run
+    test_cli_resolve_json(capsys)
+    test_cli_execute_dry_run(capsys)
+  tests/test_compile.py:
+    e: test_compile_app_open_linux,test_compile_screenshot_macos,test_compile_ide_native_deep_link,test_compile_settings_windows
+    test_compile_app_open_linux()
+    test_compile_screenshot_macos()
+    test_compile_ide_native_deep_link()
+    test_compile_settings_windows()
+  tests/test_config.py:
+    e: test_auto_platform_detection,test_config_resolved_platform_auto,test_env_platform_override,test_save_and_load_yaml,test_ensure_config_writes_defaults
+    test_auto_platform_detection()
+    test_config_resolved_platform_auto()
+    test_env_platform_override(monkeypatch)
+    test_save_and_load_yaml(tmp_path;monkeypatch)
+    test_ensure_config_writes_defaults(tmp_path;monkeypatch)
+  tests/test_mcp.py:
+    e: test_text_uri_list_mime,test_tool_resolve_desktop_action,test_mcp_handoff_includes_actions
+    test_text_uri_list_mime()
+    test_tool_resolve_desktop_action()
+    test_mcp_handoff_includes_actions()
+  tests/test_platforms.py:
+    e: test_linux_dry_run_open_app,test_macos_dry_run_capture_screen,test_windows_dry_run_settings,test_linux_dry_run_file_uri
+    test_linux_dry_run_open_app()
+    test_macos_dry_run_capture_screen()
+    test_windows_dry_run_settings()
+    test_linux_dry_run_file_uri()
+  tests/test_resolve.py:
+    e: test_resolve_linux,test_polish_open_vscode_in_folder,test_polish_active_browser_screenshot,test_nlp2uri_returns_actions,test_parse_absolute_uri_passthrough,test_settings_windows,test_settings_macos,test_empty_input_raises
+    test_resolve_linux(text;expected_uri_prefix;expected_action)
+    test_polish_open_vscode_in_folder()
+    test_polish_active_browser_screenshot()
+    test_nlp2uri_returns_actions()
+    test_parse_absolute_uri_passthrough()
+    test_settings_windows()
+    test_settings_macos()
+    test_empty_input_raises()
+  tests/test_rest_server.py:
+    e: _post,test_rest_server_plan
+    _post(url;payload)
+    test_rest_server_plan()
+  tests/test_service.py:
+    e: test_from_prompt,test_handle_prompt_dry_run,test_handle_uri
+    test_from_prompt()
+    test_handle_prompt_dry_run()
+    test_handle_uri()

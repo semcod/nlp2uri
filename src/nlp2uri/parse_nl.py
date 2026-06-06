@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from urllib.parse import urlparse
 
 from nlp2uri.models import IntentKind, UriIntent
@@ -49,6 +50,8 @@ _FILE_RE = re.compile(
     r"(?P<path>[^\s'\"]+)",
     re.IGNORECASE,
 )
+_OPEN_PREFIXES = ("otwórz ", "otworz ", "open ")
+_KEYWORD_TARGETS = frozenset({"screen", "desktop", "window", "okno", "ekran"})
 
 
 def _strip_quotes(value: str) -> str:
@@ -67,152 +70,205 @@ def _normalize_aliases(text: str) -> str:
     return normalized
 
 
-def parse_text(text: str) -> UriIntent:
-    raw = _normalize_aliases((text or "").strip())
-    if not raw:
-        raise ValueError("empty input")
+def _parse_absolute_uri(raw: str, _lowered: str) -> UriIntent | None:
+    if not _ABSOLUTE_URI_RE.match(raw):
+        return None
+    parsed = urlparse(raw)
+    return UriIntent(
+        kind=IntentKind.NAVIGATE,
+        target=raw,
+        params={"scheme": parsed.scheme},
+        raw_text=raw,
+        confidence=1.0,
+    )
 
-    lowered = raw.lower()
 
-    if _ABSOLUTE_URI_RE.match(raw):
-        parsed = urlparse(raw)
-        return UriIntent(
-            kind=IntentKind.NAVIGATE,
-            target=raw,
-            params={"scheme": parsed.scheme},
-            raw_text=raw,
-            confidence=1.0,
-        )
+def _parse_http_url(raw: str, _lowered: str) -> UriIntent | None:
+    url_match = re.search(r"(https?://\S+)", raw, re.IGNORECASE)
+    if not url_match:
+        return None
+    return UriIntent(
+        kind=IntentKind.NAVIGATE,
+        target=url_match.group(1),
+        params={"scheme": "https"},
+        raw_text=raw,
+        confidence=0.95,
+    )
 
-    if re.search(r"\bhttps?://\S+", raw, re.IGNORECASE):
-        url_match = re.search(r"(https?://\S+)", raw, re.IGNORECASE)
-        assert url_match is not None
-        return UriIntent(
-            kind=IntentKind.NAVIGATE,
-            target=url_match.group(1),
-            params={"scheme": "https"},
-            raw_text=raw,
-            confidence=0.95,
-        )
 
+def _parse_ide_project(raw: str, _lowered: str) -> UriIntent | None:
     match = _IDE_PROJECT_RE.search(raw)
-    if match:
-        return UriIntent(
-            kind=IntentKind.OPEN,
-            target="ide",
-            params={
-                "ide": match.group("ide").lower(),
-                "path": _strip_quotes(match.group("path")),
-            },
-            raw_text=raw,
-            confidence=0.95,
-        )
+    if not match:
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="ide",
+        params={
+            "ide": match.group("ide").lower(),
+            "path": _strip_quotes(match.group("path")),
+        },
+        raw_text=raw,
+        confidence=0.95,
+    )
 
+
+def _parse_file_open(raw: str, _lowered: str) -> UriIntent | None:
     match = _FILE_RE.search(raw)
-    if match:
-        return UriIntent(
-            kind=IntentKind.OPEN,
-            target="file",
-            params={"path": _strip_quotes(match.group("path"))},
-            raw_text=raw,
-            confidence=0.9,
-        )
+    if not match:
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="file",
+        params={"path": _strip_quotes(match.group("path"))},
+        raw_text=raw,
+        confidence=0.9,
+    )
 
-    if _SETTINGS_RE.search(lowered):
-        return UriIntent(
-            kind=IntentKind.OPEN,
-            target="settings",
-            raw_text=raw,
-            confidence=0.85,
-        )
 
-    if _ACTIVE_WINDOW_RE.search(raw):
-        params = {"mode": "active", "class": "browser"}
-        if re.search(r"przegl[aą]darki|browser", lowered):
-            params["class"] = "browser"
-        return UriIntent(
-            kind=IntentKind.CAPTURE,
-            target="window",
-            params=params,
-            raw_text=raw,
-            confidence=0.9,
-        )
+def _parse_settings(_raw: str, lowered: str) -> UriIntent | None:
+    if not _SETTINGS_RE.search(lowered):
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="settings",
+        raw_text=_raw,
+        confidence=0.85,
+    )
 
+
+def _parse_active_window(raw: str, _lowered: str) -> UriIntent | None:
+    if not _ACTIVE_WINDOW_RE.search(raw):
+        return None
+    params = {"mode": "active", "class": "browser"}
+    return UriIntent(
+        kind=IntentKind.CAPTURE,
+        target="window",
+        params=params,
+        raw_text=raw,
+        confidence=0.9,
+    )
+
+
+def _capture_target(lowered: str, title: str) -> str:
+    if re.search(r"\b(?:screen|desktop|ekran)\b", lowered):
+        return "screen"
+    if re.search(r"\b(?:window|okno)\b", lowered) or title:
+        return "window"
+    return "screen"
+
+
+def _parse_capture(raw: str, lowered: str) -> UriIntent | None:
     match = _CAPTURE_RE.search(raw)
-    if match:
-        title = (match.group("title") or "").strip()
-        title = _strip_quotes(title)
-        if title.lower() in {"screen", "desktop", "window", "okno", "ekran"}:
-            title = ""
+    if not match:
+        return None
+    title = _strip_quotes((match.group("title") or "").strip())
+    if title.lower() in _KEYWORD_TARGETS:
+        title = ""
+    target = _capture_target(lowered, title)
+    params: dict[str, str] = {}
+    if title:
+        params["title"] = title
+    if target == "window":
+        params.setdefault("mode", "active")
+    return UriIntent(
+        kind=IntentKind.CAPTURE,
+        target=target,
+        params=params,
+        raw_text=raw,
+        confidence=0.85,
+    )
 
-        if re.search(r"\b(?:screen|desktop|ekran)\b", lowered):
-            target = "screen"
-        elif re.search(r"\b(?:window|okno)\b", lowered) or title:
-            target = "window"
-        else:
-            target = "screen"
-        params: dict[str, str] = {}
-        if title:
-            params["title"] = title
-        if target == "window":
-            params.setdefault("mode", "active")
-        return UriIntent(
-            kind=IntentKind.CAPTURE,
-            target=target,
-            params=params,
-            raw_text=raw,
-            confidence=0.85,
-        )
 
+def _parse_focus(raw: str, _lowered: str) -> UriIntent | None:
     match = _FOCUS_RE.search(raw)
-    if match:
-        return UriIntent(
-            kind=IntentKind.FOCUS,
-            target="app",
-            params={"name": match.group("app").lower()},
-            raw_text=raw,
-            confidence=0.8,
-        )
+    if not match:
+        return None
+    return UriIntent(
+        kind=IntentKind.FOCUS,
+        target="app",
+        params={"name": match.group("app").lower()},
+        raw_text=raw,
+        confidence=0.8,
+    )
 
+
+def _parse_app_open(raw: str, _lowered: str) -> UriIntent | None:
     match = _APP_RE.search(raw)
-    if match:
-        return UriIntent(
-            kind=IntentKind.OPEN,
-            target="app",
-            params={"name": match.group("app").lower()},
-            raw_text=raw,
-            confidence=0.75,
-        )
+    if not match:
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="app",
+        params={"name": match.group("app").lower()},
+        raw_text=raw,
+        confidence=0.75,
+    )
 
+
+def _parse_path(raw: str, _lowered: str) -> UriIntent | None:
     path_match = _PATH_RE.search(raw)
-    if path_match:
-        return UriIntent(
-            kind=IntentKind.OPEN,
-            target="file",
-            params={"path": _strip_quotes(path_match.group(1))},
-            raw_text=raw,
-            confidence=0.6,
-        )
+    if not path_match:
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="file",
+        params={"path": _strip_quotes(path_match.group(1))},
+        raw_text=raw,
+        confidence=0.6,
+    )
 
-    if lowered.startswith(("open ", "otworz ", "otwórz ")):
-        for prefix in ("otwórz ", "otworz ", "open "):
-            if lowered.startswith(prefix):
-                remainder = raw[len(prefix) :].strip()
-                break
-        else:
-            remainder = ""
-        if remainder:
-            return UriIntent(
-                kind=IntentKind.OPEN,
-                target="app",
-                params={"name": remainder.split()[0].lower()},
-                raw_text=raw,
-                confidence=0.5,
-            )
 
+def _parse_open_prefix(raw: str, lowered: str) -> UriIntent | None:
+    if not lowered.startswith(_OPEN_PREFIXES):
+        return None
+    remainder = ""
+    for prefix in _OPEN_PREFIXES:
+        if lowered.startswith(prefix):
+            remainder = raw[len(prefix) :].strip()
+            break
+    if not remainder:
+        return None
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="app",
+        params={"name": remainder.split()[0].lower()},
+        raw_text=raw,
+        confidence=0.5,
+    )
+
+
+def _parse_fallback(raw: str, _lowered: str) -> UriIntent:
     return UriIntent(
         kind=IntentKind.NAVIGATE,
         target=raw,
         raw_text=raw,
         confidence=0.3,
     )
+
+
+_PARSERS: tuple[Callable[[str, str], UriIntent | None], ...] = (
+    _parse_absolute_uri,
+    _parse_http_url,
+    _parse_ide_project,
+    _parse_file_open,
+    _parse_settings,
+    _parse_active_window,
+    _parse_capture,
+    _parse_focus,
+    _parse_app_open,
+    _parse_path,
+    _parse_open_prefix,
+)
+
+
+def parse_text(text: str) -> UriIntent:
+    raw = _normalize_aliases((text or "").strip())
+    if not raw:
+        raise ValueError("empty input")
+
+    lowered = raw.lower()
+    for parser in _PARSERS:
+        intent = parser(raw, lowered)
+        if intent is not None:
+            return intent
+    return _parse_fallback(raw, lowered)

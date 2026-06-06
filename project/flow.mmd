@@ -1,0 +1,30 @@
+flowchart TD
+%% generated in 0.01s
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph Core
+        src__nlp2uri__parse_nl__parse_text{{parse_text CC=27}}
+        src__nlp2uri__integrators__mcp_server__main["main"]
+        src__nlp2uri__cli___add_common_args["_add_common_args"]
+        src__nlp2uri__cli___build_parser["_build_parser"]
+        src__nlp2uri__cli___platform["_platform"]
+        src__nlp2uri__cli___emit["_emit"]
+        src__nlp2uri__cli___request_from_args["_request_from_args"]
+        src__nlp2uri__cli__main["main"]
+        src__nlp2uri__platforms__base__UriExecutor__execute["execute"]
+        src__nlp2uri__platforms__base__UriExecutor___result["_result"]
+        src__nlp2uri__platforms__base__UriExecutor___dry["_dry"]
+        src__nlp2uri__platforms__base__UriExecutor___run["_run"]
+        src__nlp2uri__platforms__base__UriExecutor___first_available["_first_available"]
+        src__nlp2uri__platforms__base__UriExecutor___open_with_browser["_open_with_browser"]
+        src__nlp2uri__platforms__base__UriExecutor___parse_nlp2uri["_parse_nlp2uri"]
+        ...["+88 more"]
+    end
+
+    subgraph Exporters
+        src__nlp2uri__adapters__shell__ShellAdapter___export_script["_export_script"]
+    end
+
+    class src__nlp2uri__integrators__mcp_server__main,src__nlp2uri__cli___add_common_args,src__nlp2uri__cli___build_parser,src__nlp2uri__cli___platform,src__nlp2uri__cli___emit,src__nlp2uri__cli___request_from_args,src__nlp2uri__cli__main,src__nlp2uri__platforms__base__UriExecutor__execute,src__nlp2uri__platforms__base__UriExecutor___result,src__nlp2uri__platforms__base__UriExecutor___dry entry

@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT"
 
 PORT="${NLP2URI_REST_PORT:-18767}"
-python -m nlp2uri.integrators.rest_server --port "$PORT" &
+nlp2uri-serve --port "$PORT" &
 pid=$!
 trap 'kill "$pid" 2>/dev/null || true' EXIT
 

@@ -1,0 +1,568 @@
+source: code2llm
+# generated in 0.03s
+schema: code2llm.planfile_tickets.v1
+project_root: /home/tom/github/semcod/nlp2uri
+tickets:
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: src.nlp2uri.parse_nl.parse_text (CC=27)'
+  description: 'code2llm reports `src.nlp2uri.parse_nl.parse_text` at `src/nlp2uri/parse_nl.py:70`
+    with cyclomatic complexity 27 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - src/nlp2uri/parse_nl.py
+  dedupe_key: code2llm:cc:src/nlp2uri/parse_nl.py:src.nlp2uri.parse_nl.parse_text
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _build_parser'
+  description: 'code2llm reports `God Function: _build_parser` in `src/nlp2uri/cli.py:29`.
+
+
+    Function ''_build_parser'' is oversized: CC=1, fan-out=16, mutations=40.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/cli.py:29:God Function: _build_parser'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: args'
+  description: 'code2llm reports `Shotgun Surgery: args` in `src/nlp2uri/mcp.py:28`.
+
+
+    Mutation of variable ''args'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/mcp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/mcp.py:28:Shotgun Surgery:
+    args'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: cfg'
+  description: 'code2llm reports `Shotgun Surgery: cfg` in `src/nlp2uri/config.py:154`.
+
+
+    Mutation of variable ''cfg'' spans 8 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/config.py:154:Shotgun Surgery:
+    cfg'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: data'
+  description: 'code2llm reports `Shotgun Surgery: data` in `src/nlp2uri/config.py:154`.
+
+
+    Mutation of variable ''data'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/config.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/config.py:154:Shotgun Surgery:
+    data'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: host'
+  description: 'code2llm reports `Shotgun Surgery: host` in `src/nlp2uri/resolve.py:21`.
+
+
+    Mutation of variable ''host'' spans 7 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/resolve.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/resolve.py:21:Shotgun Surgery:
+    host'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: name'
+  description: 'code2llm reports `Shotgun Surgery: name` in `src/nlp2uri/compile.py:180`.
+
+
+    Mutation of variable ''name'' spans 6 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/compile.py:180:Shotgun Surgery:
+    name'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: normalized'
+  description: 'code2llm reports `Shotgun Surgery: normalized` in `src/nlp2uri/schemes/ide.py:17`.
+
+
+    Mutation of variable ''normalized'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/schemes/ide.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/schemes/ide.py:17:Shotgun
+    Surgery: normalized'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: parser'
+  description: 'code2llm reports `Shotgun Surgery: parser` in `src/nlp2uri/integrators/mcp_server.py:121`.
+
+
+    Mutation of variable ''parser'' spans 5 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/integrators/mcp_server.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/integrators/mcp_server.py:121:Shotgun
+    Surgery: parser'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: response'
+  description: 'code2llm reports `Shotgun Surgery: response` in `src/nlp2uri/mcp.py:28`.
+
+
+    Mutation of variable ''response'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/mcp.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/mcp.py:28:Shotgun Surgery:
+    response'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: target'
+  description: 'code2llm reports `Shotgun Surgery: target` in `src/nlp2uri/parse_nl.py:70`.
+
+
+    Mutation of variable ''target'' spans 8 functions. Changing this logic requires
+    work in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/parse_nl.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/parse_nl.py:70:Shotgun Surgery:
+    target'
+- signal: code2llm_smell_shotgun_surgery
+  title: 'Address code smell: Shotgun Surgery: uri'
+  description: 'code2llm reports `Shotgun Surgery: uri` in `src/nlp2uri/schemes/desktop.py:40`.
+
+
+    Mutation of variable ''uri'' spans 7 functions. Changing this logic requires work
+    in many places.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: high
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - shotgun-surgery
+  files:
+  - src/nlp2uri/schemes/desktop.py
+  dedupe_key: 'code2llm:smell:shotgun_surgery:src/nlp2uri/schemes/desktop.py:40:Shotgun
+    Surgery: uri'
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: src.nlp2uri.cli.main (CC=20)'
+  description: 'code2llm reports `src.nlp2uri.cli.main` at `src/nlp2uri/cli.py:108`
+    with cyclomatic complexity 20 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - src/nlp2uri/cli.py
+  dedupe_key: code2llm:cc:src/nlp2uri/cli.py:src.nlp2uri.cli.main
+- signal: code2llm_cc
+  title: 'Reduce cyclomatic complexity: src.nlp2uri.compile._compile_screenshot (CC=17)'
+  description: 'code2llm reports `src.nlp2uri.compile._compile_screenshot` at `src/nlp2uri/compile.py:131`
+    with cyclomatic complexity 17 (limit 15).
+
+
+    Extract smaller functions, flatten conditionals, or split strategy branches. Re-run
+    code2llm after the change and keep tests green.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - complexity
+  - refactor
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: code2llm:cc:src/nlp2uri/compile.py:src.nlp2uri.compile._compile_screenshot
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: target, self, params'
+  description: 'code2llm reports `Data Clump: target, self, params` in `src/nlp2uri/platforms/windows.py:62`.
+
+
+    Arguments (target, self, params) are used together in multiple functions: src.nlp2uri.platforms.windows.WindowsExecutor._capture,
+    src.nlp2uri.platforms.macos.MacOSExecutor._capture, src.nlp2uri.platforms.linux.LinuxExecutor._capture.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/platforms/windows.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/platforms/windows.py:62:Data
+    Clump: target, self, params'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: target, self, params'
+  description: 'code2llm reports `Data Clump: target, self, params` in `src/nlp2uri/platforms/macos.py:67`.
+
+
+    Arguments (target, self, params) are used together in multiple functions: src.nlp2uri.platforms.windows.WindowsExecutor._capture,
+    src.nlp2uri.platforms.macos.MacOSExecutor._capture, src.nlp2uri.platforms.linux.LinuxExecutor._capture.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/platforms/macos.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/platforms/macos.py:67:Data Clump:
+    target, self, params'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: target, self, params'
+  description: 'code2llm reports `Data Clump: target, self, params` in `src/nlp2uri/platforms/linux.py:105`.
+
+
+    Arguments (target, self, params) are used together in multiple functions: src.nlp2uri.platforms.windows.WindowsExecutor._capture,
+    src.nlp2uri.platforms.macos.MacOSExecutor._capture, src.nlp2uri.platforms.linux.LinuxExecutor._capture.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/platforms/linux.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/platforms/linux.py:105:Data Clump:
+    target, self, params'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, params, authority, host'
+  description: 'code2llm reports `Data Clump: uri, params, authority, host` in `src/nlp2uri/compile.py:131`.
+
+
+    Arguments (uri, params, authority, host) are used together in multiple functions:
+    src.nlp2uri.compile._compile_screenshot, src.nlp2uri.compile._compile_window.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/compile.py:131:Data Clump: uri,
+    params, authority, host'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, params, authority, host'
+  description: 'code2llm reports `Data Clump: uri, params, authority, host` in `src/nlp2uri/compile.py:180`.
+
+
+    Arguments (uri, params, authority, host) are used together in multiple functions:
+    src.nlp2uri.compile._compile_screenshot, src.nlp2uri.compile._compile_window.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/compile.py:180:Data Clump: uri,
+    params, authority, host'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, self, command'
+  description: 'code2llm reports `Data Clump: uri, self, command` in `src/nlp2uri/platforms/base.py:40`.
+
+
+    Arguments (uri, self, command) are used together in multiple functions: src.nlp2uri.platforms.base.UriExecutor._dry,
+    src.nlp2uri.platforms.base.UriExecutor._run.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/platforms/base.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/platforms/base.py:40:Data Clump:
+    uri, self, command'
+- signal: code2llm_smell_data_clump
+  title: 'Address code smell: Data Clump: uri, self, command'
+  description: 'code2llm reports `Data Clump: uri, self, command` in `src/nlp2uri/platforms/base.py:48`.
+
+
+    Arguments (uri, self, command) are used together in multiple functions: src.nlp2uri.platforms.base.UriExecutor._dry,
+    src.nlp2uri.platforms.base.UriExecutor._run.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - data-clump
+  files:
+  - src/nlp2uri/platforms/base.py
+  dedupe_key: 'code2llm:smell:data_clump:src/nlp2uri/platforms/base.py:48:Data Clump:
+    uri, self, command'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _compile_app'
+  description: 'code2llm reports `God Function: _compile_app` in `src/nlp2uri/compile.py:67`.
+
+
+    Function ''_compile_app'' is oversized: CC=11, fan-out=14, mutations=6.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/compile.py:67:God Function:
+    _compile_app'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _compile_legacy_nlp2uri'
+  description: 'code2llm reports `God Function: _compile_legacy_nlp2uri` in `src/nlp2uri/compile.py:218`.
+
+
+    Function ''_compile_legacy_nlp2uri'' is oversized: CC=7, fan-out=12, mutations=5.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/compile.py:218:God Function:
+    _compile_legacy_nlp2uri'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _compile_window'
+  description: 'code2llm reports `God Function: _compile_window` in `src/nlp2uri/compile.py:180`.
+
+
+    Function ''_compile_window'' is oversized: CC=10, fan-out=5, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/compile.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/compile.py:180:God Function:
+    _compile_window'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: _parse_simple_yaml'
+  description: 'code2llm reports `God Function: _parse_simple_yaml` in `src/nlp2uri/config.py:107`.
+
+
+    Function ''_parse_simple_yaml'' is oversized: CC=5, fan-out=6, mutations=7.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/config.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/config.py:107:God Function:
+    _parse_simple_yaml'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: config_search_paths'
+  description: 'code2llm reports `God Function: config_search_paths` in `src/nlp2uri/config.py:120`.
+
+
+    Function ''config_search_paths'' is oversized: CC=5, fan-out=7, mutations=8.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/config.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/config.py:120:God Function:
+    config_search_paths'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: dispatch'
+  description: 'code2llm reports `God Function: dispatch` in `src/nlp2uri/adapters/rest.py:26`.
+
+
+    Function ''dispatch'' is oversized: CC=14, fan-out=16, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/adapters/rest.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/adapters/rest.py:26:God Function:
+    dispatch'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: execute'
+  description: 'code2llm reports `God Function: execute` in `src/nlp2uri/platforms/linux.py:17`.
+
+
+    Function ''execute'' is oversized: CC=8, fan-out=11, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/platforms/linux.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/platforms/linux.py:17:God Function:
+    execute'
+- signal: code2llm_smell_god_function
+  title: 'Address code smell: God Function: handle'
+  description: 'code2llm reports `God Function: handle` in `src/nlp2uri/adapters/cli.py:11`.
+
+
+    Function ''handle'' is oversized: CC=10, fan-out=14, mutations=0.
+
+
+    Make the smallest refactor that removes the smell and run local tests.'
+  priority: normal
+  labels:
+  - llm-ready
+  - code2llm
+  - code-smell
+  - god-function
+  files:
+  - src/nlp2uri/adapters/cli.py
+  dedupe_key: 'code2llm:smell:god_function:src/nlp2uri/adapters/cli.py:11:God Function:
+    handle'
+applied: []
+skipped: []

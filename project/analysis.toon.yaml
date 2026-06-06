@@ -1,0 +1,188 @@
+# code2llm | 52f 3779L | python:36,shell:10,yaml:3,toml:1,yml:1 | 2026-06-06
+# generated in 0.03s
+# CC̅=3.9 | critical:3/148 | dups:0 | cycles:0
+
+HEALTH[3]:
+  🟡 CC    parse_text CC=27 (limit:15)
+  🟡 CC    main CC=20 (limit:15)
+  🟡 CC    _compile_screenshot CC=17 (limit:15)
+
+REFACTOR[1]:
+  1. split 3 high-CC methods  (CC>15)
+
+PIPELINES[89]:
+  [1] Src [main]: main → run_stdio → ensure_config → find_config_path → ...(1 more)
+      PURITY: 100% pure
+  [2] Src [main]: main → nlp2uri → get_effective_platform → load_config → ...(2 more)
+      PURITY: 100% pure
+  [3] Src [main]: main → _build_parser → _add_common_args
+      PURITY: 100% pure
+  [4] Src [_result]: _result
+      PURITY: 100% pure
+  [5] Src [_dry]: _dry
+      PURITY: 100% pure
+  [6] Src [_run]: _run
+      PURITY: 100% pure
+  [7] Src [_first_available]: _first_available
+      PURITY: 100% pure
+  [8] Src [_open_with_browser]: _open_with_browser
+      PURITY: 100% pure
+  [9] Src [_parse_nlp2uri]: _parse_nlp2uri
+      PURITY: 100% pure
+  [10] Src [_desktop_id_for_app]: _desktop_id_for_app
+      PURITY: 100% pure
+  [11] Src [slugify_app_name]: slugify_app_name
+      PURITY: 100% pure
+  [12] Src [get_executor]: get_executor → detect_platform
+      PURITY: 100% pure
+  [13] Src [__getattr__]: __getattr__
+      PURITY: 100% pure
+  [14] Src [execute]: execute
+      PURITY: 100% pure
+  [15] Src [_start]: _start
+      PURITY: 100% pure
+  [16] Src [_open_app]: _open_app
+      PURITY: 100% pure
+  [17] Src [_focus_app]: _focus_app
+      PURITY: 100% pure
+  [18] Src [_capture]: _capture
+      PURITY: 100% pure
+  [19] Src [execute]: execute
+      PURITY: 100% pure
+  [20] Src [_open]: _open
+      PURITY: 100% pure
+  [21] Src [_open_app]: _open_app
+      PURITY: 100% pure
+  [22] Src [_focus_app]: _focus_app
+      PURITY: 100% pure
+  [23] Src [_capture]: _capture
+      PURITY: 100% pure
+  [24] Src [text_uri_list]: text_uri_list
+      PURITY: 100% pure
+  [25] Src [tool_execute_desktop_uri]: tool_execute_desktop_uri
+      PURITY: 100% pure
+  [26] Src [main]: main → nlp2uri → get_effective_platform → load_config → ...(2 more)
+      PURITY: 100% pure
+  [27] Src [main]: main → mcp_handoff_payload
+      PURITY: 100% pure
+  [28] Src [build_http]: build_http
+      PURITY: 100% pure
+  [29] Src [execute]: execute
+      PURITY: 100% pure
+  [30] Src [_open_generic]: _open_generic
+      PURITY: 100% pure
+  [31] Src [_open_settings]: _open_settings
+      PURITY: 100% pure
+  [32] Src [_open_app]: _open_app
+      PURITY: 100% pure
+  [33] Src [_focus_app]: _focus_app
+      PURITY: 100% pure
+  [34] Src [_capture]: _capture
+      PURITY: 100% pure
+  [35] Src [build_file]: build_file → normalize_path
+      PURITY: 100% pure
+  [36] Src [build_ide]: build_ide → normalize_path
+      PURITY: 100% pure
+  [37] Src [nlp2uri_url]: nlp2uri_url
+      PURITY: 100% pure
+  [38] Src [percent_encode_segment]: percent_encode_segment
+      PURITY: 100% pure
+  [39] Src [build_capture]: build_capture → abstract_url
+      PURITY: 100% pure
+  [40] Src [build_focus]: build_focus → abstract_url
+      PURITY: 100% pure
+  [41] Src [build_app_open]: build_app_open → abstract_url
+      PURITY: 100% pure
+  [42] Src [build_settings]: build_settings
+      PURITY: 100% pure
+  [43] Src [handle]: handle
+      PURITY: 100% pure
+  [44] Src [with_params]: with_params
+      PURITY: 100% pure
+  [45] Src [to_slots]: to_slots
+      PURITY: 100% pure
+  [46] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [47] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [48] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [49] Src [to_dict]: to_dict
+      PURITY: 100% pure
+  [50] Src [get_executor]: get_executor
+      PURITY: 100% pure
+
+LAYERS:
+  src/                            CC̄=3.9    ←in:0  →out:0
+  │ !! compile                    258L  0C   11m  CC=17     ←4
+  │ config                     230L  1C   17m  CC=8      ←7
+  │ !! parse_nl                   218L  0C    3m  CC=27     ←1
+  │ !! cli                        185L  0C    6m  CC=20     ←0
+  │ mcp                        183L  1C   11m  CC=6      ←0
+  │ models                     174L  7C    7m  CC=11     ←0
+  │ linux                      145L  1C    6m  CC=11     ←0
+  │ base                       130L  1C    9m  CC=7      ←0
+  │ mcp_server                 128L  0C   10m  CC=8      ←0
+  │ windows                     94L  1C    5m  CC=7      ←0
+  │ macos                       94L  1C    5m  CC=7      ←0
+  │ desktop                     94L  0C    4m  CC=5      ←0
+  │ runtime                     92L  0C    2m  CC=9      ←1
+  │ rest_server                 90L  1C    7m  CC=4      ←0
+  │ rest                        87L  1C    4m  CC=14     ←0
+  │ mcp                         81L  0C    5m  CC=2      ←1
+  │ service                     71L  1C   10m  CC=2      ←0
+  │ shell                       66L  1C    2m  CC=11     ←0
+  │ build                       59L  0C    2m  CC=11     ←1
+  │ base                        59L  3C    5m  CC=2      ←0
+  │ util                        47L  0C    5m  CC=9      ←3
+  │ resolve                     40L  0C    2m  CC=4      ←3
+  │ cli                         39L  1C    1m  CC=10     ←0
+  │ ide                         35L  0C    1m  CC=4      ←0
+  │ __init__                    28L  0C    0m  CC=0.0    ←0
+  │ file                        25L  0C    1m  CC=3      ←0
+  │ registry                    24L  0C    1m  CC=3      ←0
+  │ __init__                    22L  0C    1m  CC=3      ←0
+  │ http                        22L  0C    1m  CC=4      ←0
+  │ platform_detect             18L  0C    1m  CC=5      ←4
+  │ __init__                    17L  0C    0m  CC=0.0    ←0
+  │ __init__                     6L  0C    0m  CC=0.0    ←0
+  │ __init__                     5L  0C    0m  CC=0.0    ←0
+  │
+  examples/                       CC̄=2.7    ←in:0  →out:0
+  │ main                        42L  0C    1m  CC=3      ←0
+  │ run-e2e.sh                  39L  0C    0m  CC=0.0    ←0
+  │ main                        29L  0C    1m  CC=3      ←0
+  │ main                        27L  0C    1m  CC=2      ←0
+  │ e2e.sh                      23L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      12L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      10L  0C    0m  CC=0.0    ←0
+  │ nlp2uri.yaml                 8L  0C    0m  CC=0.0    ←0
+  │
+  ./                              CC̄=0.0    ←in:0  →out:0
+  │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              70L  0C    0m  CC=0.0    ←0
+  │ project.sh                  59L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                  29L  0C    0m  CC=0.0    ←0
+  │ nlp2uri.yaml                 8L  0C    0m  CC=0.0    ←0
+  │ docker-compose.yml           6L  0C    0m  CC=0.0    ←0
+  │ tree.sh                      1L  0C    0m  CC=0.0    ←0
+  │
+  scripts/                        CC̄=0.0    ←in:0  →out:0
+  │ testapp-handler.sh           6L  0C    0m  CC=0.0    ←0
+  │
+
+COUPLING:
+                         src.nlp2uri  examples.execute      examples.mcp  examples.resolve
+       src.nlp2uri                ──                ←2                ←2                ←1  hub
+  examples.execute                 2                ──                                    
+      examples.mcp                 2                                  ──                  
+  examples.resolve                 1                                                    ──
+  CYCLES: none
+  HUB: src.nlp2uri/ (fan-in=5)
+
+EXTERNAL:
+  validation: run `vallm batch .` → validation.toon
+  duplication: run `redup scan .` → duplication.toon

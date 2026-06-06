@@ -5,7 +5,106 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2026-06-06
+
+### Fixed
+- Fix unused-imports issues (ticket-4dbed369)
+- Fix unused-imports issues (ticket-40c5ea4a)
+- Fix magic-numbers issues (ticket-5fc5a367)
+- Fix unused-imports issues (ticket-4b556994)
+- Fix unused-imports issues (ticket-908cacdb)
+- Fix magic-numbers issues (ticket-8fd68944)
+- Fix unused-imports issues (ticket-ec27ee46)
+- Fix magic-numbers issues (ticket-2bd50de1)
+- Fix string-concat issues (ticket-025bc079)
+- Fix unused-imports issues (ticket-beefda98)
+- Fix ai-boilerplate issues (ticket-4049c9c7)
+- Fix string-concat issues (ticket-319a9be2)
+- Fix unused-imports issues (ticket-4a5bfabc)
+- Fix magic-numbers issues (ticket-63a17a38)
+- Fix ai-boilerplate issues (ticket-caf9954c)
+- Fix unused-imports issues (ticket-16c7bcbc)
+- Fix unused-imports issues (ticket-2381de43)
+- Fix string-concat issues (ticket-1356c934)
+- Fix unused-imports issues (ticket-42f6454c)
+- Fix string-concat issues (ticket-218edc2b)
+- Fix unused-imports issues (ticket-24bfb0b8)
+- Fix unused-imports issues (ticket-2451db9a)
+- Fix unused-imports issues (ticket-0d1a6d8f)
+- Fix magic-numbers issues (ticket-8c86d0f0)
+- Fix ai-boilerplate issues (ticket-c68e7687)
+- Fix unused-imports issues (ticket-cf11d136)
+- Fix unused-imports issues (ticket-affe0617)
+- Fix unused-imports issues (ticket-68160499)
+- Fix unused-imports issues (ticket-cae7f597)
+- Fix magic-numbers issues (ticket-03b24c9d)
+- Fix unused-imports issues (ticket-7a70db65)
+- Fix unused-imports issues (ticket-114f9aa5)
+- Fix unused-imports issues (ticket-0f8c14ae)
+- Fix unused-imports issues (ticket-0803a9d2)
+- Fix smart-return-type issues (ticket-a95733a3)
+- Fix unused-imports issues (ticket-4e3e7014)
+- Fix magic-numbers issues (ticket-7575c150)
+- Fix unused-imports issues (ticket-468bccf3)
+- Fix unused-imports issues (ticket-e4a557c9)
+- Fix unused-imports issues (ticket-8cbd0f97)
+- Fix unused-imports issues (ticket-16d8f91b)
+- Fix unused-imports issues (ticket-947d9eb6)
+- Fix unused-imports issues (ticket-8ffc5c27)
+- Fix unused-imports issues (ticket-d4ab18d3)
+- Fix smart-return-type issues (ticket-4a6c1cb9)
+- Fix unused-imports issues (ticket-b0825f99)
+- Fix smart-return-type issues (ticket-06bbd30d)
+- Fix unused-imports issues (ticket-f8a35ff5)
+- Fix smart-return-type issues (ticket-e20dea72)
+- Fix unused-imports issues (ticket-706796cf)
+- Fix smart-return-type issues (ticket-ab2ce634)
+- Fix unused-imports issues (ticket-a29c2ffd)
+- Fix smart-return-type issues (ticket-2db5cbf9)
+- Fix unused-imports issues (ticket-56520637)
+- Fix smart-return-type issues (ticket-af05b203)
+- Fix unused-imports issues (ticket-885edd98)
+- Fix smart-return-type issues (ticket-0de81b6e)
+- Fix unused-imports issues (ticket-ee9a5b2b)
+- Fix smart-return-type issues (ticket-823850ef)
+- Fix unused-imports issues (ticket-d8c3b377)
+- Fix smart-return-type issues (ticket-0d9423d4)
+- Fix unused-imports issues (ticket-dce0113c)
+- Fix duplicate-imports issues (ticket-49125f69)
+- Fix smart-return-type issues (ticket-20bd23e9)
+- Fix unused-imports issues (ticket-e021d897)
+- Fix smart-return-type issues (ticket-65994ec3)
+- Fix unused-imports issues (ticket-958c03f6)
+
 ## [Unreleased]
+
+## [0.1.3] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update testql-scenarios/generated-from-pytests.testql.toon.yaml
+
+### Other
+- Update app.doql.less
+- Update examples/integrators/rest-api/e2e.sh
+- Update examples/nlp2uri.yaml
+- Update planfile.yaml
+- Update prefact.yaml
+- Update project.sh
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 15 more files
 
 ## [0.1.2] - 2026-06-06
 

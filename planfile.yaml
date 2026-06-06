@@ -1,0 +1,890 @@
+name: Code Quality Improvement
+project_name: ''
+project_type: prefactoring
+domain: dev-tools
+goal: Improve code quality using prefact
+goals:
+- Fix all prefact-detected issues
+- Improve code maintainability
+- Ensure consistent code style
+quality_gates:
+- metric: Prefact Issues
+  threshold: '0'
+sprints:
+- id: sprint-1
+  name: Code Quality Improvements
+  duration: 2 weeks
+  objectives:
+  - Fix code quality issues
+  task_patterns:
+  - id: ticket-4dbed369
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/adapters/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-40c5ea4a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/adapters/base.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/base.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5fc5a367
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/nlp2uri/adapters/base.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/base.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4b556994
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/adapters/shell.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/shell.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-908cacdb
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/adapters/rest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/rest.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8fd68944
+    name: Fix magic-numbers issues
+    description: Resolve 7 magic-numbers issues in src/nlp2uri/adapters/rest.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/nlp2uri/adapters/rest.py
+    rule_id: magic-numbers
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ec27ee46
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/adapters/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/mcp.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2bd50de1
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/nlp2uri/adapters/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/adapters/mcp.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-025bc079
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in src/nlp2uri/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/cli.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-beefda98
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4049c9c7
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in src/nlp2uri/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/cli.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-319a9be2
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/nlp2uri/integrators/mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/mcp_server.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4a5bfabc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/integrators/mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/mcp_server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-63a17a38
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/nlp2uri/integrators/mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/mcp_server.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-caf9954c
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in src/nlp2uri/integrators/mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-16c7bcbc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/integrators/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/__init__.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2381de43
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/compile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/compile.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1356c934
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/nlp2uri/config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/config.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-42f6454c
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/nlp2uri/config.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/nlp2uri/config.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-218edc2b
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/nlp2uri/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/mcp.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-24bfb0b8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/mcp.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2451db9a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/parse_nl.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/parse_nl.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0d1a6d8f
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/integrators/rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/rest_server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8c86d0f0
+    name: Fix magic-numbers issues
+    description: Resolve 5 magic-numbers issues in src/nlp2uri/integrators/rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/nlp2uri/integrators/rest_server.py
+    rule_id: magic-numbers
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c68e7687
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in src/nlp2uri/integrators/rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/integrators/rest_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cf11d136
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/models.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/models.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-affe0617
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/platform_detect.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platform_detect.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-68160499
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/nlp2uri/platforms/linux.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/nlp2uri/platforms/linux.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cae7f597
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/platforms/base.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platforms/base.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-03b24c9d
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in src/nlp2uri/platforms/base.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platforms/base.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7a70db65
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/platforms/macos.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platforms/macos.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-114f9aa5
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/platforms/registry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platforms/registry.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0f8c14ae
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/platforms/windows.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/platforms/windows.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0803a9d2
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/resolve.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/resolve.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a95733a3
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/nlp2uri/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/runtime.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4e3e7014
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/runtime.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7575c150
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in src/nlp2uri/runtime.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/runtime.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-468bccf3
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/desktop.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/desktop.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e4a557c9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/build.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/build.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8cbd0f97
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/file.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/file.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-16d8f91b
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/http.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/http.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-947d9eb6
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/ide.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/ide.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8ffc5c27
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/schemes/util.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/schemes/util.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d4ab18d3
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/service.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/service.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4a6c1cb9
+    name: Fix smart-return-type issues
+    description: Resolve 6 smart-return-type issues in tests/test_adapters.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_adapters.py
+    rule_id: smart-return-type
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b0825f99
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in tests/test_adapters.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_adapters.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-06bbd30d
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in tests/test_cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_cli.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f8a35ff5
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_cli.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e20dea72
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/integration/test_xdg_handler.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_xdg_handler.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-706796cf
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/integration/test_xdg_handler.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/integration/test_xdg_handler.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ab2ce634
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/test_compile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_compile.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a29c2ffd
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_compile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_compile.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2db5cbf9
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/conftest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/conftest.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-56520637
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/conftest.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/conftest.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-af05b203
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in tests/test_config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_config.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-885edd98
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in tests/test_config.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_config.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0de81b6e
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_mcp.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ee9a5b2b
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_mcp.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-823850ef
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in tests/test_platforms.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - tests/test_platforms.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d8c3b377
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_platforms.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_platforms.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0d9423d4
+    name: Fix smart-return-type issues
+    description: Resolve 8 smart-return-type issues in tests/test_resolve.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_resolve.py
+    rule_id: smart-return-type
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dce0113c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_resolve.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_resolve.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-49125f69
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in tests/test_rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_rest_server.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-20bd23e9
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in tests/test_rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_rest_server.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e021d897
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_rest_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_rest_server.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-65994ec3
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in tests/test_service.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_service.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-958c03f6
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_service.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_service.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

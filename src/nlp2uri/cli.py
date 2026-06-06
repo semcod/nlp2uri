@@ -5,11 +5,18 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from pathlib import Path
 
 from nlp2uri.adapters.base import AdapterRequest
 from nlp2uri.adapters.cli import CliAdapter
 from nlp2uri.adapters.shell import ShellAdapter
-from nlp2uri.config import ensure_config, find_config_path, load_config, save_config
+from nlp2uri.config import (
+    default_config,
+    ensure_config,
+    find_config_path,
+    load_config,
+    save_config,
+)
 from nlp2uri.models import HostPlatform
 
 
@@ -105,65 +112,61 @@ def _request_from_args(args: argparse.Namespace, *, operation: str) -> AdapterRe
     )
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = _build_parser()
-    args = parser.parse_args(argv)
+def _with_platform(payload: dict, *, as_json: bool) -> dict:
+    if as_json:
+        payload["platform"] = load_config().resolved_platform().value
+    return payload
 
-    if args.command != "config":
-        ensure_config()
 
-    if args.command == "config":
-        if args.config_command == "init":
-            from pathlib import Path
-
-            from nlp2uri.config import default_config
-
-            path = save_config(default_config(), Path(args.path))
-            print(f"wrote {path}")
-            return 0
-        cfg = load_config()
-        found = find_config_path()
-        payload = {
-            "config_path": str(found) if found else None,
-            "effective_platform": cfg.resolved_platform().value,
-            **cfg.to_dict(),
-        }
-        _emit(payload, as_json=args.json)
+def _run_config(args: argparse.Namespace) -> int:
+    if args.config_command == "init":
+        path = save_config(default_config(), Path(args.path))
+        print(f"wrote {path}")
         return 0
+    cfg = load_config()
+    found = find_config_path()
+    payload = {
+        "config_path": str(found) if found else None,
+        "effective_platform": cfg.resolved_platform().value,
+        **cfg.to_dict(),
+    }
+    _emit(payload, as_json=args.json)
+    return 0
 
-    cli = CliAdapter()
 
-    if args.command == "shell":
-        shell = ShellAdapter()
-        if args.shell_command == "export":
-            response = shell.handle(_request_from_args(args, operation="export"))
-        else:
-            req = AdapterRequest(
+def _run_shell(args: argparse.Namespace) -> int:
+    shell = ShellAdapter()
+    if args.shell_command == "export":
+        response = shell.handle(_request_from_args(args, operation="export"))
+    else:
+        response = shell.handle(
+            AdapterRequest(
                 operation="eval-uri",
                 uri=args.uri,
                 platform=_platform(args.platform),
             )
-            response = shell.handle(req)
-        if args.json:
-            _emit(response.to_dict(), as_json=True)
-        else:
-            sys.stdout.write(response.data.get("script", "") + "\n")
-        return 0 if response.ok else response.status_code or 1
+        )
+    if args.json:
+        _emit(response.to_dict(), as_json=True)
+    else:
+        sys.stdout.write(response.data.get("script", "") + "\n")
+    return 0 if response.ok else response.status_code or 1
 
-    if args.command in {"plan", "resolve", "compile"}:
-        if args.command == "compile":
-            req = AdapterRequest(operation="compile", uri=args.uri, platform=_platform(args.platform))
-        else:
-            req = _request_from_args(args, operation=args.command)
-        response = cli.handle(req)
-        payload = response.to_dict()
-        if args.json:
-            payload["platform"] = load_config().resolved_platform().value
-        _emit(payload, as_json=args.json)
-        return 0 if response.ok else response.status_code or 1
 
-    uri_only = bool(getattr(args, "uri_only", False))
-    if uri_only or "://" in args.text:
+def _run_adapter_command(args: argparse.Namespace, *, operation: str) -> int:
+    cli = CliAdapter()
+    if operation == "compile":
+        req = AdapterRequest(operation="compile", uri=args.uri, platform=_platform(args.platform))
+    else:
+        req = _request_from_args(args, operation=operation)
+    response = cli.handle(req)
+    _emit(_with_platform(response.to_dict(), as_json=args.json), as_json=args.json)
+    return 0 if response.ok else response.status_code or 1
+
+
+def _run_execute(args: argparse.Namespace) -> int:
+    cli = CliAdapter()
+    if getattr(args, "uri_only", False) or "://" in args.text:
         req = AdapterRequest(
             operation="execute",
             uri=args.text,
@@ -172,13 +175,24 @@ def main(argv: list[str] | None = None) -> int:
         )
     else:
         req = _request_from_args(args, operation="execute")
-
     response = cli.handle(req)
-    payload = response.to_dict()
-    if args.json:
-        payload["platform"] = load_config().resolved_platform().value
-    _emit(payload, as_json=args.json)
+    _emit(_with_platform(response.to_dict(), as_json=args.json), as_json=args.json)
     return 0 if response.ok else response.status_code or 1
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _build_parser().parse_args(argv)
+
+    if args.command == "config":
+        return _run_config(args)
+
+    ensure_config()
+
+    if args.command == "shell":
+        return _run_shell(args)
+    if args.command in {"plan", "resolve", "compile"}:
+        return _run_adapter_command(args, operation=args.command)
+    return _run_execute(args)
 
 
 if __name__ == "__main__":

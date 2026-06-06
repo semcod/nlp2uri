@@ -1,0 +1,185 @@
+flowchart LR
+%% generated in 0.01s
+    subgraph examples__execute
+        examples__execute__dry_run__main__main["main"]
+    end
+    subgraph examples__mcp
+        examples__mcp__tool_handoff__main__main["main"]
+    end
+    subgraph examples__resolve
+        examples__resolve__nl_to_uri__main__main["main"]
+    end
+    subgraph src__nlp2uri
+        src__nlp2uri__compile___compile_window["_compile_window"]
+        src__nlp2uri__resolve__resolve_text["resolve_text"]
+        src__nlp2uri__schemes__ide__build_ide["build_ide"]
+        src__nlp2uri__schemes__desktop__build_focus["build_focus"]
+        src__nlp2uri__service__NLP2URIService__execute["execute"]
+        src__nlp2uri__integrators__mcp_server___log["_log"]
+        src__nlp2uri__mcp__tool_resolve_desktop_action["tool_resolve_desktop_action"]
+        src__nlp2uri__service__NLP2URIService__for_platform["for_platform"]
+        src__nlp2uri__compile___compile_settings["_compile_settings"]
+        src__nlp2uri__config__payload_keys["payload_keys"]
+        src__nlp2uri__integrators__rest_server__main["main"]
+        src__nlp2uri__parse_nl___normalize_aliases["_normalize_aliases"]
+        src__nlp2uri__integrators__rest_server__run_server["run_server"]
+        src__nlp2uri__cli___add_common_args["_add_common_args"]
+        src__nlp2uri__service__NLP2URIService___host["_host"]
+        src__nlp2uri__compile___compile_legacy_nlp2uri["_compile_legacy_nlp2uri"]
+        src__nlp2uri__compile___open_uri["_open_uri"]
+        src__nlp2uri__schemes__util__normalize_path["normalize_path"]
+        src__nlp2uri__integrators__mcp_server__main["main"]
+        src__nlp2uri__schemes__desktop__build_app_open["build_app_open"]
+        src__nlp2uri__schemes__util__file_uri["file_uri"]
+        src__nlp2uri__service__NLP2URIService___cfg["_cfg"]
+        src__nlp2uri__config__config_search_paths["config_search_paths"]
+        src__nlp2uri__config__ensure_config["ensure_config"]
+        src__nlp2uri__compile___compile_screenshot["_compile_screenshot"]
+        src__nlp2uri__config__find_config_path["find_config_path"]
+        src__nlp2uri__cli___build_parser["_build_parser"]
+        src__nlp2uri__platform_detect__detect_platform["detect_platform"]
+        src__nlp2uri__service__NLP2URIService__from_prompt["from_prompt"]
+        src__nlp2uri__config__NLP2URIConfig__to_yaml["to_yaml"]
+        src__nlp2uri__integrators__mcp_server___handle_tools_call["_handle_tools_call"]
+        src__nlp2uri__compile___desktop_id_for_app["_desktop_id_for_app"]
+        src__nlp2uri__platforms__registry__get_executor["get_executor"]
+        src__nlp2uri__config___load_from_path["_load_from_path"]
+        src__nlp2uri__config__get_effective_platform["get_effective_platform"]
+        src__nlp2uri__config___yaml_scalar["_yaml_scalar"]
+        src__nlp2uri__config__load_config["load_config"]
+        src__nlp2uri__adapters__base__BaseAdapter____init__["__init__"]
+        src__nlp2uri__runtime__execute_uri["execute_uri"]
+        src__nlp2uri__compile___compile_launch_app["_compile_launch_app"]
+        src__nlp2uri__integrators__mcp_server__run_stdio["run_stdio"]
+        src__nlp2uri__config___parse_simple_yaml["_parse_simple_yaml"]
+        src__nlp2uri__service__NLP2URIService__default["default"]
+        src__nlp2uri__parse_nl__parse_text["parse_text"]
+        src__nlp2uri__config__default_config["default_config"]
+        src__nlp2uri__cli___emit["_emit"]
+        src__nlp2uri__compile___query_params["_query_params"]
+        src__nlp2uri__integrators__mcp_server___write_json["_write_json"]
+        src__nlp2uri__compile__compile_uri_to_actions["compile_uri_to_actions"]
+        src__nlp2uri__mcp__mcp_handoff_payload["mcp_handoff_payload"]
+        src__nlp2uri__compile___compile_app["_compile_app"]
+        src__nlp2uri__schemes__build___build_navigate["_build_navigate"]
+        src__nlp2uri__cli___platform["_platform"]
+        src__nlp2uri__integrators__mcp_server___handle_tools_list["_handle_tools_list"]
+        src__nlp2uri__resolve__nlp2uri["nlp2uri"]
+        src__nlp2uri__cli___request_from_args["_request_from_args"]
+        src__nlp2uri__cli__main["main"]
+        src__nlp2uri__schemes__build__build_uri["build_uri"]
+        src__nlp2uri__schemes__desktop__build_capture["build_capture"]
+        src__nlp2uri__config__NLP2URIConfig__to_dict["to_dict"]
+        src__nlp2uri__service__NLP2URIService__compile["compile"]
+        src__nlp2uri__integrators__mcp_server___jsonrpc_error["_jsonrpc_error"]
+        src__nlp2uri__integrators__mcp_server___handle_initialize["_handle_initialize"]
+        src__nlp2uri__config__save_config["save_config"]
+        src__nlp2uri__compile___first_available["_first_available"]
+        src__nlp2uri__integrators__mcp_server__handle_message["handle_message"]
+        src__nlp2uri__service__NLP2URIService__resolve["resolve"]
+        src__nlp2uri__config__NLP2URIConfig__resolved_platform["resolved_platform"]
+        src__nlp2uri__integrators__mcp_server___jsonrpc_response["_jsonrpc_response"]
+        src__nlp2uri__schemes__util__abstract_url["abstract_url"]
+        src__nlp2uri__config___parse_scalar["_parse_scalar"]
+        src__nlp2uri__schemes__file__build_file["build_file"]
+    end
+    src__nlp2uri__parse_nl__parse_text --> src__nlp2uri__parse_nl___normalize_aliases
+    src__nlp2uri__integrators__mcp_server__handle_message --> src__nlp2uri__integrators__mcp_server___jsonrpc_error
+    src__nlp2uri__integrators__mcp_server__handle_message --> src__nlp2uri__integrators__mcp_server___jsonrpc_response
+    src__nlp2uri__integrators__mcp_server__handle_message --> src__nlp2uri__integrators__mcp_server___handle_initialize
+    src__nlp2uri__integrators__mcp_server__handle_message --> src__nlp2uri__integrators__mcp_server___handle_tools_list
+    src__nlp2uri__integrators__mcp_server__handle_message --> src__nlp2uri__integrators__mcp_server___handle_tools_call
+    src__nlp2uri__integrators__mcp_server__run_stdio --> src__nlp2uri__config__ensure_config
+    src__nlp2uri__integrators__mcp_server__run_stdio --> src__nlp2uri__config__load_config
+    src__nlp2uri__integrators__mcp_server__run_stdio --> src__nlp2uri__integrators__mcp_server___log
+    src__nlp2uri__integrators__mcp_server__run_stdio --> src__nlp2uri__integrators__mcp_server__handle_message
+    src__nlp2uri__integrators__mcp_server__run_stdio --> src__nlp2uri__integrators__mcp_server___write_json
+    src__nlp2uri__integrators__mcp_server__main --> src__nlp2uri__integrators__mcp_server__run_stdio
+    examples__execute__dry_run__main__main --> src__nlp2uri__resolve__nlp2uri
+    examples__execute__dry_run__main__main --> src__nlp2uri__compile__compile_uri_to_actions
+    src__nlp2uri__cli___build_parser --> src__nlp2uri__cli___add_common_args
+    src__nlp2uri__cli___request_from_args --> src__nlp2uri__cli___platform
+    src__nlp2uri__cli__main --> src__nlp2uri__cli___build_parser
+    src__nlp2uri__cli__main --> src__nlp2uri__cli___emit
+    src__nlp2uri__cli__main --> src__nlp2uri__config__ensure_config
+    src__nlp2uri__cli__main --> src__nlp2uri__config__load_config
+    src__nlp2uri__cli__main --> src__nlp2uri__config__find_config_path
+    src__nlp2uri__platforms__registry__get_executor --> src__nlp2uri__platform_detect__detect_platform
+    examples__resolve__nl_to_uri__main__main --> src__nlp2uri__resolve__nlp2uri
+    examples__mcp__tool_handoff__main__main --> src__nlp2uri__mcp__mcp_handoff_payload
+    examples__mcp__tool_handoff__main__main --> src__nlp2uri__mcp__tool_resolve_desktop_action
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___query_params
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___compile_app
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___compile_screenshot
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___compile_window
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___compile_legacy_nlp2uri
+    src__nlp2uri__compile__compile_uri_to_actions --> src__nlp2uri__compile___open_uri
+    src__nlp2uri__compile___open_uri --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_app --> src__nlp2uri__compile___compile_settings
+    src__nlp2uri__compile___compile_app --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_app --> src__nlp2uri__compile___compile_launch_app
+    src__nlp2uri__compile___compile_app --> src__nlp2uri__compile___open_uri
+    src__nlp2uri__compile___compile_settings --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_settings --> src__nlp2uri__compile___open_uri
+    src__nlp2uri__compile___compile_launch_app --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_launch_app --> src__nlp2uri__compile___desktop_id_for_app
+    src__nlp2uri__compile___compile_screenshot --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_window --> src__nlp2uri__compile___first_available
+    src__nlp2uri__compile___compile_window --> src__nlp2uri__compile___compile_launch_app
+    src__nlp2uri__compile___compile_legacy_nlp2uri --> src__nlp2uri__compile___query_params
+    src__nlp2uri__compile___compile_legacy_nlp2uri --> src__nlp2uri__compile___compile_settings
+    src__nlp2uri__compile___compile_legacy_nlp2uri --> src__nlp2uri__compile___compile_launch_app
+    src__nlp2uri__compile___compile_legacy_nlp2uri --> src__nlp2uri__compile___compile_window
+    src__nlp2uri__compile___compile_legacy_nlp2uri --> src__nlp2uri__compile___compile_screenshot
+    src__nlp2uri__schemes__build__build_uri --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__schemes__build__build_uri --> src__nlp2uri__schemes__build___build_navigate
+    src__nlp2uri__schemes__file__build_file --> src__nlp2uri__schemes__util__normalize_path
+    src__nlp2uri__schemes__file__build_file --> src__nlp2uri__schemes__util__file_uri
+    src__nlp2uri__schemes__file__build_file --> src__nlp2uri__schemes__util__abstract_url
+    src__nlp2uri__schemes__ide__build_ide --> src__nlp2uri__schemes__util__normalize_path
+    src__nlp2uri__schemes__ide__build_ide --> src__nlp2uri__schemes__util__abstract_url
+    src__nlp2uri__resolve__resolve_text --> src__nlp2uri__parse_nl__parse_text
+    src__nlp2uri__resolve__resolve_text --> src__nlp2uri__schemes__build__build_uri
+    src__nlp2uri__resolve__resolve_text --> src__nlp2uri__config__get_effective_platform
+    src__nlp2uri__resolve__nlp2uri --> src__nlp2uri__config__get_effective_platform
+    src__nlp2uri__resolve__nlp2uri --> src__nlp2uri__parse_nl__parse_text
+    src__nlp2uri__resolve__nlp2uri --> src__nlp2uri__schemes__build__build_uri
+    src__nlp2uri__resolve__nlp2uri --> src__nlp2uri__compile__compile_uri_to_actions
+    src__nlp2uri__resolve__nlp2uri --> src__nlp2uri__config__load_config
+    src__nlp2uri__schemes__util__file_uri --> src__nlp2uri__schemes__util__normalize_path
+    src__nlp2uri__schemes__desktop__build_capture --> src__nlp2uri__schemes__util__abstract_url
+    src__nlp2uri__schemes__desktop__build_focus --> src__nlp2uri__schemes__util__abstract_url
+    src__nlp2uri__schemes__desktop__build_app_open --> src__nlp2uri__schemes__util__abstract_url
+    src__nlp2uri__runtime__execute_uri --> src__nlp2uri__config__get_effective_platform
+    src__nlp2uri__runtime__execute_uri --> src__nlp2uri__compile__compile_uri_to_actions
+    src__nlp2uri__config__NLP2URIConfig__resolved_platform --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__config__NLP2URIConfig__to_dict --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__config__NLP2URIConfig__to_yaml --> src__nlp2uri__config__payload_keys
+    src__nlp2uri__config__NLP2URIConfig__to_yaml --> src__nlp2uri__config___yaml_scalar
+    src__nlp2uri__config___parse_simple_yaml --> src__nlp2uri__config___parse_scalar
+    src__nlp2uri__config__find_config_path --> src__nlp2uri__config__config_search_paths
+    src__nlp2uri__config__default_config --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__config___load_from_path --> src__nlp2uri__config___parse_simple_yaml
+    src__nlp2uri__config___load_from_path --> src__nlp2uri__config__payload_keys
+    src__nlp2uri__config__load_config --> src__nlp2uri__config__find_config_path
+    src__nlp2uri__config__load_config --> src__nlp2uri__config___load_from_path
+    src__nlp2uri__config__load_config --> src__nlp2uri__config__default_config
+    src__nlp2uri__config__save_config --> src__nlp2uri__platform_detect__detect_platform
+    src__nlp2uri__config__ensure_config --> src__nlp2uri__config__find_config_path
+    src__nlp2uri__config__ensure_config --> src__nlp2uri__config__default_config
+    src__nlp2uri__config__ensure_config --> src__nlp2uri__config__save_config
+    src__nlp2uri__config__ensure_config --> src__nlp2uri__config___load_from_path
+    src__nlp2uri__config__get_effective_platform --> src__nlp2uri__config__load_config
+    src__nlp2uri__service__NLP2URIService__default --> src__nlp2uri__config__ensure_config
+    src__nlp2uri__service__NLP2URIService__for_platform --> src__nlp2uri__config__load_config
+    src__nlp2uri__service__NLP2URIService___cfg --> src__nlp2uri__config__load_config
+    src__nlp2uri__service__NLP2URIService___host --> src__nlp2uri__config__get_effective_platform
+    src__nlp2uri__service__NLP2URIService__from_prompt --> src__nlp2uri__resolve__nlp2uri
+    src__nlp2uri__service__NLP2URIService__resolve --> src__nlp2uri__resolve__resolve_text
+    src__nlp2uri__service__NLP2URIService__compile --> src__nlp2uri__compile__compile_uri_to_actions
+    src__nlp2uri__service__NLP2URIService__execute --> src__nlp2uri__runtime__execute_uri
+    src__nlp2uri__integrators__rest_server__run_server --> src__nlp2uri__config__ensure_config
+    src__nlp2uri__integrators__rest_server__run_server --> src__nlp2uri__config__load_config
+    src__nlp2uri__integrators__rest_server__main --> src__nlp2uri__integrators__rest_server__run_server
+    src__nlp2uri__adapters__base__BaseAdapter____init__ --> src__nlp2uri__config__load_config

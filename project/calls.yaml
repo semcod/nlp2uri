@@ -1,0 +1,1027 @@
+project: /home/tom/github/semcod/nlp2uri
+generated_from: code2llm call graph analysis
+stats:
+  total_nodes: 75
+  total_edges: 100
+  modules_count: 21
+nodes:
+  src.nlp2uri.compile._compile_window:
+    name: _compile_window
+    module: src.nlp2uri.compile
+    line: 180
+    cyclomatic_complexity: 10
+    calls_out: 12
+    calls_in: 2
+  src.nlp2uri.resolve.resolve_text:
+    name: resolve_text
+    module: src.nlp2uri.resolve
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  src.nlp2uri.schemes.ide.build_ide:
+    name: build_ide
+    module: src.nlp2uri.schemes.ide
+    line: 17
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 0
+  src.nlp2uri.schemes.desktop.build_focus:
+    name: build_focus
+    module: src.nlp2uri.schemes.desktop
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  src.nlp2uri.service.NLP2URIService.execute:
+    name: execute
+    module: src.nlp2uri.service
+    line: 49
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  src.nlp2uri.integrators.mcp_server._log:
+    name: _log
+    module: src.nlp2uri.integrators.mcp_server
+    line: 36
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  src.nlp2uri.mcp.tool_resolve_desktop_action:
+    name: tool_resolve_desktop_action
+    module: src.nlp2uri.mcp
+    line: 28
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.nlp2uri.service.NLP2URIService.for_platform:
+    name: for_platform
+    module: src.nlp2uri.service
+    line: 28
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  src.nlp2uri.compile._compile_settings:
+    name: _compile_settings
+    module: src.nlp2uri.compile
+    line: 100
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 2
+  src.nlp2uri.config.payload_keys:
+    name: payload_keys
+    module: src.nlp2uri.config
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 2
+  src.nlp2uri.integrators.rest_server.main:
+    name: main
+    module: src.nlp2uri.integrators.rest_server
+    line: 81
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  src.nlp2uri.parse_nl._normalize_aliases:
+    name: _normalize_aliases
+    module: src.nlp2uri.parse_nl
+    line: 58
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  examples.resolve.nl-to-uri.main.main:
+    name: main
+    module: examples.resolve.nl-to-uri.main
+    line: 24
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.nlp2uri.integrators.rest_server.run_server:
+    name: run_server
+    module: src.nlp2uri.integrators.rest_server
+    line: 62
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  src.nlp2uri.cli._add_common_args:
+    name: _add_common_args
+    module: src.nlp2uri.cli
+    line: 16
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 9
+  examples.mcp.tool-handoff.main.main:
+    name: main
+    module: examples.mcp.tool-handoff.main
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  src.nlp2uri.service.NLP2URIService._host:
+    name: _host
+    module: src.nlp2uri.service
+    line: 36
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  src.nlp2uri.compile._compile_legacy_nlp2uri:
+    name: _compile_legacy_nlp2uri
+    module: src.nlp2uri.compile
+    line: 218
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 1
+  src.nlp2uri.compile._open_uri:
+    name: _open_uri
+    module: src.nlp2uri.compile
+    line: 56
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 8
+  src.nlp2uri.schemes.util.normalize_path:
+    name: normalize_path
+    module: src.nlp2uri.schemes.util
+    line: 33
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 3
+  src.nlp2uri.integrators.mcp_server.main:
+    name: main
+    module: src.nlp2uri.integrators.mcp_server
+    line: 121
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  src.nlp2uri.schemes.desktop.build_app_open:
+    name: build_app_open
+    module: src.nlp2uri.schemes.desktop
+    line: 60
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.nlp2uri.schemes.util.file_uri:
+    name: file_uri
+    module: src.nlp2uri.schemes.util
+    line: 41
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  src.nlp2uri.service.NLP2URIService._cfg:
+    name: _cfg
+    module: src.nlp2uri.service
+    line: 33
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 0
+  src.nlp2uri.config.config_search_paths:
+    name: config_search_paths
+    module: src.nlp2uri.config
+    line: 120
+    cyclomatic_complexity: 5
+    calls_out: 15
+    calls_in: 1
+  src.nlp2uri.config.ensure_config:
+    name: ensure_config
+    module: src.nlp2uri.config
+    line: 201
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 4
+  src.nlp2uri.compile._compile_screenshot:
+    name: _compile_screenshot
+    module: src.nlp2uri.compile
+    line: 131
+    cyclomatic_complexity: 17
+    calls_out: 24
+    calls_in: 2
+  src.nlp2uri.config.find_config_path:
+    name: find_config_path
+    module: src.nlp2uri.config
+    line: 136
+    cyclomatic_complexity: 3
+    calls_out: 2
+    calls_in: 3
+  src.nlp2uri.cli._build_parser:
+    name: _build_parser
+    module: src.nlp2uri.cli
+    line: 29
+    cyclomatic_complexity: 1
+    calls_out: 35
+    calls_in: 1
+  src.nlp2uri.platform_detect.detect_platform:
+    name: detect_platform
+    module: src.nlp2uri.platform_detect
+    line: 11
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 9
+  src.nlp2uri.service.NLP2URIService.from_prompt:
+    name: from_prompt
+    module: src.nlp2uri.service
+    line: 39
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  src.nlp2uri.config.NLP2URIConfig.to_yaml:
+    name: to_yaml
+    module: src.nlp2uri.config
+    line: 56
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  src.nlp2uri.integrators.mcp_server._handle_tools_call:
+    name: _handle_tools_call
+    module: src.nlp2uri.integrators.mcp_server
+    line: 52
+    cyclomatic_complexity: 6
+    calls_out: 7
+    calls_in: 1
+  src.nlp2uri.compile._desktop_id_for_app:
+    name: _desktop_id_for_app
+    module: src.nlp2uri.compile
+    line: 237
+    cyclomatic_complexity: 7
+    calls_out: 7
+    calls_in: 1
+  src.nlp2uri.platforms.registry.get_executor:
+    name: get_executor
+    module: src.nlp2uri.platforms.registry
+    line: 19
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  src.nlp2uri.config._load_from_path:
+    name: _load_from_path
+    module: src.nlp2uri.config
+    line: 154
+    cyclomatic_complexity: 6
+    calls_out: 17
+    calls_in: 3
+  src.nlp2uri.config.get_effective_platform:
+    name: get_effective_platform
+    module: src.nlp2uri.config
+    line: 222
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 4
+  src.nlp2uri.config._yaml_scalar:
+    name: _yaml_scalar
+    module: src.nlp2uri.config
+    line: 81
+    cyclomatic_complexity: 8
+    calls_out: 6
+    calls_in: 1
+  src.nlp2uri.config.load_config:
+    name: load_config
+    module: src.nlp2uri.config
+    line: 171
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 10
+  src.nlp2uri.adapters.base.BaseAdapter.__init__:
+    name: __init__
+    module: src.nlp2uri.adapters.base
+    line: 43
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  src.nlp2uri.runtime.execute_uri:
+    name: execute_uri
+    module: src.nlp2uri.runtime
+    line: 17
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 1
+  src.nlp2uri.compile._compile_launch_app:
+    name: _compile_launch_app
+    module: src.nlp2uri.compile
+    line: 116
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 3
+  src.nlp2uri.integrators.mcp_server.run_stdio:
+    name: run_stdio
+    module: src.nlp2uri.integrators.mcp_server
+    line: 100
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 1
+  src.nlp2uri.config._parse_simple_yaml:
+    name: _parse_simple_yaml
+    module: src.nlp2uri.config
+    line: 107
+    cyclomatic_complexity: 5
+    calls_out: 6
+    calls_in: 1
+  src.nlp2uri.service.NLP2URIService.default:
+    name: default
+    module: src.nlp2uri.service
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.nlp2uri.parse_nl.parse_text:
+    name: parse_text
+    module: src.nlp2uri.parse_nl
+    line: 70
+    cyclomatic_complexity: 27
+    calls_out: 55
+    calls_in: 2
+  src.nlp2uri.config.default_config:
+    name: default_config
+    module: src.nlp2uri.config
+    line: 143
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 4
+  src.nlp2uri.cli._emit:
+    name: _emit
+    module: src.nlp2uri.cli
+    line: 90
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 4
+  src.nlp2uri.compile._query_params:
+    name: _query_params
+    module: src.nlp2uri.compile
+    line: 44
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  src.nlp2uri.integrators.mcp_server._write_json:
+    name: _write_json
+    module: src.nlp2uri.integrators.mcp_server
+    line: 31
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  src.nlp2uri.compile.compile_uri_to_actions:
+    name: compile_uri_to_actions
+    module: src.nlp2uri.compile
+    line: 14
+    cyclomatic_complexity: 8
+    calls_out: 11
+    calls_in: 4
+  src.nlp2uri.mcp.mcp_handoff_payload:
+    name: mcp_handoff_payload
+    module: src.nlp2uri.mcp
+    line: 57
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.nlp2uri.compile._compile_app:
+    name: _compile_app
+    module: src.nlp2uri.compile
+    line: 67
+    cyclomatic_complexity: 11
+    calls_out: 18
+    calls_in: 1
+  src.nlp2uri.schemes.build._build_navigate:
+    name: _build_navigate
+    module: src.nlp2uri.schemes.build
+    line: 41
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 2
+  src.nlp2uri.cli._platform:
+    name: _platform
+    module: src.nlp2uri.cli
+    line: 84
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 4
+  src.nlp2uri.integrators.mcp_server._handle_tools_list:
+    name: _handle_tools_list
+    module: src.nlp2uri.integrators.mcp_server
+    line: 48
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  examples.execute.dry-run.main.main:
+    name: main
+    module: examples.execute.dry-run.main
+    line: 17
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 0
+  src.nlp2uri.resolve.nlp2uri:
+    name: nlp2uri
+    module: src.nlp2uri.resolve
+    line: 21
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 3
+  src.nlp2uri.cli._request_from_args:
+    name: _request_from_args
+    module: src.nlp2uri.cli
+    line: 98
+    cyclomatic_complexity: 3
+    calls_out: 7
+    calls_in: 3
+  src.nlp2uri.cli.main:
+    name: main
+    module: src.nlp2uri.cli
+    line: 108
+    cyclomatic_complexity: 20
+    calls_out: 43
+    calls_in: 0
+  src.nlp2uri.schemes.build.build_uri:
+    name: build_uri
+    module: src.nlp2uri.schemes.build
+    line: 12
+    cyclomatic_complexity: 11
+    calls_out: 13
+    calls_in: 2
+  src.nlp2uri.schemes.desktop.build_capture:
+    name: build_capture
+    module: src.nlp2uri.schemes.desktop
+    line: 15
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  src.nlp2uri.config.NLP2URIConfig.to_dict:
+    name: to_dict
+    module: src.nlp2uri.config
+    line: 45
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  src.nlp2uri.service.NLP2URIService.compile:
+    name: compile
+    module: src.nlp2uri.service
+    line: 46
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.nlp2uri.integrators.mcp_server._jsonrpc_error:
+    name: _jsonrpc_error
+    module: src.nlp2uri.integrators.mcp_server
+    line: 24
+    cyclomatic_complexity: 2
+    calls_out: 0
+    calls_in: 2
+  src.nlp2uri.integrators.mcp_server._handle_initialize:
+    name: _handle_initialize
+    module: src.nlp2uri.integrators.mcp_server
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 1
+  src.nlp2uri.config.save_config:
+    name: save_config
+    module: src.nlp2uri.config
+    line: 187
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 3
+  src.nlp2uri.compile._first_available:
+    name: _first_available
+    module: src.nlp2uri.compile
+    line: 49
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 12
+  src.nlp2uri.integrators.mcp_server.handle_message:
+    name: handle_message
+    module: src.nlp2uri.integrators.mcp_server
+    line: 80
+    cyclomatic_complexity: 8
+    calls_out: 12
+    calls_in: 1
+  src.nlp2uri.service.NLP2URIService.resolve:
+    name: resolve
+    module: src.nlp2uri.service
+    line: 43
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.nlp2uri.config.NLP2URIConfig.resolved_platform:
+    name: resolved_platform
+    module: src.nlp2uri.config
+    line: 32
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 0
+  src.nlp2uri.integrators.mcp_server._jsonrpc_response:
+    name: _jsonrpc_response
+    module: src.nlp2uri.integrators.mcp_server
+    line: 20
+    cyclomatic_complexity: 1
+    calls_out: 0
+    calls_in: 3
+  src.nlp2uri.schemes.util.abstract_url:
+    name: abstract_url
+    module: src.nlp2uri.schemes.util
+    line: 9
+    cyclomatic_complexity: 9
+    calls_out: 5
+    calls_in: 5
+  src.nlp2uri.config._parse_scalar:
+    name: _parse_scalar
+    module: src.nlp2uri.config
+    line: 94
+    cyclomatic_complexity: 8
+    calls_out: 5
+    calls_in: 1
+  src.nlp2uri.schemes.file.build_file:
+    name: build_file
+    module: src.nlp2uri.schemes.file
+    line: 9
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+edges:
+- caller: src.nlp2uri.parse_nl.parse_text
+  callee: src.nlp2uri.parse_nl._normalize_aliases
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.handle_message
+  callee: src.nlp2uri.integrators.mcp_server._jsonrpc_error
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.handle_message
+  callee: src.nlp2uri.integrators.mcp_server._jsonrpc_response
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.handle_message
+  callee: src.nlp2uri.integrators.mcp_server._handle_initialize
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.handle_message
+  callee: src.nlp2uri.integrators.mcp_server._handle_tools_list
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.handle_message
+  callee: src.nlp2uri.integrators.mcp_server._handle_tools_call
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.run_stdio
+  callee: src.nlp2uri.config.ensure_config
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.run_stdio
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.run_stdio
+  callee: src.nlp2uri.integrators.mcp_server._log
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.run_stdio
+  callee: src.nlp2uri.integrators.mcp_server.handle_message
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.run_stdio
+  callee: src.nlp2uri.integrators.mcp_server._write_json
+  call_type: resolved
+- caller: src.nlp2uri.integrators.mcp_server.main
+  callee: src.nlp2uri.integrators.mcp_server.run_stdio
+  call_type: resolved
+- caller: examples.execute.dry-run.main.main
+  callee: src.nlp2uri.resolve.nlp2uri
+  call_type: resolved
+- caller: examples.execute.dry-run.main.main
+  callee: src.nlp2uri.compile.compile_uri_to_actions
+  call_type: resolved
+- caller: src.nlp2uri.cli._build_parser
+  callee: src.nlp2uri.cli._add_common_args
+  call_type: resolved
+- caller: src.nlp2uri.cli._request_from_args
+  callee: src.nlp2uri.cli._platform
+  call_type: resolved
+- caller: src.nlp2uri.cli.main
+  callee: src.nlp2uri.cli._build_parser
+  call_type: resolved
+- caller: src.nlp2uri.cli.main
+  callee: src.nlp2uri.cli._emit
+  call_type: resolved
+- caller: src.nlp2uri.cli.main
+  callee: src.nlp2uri.config.ensure_config
+  call_type: resolved
+- caller: src.nlp2uri.cli.main
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.cli.main
+  callee: src.nlp2uri.config.find_config_path
+  call_type: resolved
+- caller: src.nlp2uri.platforms.registry.get_executor
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: examples.resolve.nl-to-uri.main.main
+  callee: src.nlp2uri.resolve.nlp2uri
+  call_type: resolved
+- caller: examples.mcp.tool-handoff.main.main
+  callee: src.nlp2uri.mcp.mcp_handoff_payload
+  call_type: resolved
+- caller: examples.mcp.tool-handoff.main.main
+  callee: src.nlp2uri.mcp.tool_resolve_desktop_action
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._query_params
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._compile_app
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._compile_screenshot
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._compile_window
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._compile_legacy_nlp2uri
+  call_type: resolved
+- caller: src.nlp2uri.compile.compile_uri_to_actions
+  callee: src.nlp2uri.compile._open_uri
+  call_type: resolved
+- caller: src.nlp2uri.compile._open_uri
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_app
+  callee: src.nlp2uri.compile._compile_settings
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_app
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_app
+  callee: src.nlp2uri.compile._compile_launch_app
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_app
+  callee: src.nlp2uri.compile._open_uri
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_settings
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_settings
+  callee: src.nlp2uri.compile._open_uri
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_launch_app
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_launch_app
+  callee: src.nlp2uri.compile._desktop_id_for_app
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_screenshot
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_window
+  callee: src.nlp2uri.compile._first_available
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_window
+  callee: src.nlp2uri.compile._compile_launch_app
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_legacy_nlp2uri
+  callee: src.nlp2uri.compile._query_params
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_legacy_nlp2uri
+  callee: src.nlp2uri.compile._compile_settings
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_legacy_nlp2uri
+  callee: src.nlp2uri.compile._compile_launch_app
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_legacy_nlp2uri
+  callee: src.nlp2uri.compile._compile_window
+  call_type: resolved
+- caller: src.nlp2uri.compile._compile_legacy_nlp2uri
+  callee: src.nlp2uri.compile._compile_screenshot
+  call_type: resolved
+- caller: src.nlp2uri.schemes.build.build_uri
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.schemes.build.build_uri
+  callee: src.nlp2uri.schemes.build._build_navigate
+  call_type: resolved
+- caller: src.nlp2uri.schemes.file.build_file
+  callee: src.nlp2uri.schemes.util.normalize_path
+  call_type: resolved
+- caller: src.nlp2uri.schemes.file.build_file
+  callee: src.nlp2uri.schemes.util.file_uri
+  call_type: resolved
+- caller: src.nlp2uri.schemes.file.build_file
+  callee: src.nlp2uri.schemes.util.abstract_url
+  call_type: resolved
+- caller: src.nlp2uri.schemes.ide.build_ide
+  callee: src.nlp2uri.schemes.util.normalize_path
+  call_type: resolved
+- caller: src.nlp2uri.schemes.ide.build_ide
+  callee: src.nlp2uri.schemes.util.abstract_url
+  call_type: resolved
+- caller: src.nlp2uri.resolve.resolve_text
+  callee: src.nlp2uri.parse_nl.parse_text
+  call_type: resolved
+- caller: src.nlp2uri.resolve.resolve_text
+  callee: src.nlp2uri.schemes.build.build_uri
+  call_type: resolved
+- caller: src.nlp2uri.resolve.resolve_text
+  callee: src.nlp2uri.config.get_effective_platform
+  call_type: resolved
+- caller: src.nlp2uri.resolve.nlp2uri
+  callee: src.nlp2uri.config.get_effective_platform
+  call_type: resolved
+- caller: src.nlp2uri.resolve.nlp2uri
+  callee: src.nlp2uri.parse_nl.parse_text
+  call_type: resolved
+- caller: src.nlp2uri.resolve.nlp2uri
+  callee: src.nlp2uri.schemes.build.build_uri
+  call_type: resolved
+- caller: src.nlp2uri.resolve.nlp2uri
+  callee: src.nlp2uri.compile.compile_uri_to_actions
+  call_type: resolved
+- caller: src.nlp2uri.resolve.nlp2uri
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.schemes.util.file_uri
+  callee: src.nlp2uri.schemes.util.normalize_path
+  call_type: resolved
+- caller: src.nlp2uri.schemes.desktop.build_capture
+  callee: src.nlp2uri.schemes.util.abstract_url
+  call_type: resolved
+- caller: src.nlp2uri.schemes.desktop.build_focus
+  callee: src.nlp2uri.schemes.util.abstract_url
+  call_type: resolved
+- caller: src.nlp2uri.schemes.desktop.build_app_open
+  callee: src.nlp2uri.schemes.util.abstract_url
+  call_type: resolved
+- caller: src.nlp2uri.runtime.execute_uri
+  callee: src.nlp2uri.config.get_effective_platform
+  call_type: resolved
+- caller: src.nlp2uri.runtime.execute_uri
+  callee: src.nlp2uri.compile.compile_uri_to_actions
+  call_type: resolved
+- caller: src.nlp2uri.config.NLP2URIConfig.resolved_platform
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.config.NLP2URIConfig.to_dict
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.config.NLP2URIConfig.to_yaml
+  callee: src.nlp2uri.config.payload_keys
+  call_type: resolved
+- caller: src.nlp2uri.config.NLP2URIConfig.to_yaml
+  callee: src.nlp2uri.config._yaml_scalar
+  call_type: resolved
+- caller: src.nlp2uri.config._parse_simple_yaml
+  callee: src.nlp2uri.config._parse_scalar
+  call_type: resolved
+- caller: src.nlp2uri.config.find_config_path
+  callee: src.nlp2uri.config.config_search_paths
+  call_type: resolved
+- caller: src.nlp2uri.config.default_config
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.config._load_from_path
+  callee: src.nlp2uri.config._parse_simple_yaml
+  call_type: resolved
+- caller: src.nlp2uri.config._load_from_path
+  callee: src.nlp2uri.config.payload_keys
+  call_type: resolved
+- caller: src.nlp2uri.config.load_config
+  callee: src.nlp2uri.config.find_config_path
+  call_type: resolved
+- caller: src.nlp2uri.config.load_config
+  callee: src.nlp2uri.config._load_from_path
+  call_type: resolved
+- caller: src.nlp2uri.config.load_config
+  callee: src.nlp2uri.config.default_config
+  call_type: resolved
+- caller: src.nlp2uri.config.save_config
+  callee: src.nlp2uri.platform_detect.detect_platform
+  call_type: resolved
+- caller: src.nlp2uri.config.ensure_config
+  callee: src.nlp2uri.config.find_config_path
+  call_type: resolved
+- caller: src.nlp2uri.config.ensure_config
+  callee: src.nlp2uri.config.default_config
+  call_type: resolved
+- caller: src.nlp2uri.config.ensure_config
+  callee: src.nlp2uri.config.save_config
+  call_type: resolved
+- caller: src.nlp2uri.config.ensure_config
+  callee: src.nlp2uri.config._load_from_path
+  call_type: resolved
+- caller: src.nlp2uri.config.get_effective_platform
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.default
+  callee: src.nlp2uri.config.ensure_config
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.for_platform
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService._cfg
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService._host
+  callee: src.nlp2uri.config.get_effective_platform
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.from_prompt
+  callee: src.nlp2uri.resolve.nlp2uri
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.resolve
+  callee: src.nlp2uri.resolve.resolve_text
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.compile
+  callee: src.nlp2uri.compile.compile_uri_to_actions
+  call_type: resolved
+- caller: src.nlp2uri.service.NLP2URIService.execute
+  callee: src.nlp2uri.runtime.execute_uri
+  call_type: resolved
+- caller: src.nlp2uri.integrators.rest_server.run_server
+  callee: src.nlp2uri.config.ensure_config
+  call_type: resolved
+- caller: src.nlp2uri.integrators.rest_server.run_server
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+- caller: src.nlp2uri.integrators.rest_server.main
+  callee: src.nlp2uri.integrators.rest_server.run_server
+  call_type: resolved
+- caller: src.nlp2uri.adapters.base.BaseAdapter.__init__
+  callee: src.nlp2uri.config.load_config
+  call_type: resolved
+modules:
+  examples.execute.dry-run.main:
+  - examples.execute.dry-run.main.main
+  examples.mcp.tool-handoff.main:
+  - examples.mcp.tool-handoff.main.main
+  examples.resolve.nl-to-uri.main:
+  - examples.resolve.nl-to-uri.main.main
+  src.nlp2uri.adapters.base:
+  - src.nlp2uri.adapters.base.BaseAdapter.__init__
+  src.nlp2uri.cli:
+  - src.nlp2uri.cli._add_common_args
+  - src.nlp2uri.cli._build_parser
+  - src.nlp2uri.cli._emit
+  - src.nlp2uri.cli._platform
+  - src.nlp2uri.cli._request_from_args
+  - src.nlp2uri.cli.main
+  src.nlp2uri.compile:
+  - src.nlp2uri.compile._compile_app
+  - src.nlp2uri.compile._compile_launch_app
+  - src.nlp2uri.compile._compile_legacy_nlp2uri
+  - src.nlp2uri.compile._compile_screenshot
+  - src.nlp2uri.compile._compile_settings
+  - src.nlp2uri.compile._compile_window
+  - src.nlp2uri.compile._desktop_id_for_app
+  - src.nlp2uri.compile._first_available
+  - src.nlp2uri.compile._open_uri
+  - src.nlp2uri.compile._query_params
+  - src.nlp2uri.compile.compile_uri_to_actions
+  src.nlp2uri.config:
+  - src.nlp2uri.config.NLP2URIConfig.resolved_platform
+  - src.nlp2uri.config.NLP2URIConfig.to_dict
+  - src.nlp2uri.config.NLP2URIConfig.to_yaml
+  - src.nlp2uri.config._load_from_path
+  - src.nlp2uri.config._parse_scalar
+  - src.nlp2uri.config._parse_simple_yaml
+  - src.nlp2uri.config._yaml_scalar
+  - src.nlp2uri.config.config_search_paths
+  - src.nlp2uri.config.default_config
+  - src.nlp2uri.config.ensure_config
+  - src.nlp2uri.config.find_config_path
+  - src.nlp2uri.config.get_effective_platform
+  - src.nlp2uri.config.load_config
+  - src.nlp2uri.config.payload_keys
+  - src.nlp2uri.config.save_config
+  src.nlp2uri.integrators.mcp_server:
+  - src.nlp2uri.integrators.mcp_server._handle_initialize
+  - src.nlp2uri.integrators.mcp_server._handle_tools_call
+  - src.nlp2uri.integrators.mcp_server._handle_tools_list
+  - src.nlp2uri.integrators.mcp_server._jsonrpc_error
+  - src.nlp2uri.integrators.mcp_server._jsonrpc_response
+  - src.nlp2uri.integrators.mcp_server._log
+  - src.nlp2uri.integrators.mcp_server._write_json
+  - src.nlp2uri.integrators.mcp_server.handle_message
+  - src.nlp2uri.integrators.mcp_server.main
+  - src.nlp2uri.integrators.mcp_server.run_stdio
+  src.nlp2uri.integrators.rest_server:
+  - src.nlp2uri.integrators.rest_server.main
+  - src.nlp2uri.integrators.rest_server.run_server
+  src.nlp2uri.mcp:
+  - src.nlp2uri.mcp.mcp_handoff_payload
+  - src.nlp2uri.mcp.tool_resolve_desktop_action
+  src.nlp2uri.parse_nl:
+  - src.nlp2uri.parse_nl._normalize_aliases
+  - src.nlp2uri.parse_nl.parse_text
+  src.nlp2uri.platform_detect:
+  - src.nlp2uri.platform_detect.detect_platform
+  src.nlp2uri.platforms.registry:
+  - src.nlp2uri.platforms.registry.get_executor
+  src.nlp2uri.resolve:
+  - src.nlp2uri.resolve.nlp2uri
+  - src.nlp2uri.resolve.resolve_text
+  src.nlp2uri.runtime:
+  - src.nlp2uri.runtime.execute_uri
+  src.nlp2uri.schemes.build:
+  - src.nlp2uri.schemes.build._build_navigate
+  - src.nlp2uri.schemes.build.build_uri
+  src.nlp2uri.schemes.desktop:
+  - src.nlp2uri.schemes.desktop.build_app_open
+  - src.nlp2uri.schemes.desktop.build_capture
+  - src.nlp2uri.schemes.desktop.build_focus
+  src.nlp2uri.schemes.file:
+  - src.nlp2uri.schemes.file.build_file
+  src.nlp2uri.schemes.ide:
+  - src.nlp2uri.schemes.ide.build_ide
+  src.nlp2uri.schemes.util:
+  - src.nlp2uri.schemes.util.abstract_url
+  - src.nlp2uri.schemes.util.file_uri
+  - src.nlp2uri.schemes.util.normalize_path
+  src.nlp2uri.service:
+  - src.nlp2uri.service.NLP2URIService._cfg
+  - src.nlp2uri.service.NLP2URIService._host
+  - src.nlp2uri.service.NLP2URIService.compile
+  - src.nlp2uri.service.NLP2URIService.default
+  - src.nlp2uri.service.NLP2URIService.execute
+  - src.nlp2uri.service.NLP2URIService.for_platform
+  - src.nlp2uri.service.NLP2URIService.from_prompt
+  - src.nlp2uri.service.NLP2URIService.resolve
+entry_points:
+- examples.execute.dry-run.main.main
+- examples.mcp.tool-handoff.main.main
+- examples.resolve.nl-to-uri.main.main
+- src.nlp2uri.adapters.base.AdapterResponse.to_dict
+- src.nlp2uri.adapters.base.BaseAdapter.__init__
+- src.nlp2uri.adapters.base.BaseAdapter._service_for
+- src.nlp2uri.adapters.base.BaseAdapter.handle
+- src.nlp2uri.adapters.base.BaseAdapter.with_platform
+- src.nlp2uri.adapters.cli.CliAdapter.handle
+- src.nlp2uri.adapters.mcp.McpAdapter._args_from_request
+- src.nlp2uri.adapters.mcp.McpAdapter._args_to_request
+- src.nlp2uri.adapters.mcp.McpAdapter._tool_compile
+- src.nlp2uri.adapters.mcp.McpAdapter._tool_execute
+- src.nlp2uri.adapters.mcp.McpAdapter._tool_handle
+- src.nlp2uri.adapters.mcp.McpAdapter._tool_plan
+- src.nlp2uri.adapters.mcp.McpAdapter._tool_resolve
+- src.nlp2uri.adapters.mcp.McpAdapter.call_tool
+- src.nlp2uri.adapters.mcp.McpAdapter.handle
+- src.nlp2uri.adapters.mcp.McpAdapter.mcp_content
+- src.nlp2uri.adapters.mcp.McpAdapter.tool_dispatch
+- src.nlp2uri.adapters.rest.RestAdapter.body_to_request
+- src.nlp2uri.adapters.rest.RestAdapter.dispatch
+- src.nlp2uri.adapters.rest.RestAdapter.handle
+- src.nlp2uri.adapters.rest.RestAdapter.match_route
+- src.nlp2uri.adapters.shell.ShellAdapter._export_script
+- src.nlp2uri.adapters.shell.ShellAdapter.handle
+- src.nlp2uri.cli.main
+- src.nlp2uri.config.NLP2URIConfig.apply_runtime_env
+- src.nlp2uri.config.NLP2URIConfig.resolved_platform
+- src.nlp2uri.config.NLP2URIConfig.to_dict
+- src.nlp2uri.config.NLP2URIConfig.to_yaml
+- src.nlp2uri.config.reset_config_cache
+- src.nlp2uri.integrators.__getattr__
+- src.nlp2uri.integrators.mcp_server.main
+- src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler._read_json
+- src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler._send
+- src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler.do_GET
+- src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler.do_POST
+- src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler.log_message
+- src.nlp2uri.integrators.rest_server.main
+- src.nlp2uri.mcp.text_uri_list
+- src.nlp2uri.mcp.tool_execute_desktop_uri
+- src.nlp2uri.mcp.ui_resource
+- src.nlp2uri.models.ActionResult.to_dict
+- src.nlp2uri.models.NLP2URIResult.to_dict
+- src.nlp2uri.models.OSAction.argv
+- src.nlp2uri.models.OSAction.to_dict
+- src.nlp2uri.models.UriIntent.to_slots
+- src.nlp2uri.models.UriIntent.with_params
+- src.nlp2uri.models.UriSpec.to_dict
+- src.nlp2uri.platforms.base.UriExecutor._desktop_id_for_app
+- src.nlp2uri.platforms.base.UriExecutor._dry
+- src.nlp2uri.platforms.base.UriExecutor._first_available
+- src.nlp2uri.platforms.base.UriExecutor._open_with_browser
+- src.nlp2uri.platforms.base.UriExecutor._parse_nlp2uri
+- src.nlp2uri.platforms.base.UriExecutor._result
+- src.nlp2uri.platforms.base.UriExecutor._run
+- src.nlp2uri.platforms.base.UriExecutor.execute
+- src.nlp2uri.platforms.base.slugify_app_name
+- src.nlp2uri.platforms.linux.LinuxExecutor._capture
+- src.nlp2uri.platforms.linux.LinuxExecutor._focus_app
+- src.nlp2uri.platforms.linux.LinuxExecutor._open_app
+- src.nlp2uri.platforms.linux.LinuxExecutor._open_generic
+- src.nlp2uri.platforms.linux.LinuxExecutor._open_settings
+- src.nlp2uri.platforms.linux.LinuxExecutor.execute
+- src.nlp2uri.platforms.macos.MacOSExecutor._capture
+- src.nlp2uri.platforms.macos.MacOSExecutor._focus_app
+- src.nlp2uri.platforms.macos.MacOSExecutor._open
+- src.nlp2uri.platforms.macos.MacOSExecutor._open_app
+- src.nlp2uri.platforms.macos.MacOSExecutor.execute
+- src.nlp2uri.platforms.registry.get_executor
+- src.nlp2uri.platforms.windows.WindowsExecutor._capture
+- src.nlp2uri.platforms.windows.WindowsExecutor._focus_app
+- src.nlp2uri.platforms.windows.WindowsExecutor._open_app
+- src.nlp2uri.platforms.windows.WindowsExecutor._start
+- src.nlp2uri.platforms.windows.WindowsExecutor.execute
+- src.nlp2uri.runtime.get_executor
+- src.nlp2uri.schemes.desktop.build_app_open
+- src.nlp2uri.schemes.desktop.build_capture
+- src.nlp2uri.schemes.desktop.build_focus
+- src.nlp2uri.schemes.desktop.build_settings
+- src.nlp2uri.schemes.file.build_file
+- src.nlp2uri.schemes.http.build_http
+- src.nlp2uri.schemes.ide.build_ide
+- src.nlp2uri.schemes.util.nlp2uri_url
+- src.nlp2uri.schemes.util.percent_encode_segment
+- src.nlp2uri.service.NLP2URIService._cfg
+- src.nlp2uri.service.NLP2URIService._host
+- src.nlp2uri.service.NLP2URIService.compile
+- src.nlp2uri.service.NLP2URIService.default
+- src.nlp2uri.service.NLP2URIService.execute
+- src.nlp2uri.service.NLP2URIService.for_platform
+- src.nlp2uri.service.NLP2URIService.from_prompt
+- src.nlp2uri.service.NLP2URIService.handle_prompt
+- src.nlp2uri.service.NLP2URIService.handle_uri
+- src.nlp2uri.service.NLP2URIService.resolve
