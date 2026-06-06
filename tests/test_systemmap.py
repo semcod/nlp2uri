@@ -4,10 +4,15 @@ from __future__ import annotations
 
 import pytest
 
+from nlp2uri.compile import compile_uri_to_actions
+from nlp2uri.models import HostPlatform
 from nlp2uri.systemmap import (
     build_uri_index,
+    compile_system_map_uri,
     env2llm_available,
+    is_system_map_uri,
     resolve_prompt_against_system_map,
+    resolve_prompt_with_fallback,
     uri_for_command,
     uri_for_runtime,
 )
@@ -109,6 +114,48 @@ def test_resolve_prompt_runtime() -> None:
     ir = _sample_ir()
     hits = resolve_prompt_against_system_map("check orchestrator:nlp-service health", ir)
     assert any(hit.kind == "runtime" for hit in hits)
+
+
+def test_is_system_map_uri() -> None:
+    assert is_system_map_uri("command://executor%3Aworker/send_invoice")
+    assert not is_system_map_uri("app://firefox/open")
+
+
+def test_compile_command_handoff() -> None:
+    uri = uri_for_command(_sample_ir()["commands"][0])
+    actions = compile_system_map_uri(uri, HostPlatform.LINUX, config={"amount": "1500", "to": "a@b.pl"})
+    assert len(actions) == 1
+    assert actions[0].command == "curl"
+    argv = " ".join(actions[0].argv())
+    assert "/workflow/run" in argv
+    assert "send_invoice" in argv
+
+
+def test_compile_uri_to_actions_command_scheme() -> None:
+    uri = "command://executor%3Aworker/send_invoice?amount=1500&to=a%40b.pl"
+    actions = compile_uri_to_actions(uri, HostPlatform.LINUX)
+    assert actions[0].command == "curl"
+    assert "send_invoice" in " ".join(actions[0].argv())
+
+
+def test_resolve_fallback_system_map_first() -> None:
+    ir = _sample_ir()
+    out = resolve_prompt_with_fallback("send invoice", ir, platform=HostPlatform.LINUX)
+    assert out["source"] == "system_map"
+    assert "send_invoice" in out["uri"]
+
+
+def test_resolve_fallback_desktop_when_no_ir_match() -> None:
+    ir = _sample_ir()
+    out = resolve_prompt_with_fallback("open firefox", ir, platform=HostPlatform.LINUX)
+    assert out["source"] == "desktop"
+    assert out["uri"].startswith("app://firefox/open")
+
+
+def test_resolve_fallback_desktop_without_ir() -> None:
+    out = resolve_prompt_with_fallback("capture screen", ir=None, platform=HostPlatform.LINUX)
+    assert out["source"] == "desktop"
+    assert out["uri"].startswith("desktop-screenshot://")
 
 
 @pytest.mark.skipif(not env2llm_available(), reason="env2llm not installed")

@@ -58,6 +58,50 @@ def test_mcp_stdio_initialize():
     assert out["result"]["serverInfo"]["name"] == "nlp2uri"
 
 
+def test_mcp_list_system_uris_inline_map():
+    adapter = McpAdapter()
+    response = adapter.call_tool(
+        "nlp2uri_list_system_uris",
+        {
+            "system_map": {
+                "format": "nlp2dsl.system_map.v1",
+                "example_id": "demo",
+                "commands": [{"name": "ping", "runtime": "executor:worker"}],
+                "runtimes": [{"id": "executor:worker", "kind": "worker"}],
+            }
+        },
+    )
+    assert response.ok
+    assert response.data["count"] >= 2
+    assert "ping" in response.data["by_name"]
+
+
+def test_mcp_resolve_system_map_with_fallback():
+    adapter = McpAdapter()
+    response = adapter.call_tool(
+        "nlp2uri_resolve_system_map",
+        {
+            "prompt": "send invoice",
+            "platform": "linux",
+            "system_map": {
+                "format": "nlp2dsl.system_map.v1",
+                "example_id": "01-invoice",
+                "commands": [
+                    {
+                        "name": "send_invoice",
+                        "runtime": "executor:worker",
+                        "fields": [{"name": "amount"}, {"name": "to"}],
+                    }
+                ],
+                "runtimes": [{"id": "executor:worker", "kind": "worker"}],
+            },
+        },
+    )
+    assert response.ok
+    assert response.data["source"] == "system_map"
+    assert "send_invoice" in response.data["uri"]
+
+
 def test_mcp_stdio_tools_call():
     adapter = McpAdapter()
     msg = {

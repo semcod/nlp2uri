@@ -107,6 +107,33 @@ Pipeline: prompt → URI → execute.
 
 Domyślnie `dry_run: true` dla bezpieczeństwa agenta.
 
+### `nlp2uri_list_system_uris`
+
+Kanoniczne URI dla wszystkich bytów `SystemMapIR` (env2llm).
+
+**Input** (jedno z pól):
+
+```json
+{
+  "system_map": { "format": "nlp2dsl.system_map.v1", "example_id": "01-invoice", "commands": [] },
+  "doql_path": "/path/to/environment.doql.less",
+  "example_dir": "/path/to/nlp2dsl/examples/01-invoice"
+}
+```
+
+### `nlp2uri_resolve_system_map`
+
+NL → URI względem SystemMap; przy braku trafienia → desktop (`open firefox`, …).
+
+```json
+{
+  "prompt": "send invoice",
+  "system_map": { "...": "..." },
+  "fallback_desktop": true,
+  "platform": "linux"
+}
+```
+
 ---
 
 ## Przepływ z innym MCP (desktop automation)

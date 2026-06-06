@@ -10,6 +10,8 @@ from nlp2uri.config import NLP2URIConfig, ensure_config, get_effective_platform,
 from nlp2uri.models import ActionResult, HostPlatform, NLP2URIResult, OSAction, UriSpec
 from nlp2uri.resolve import nlp2uri, resolve_text
 from nlp2uri.runtime import execute_uri
+from nlp2uri.systemmap.fallback import resolve_prompt_with_fallback
+from nlp2uri.systemmap.index import UriMap, build_uri_index
 
 
 @dataclass
@@ -68,4 +70,44 @@ class NLP2URIService:
             "platform": self._host().value,
             "actions": [a.to_dict() for a in actions],
             "result": result.to_dict(),
+        }
+
+    def list_system_uris(self, ir: Any, *, uri_map: UriMap | None = None) -> dict[str, Any]:
+        index = uri_map or build_uri_index(ir)
+        return {
+            "example_id": index.example_id,
+            "format": index.format,
+            "count": len(index.entries),
+            "entries": [entry.to_dict() for entry in index.entries.values()],
+            "by_name": dict(index.by_name),
+        }
+
+    def resolve_system_map(
+        self,
+        prompt: str,
+        ir: Any,
+        *,
+        uri_map: UriMap | None = None,
+        fallback_desktop: bool = True,
+    ) -> dict[str, Any]:
+        if fallback_desktop:
+            return resolve_prompt_with_fallback(
+                prompt,
+                ir,
+                uri_map=uri_map,
+                platform=self._host(),
+            )
+        from nlp2uri.systemmap.resolve import resolve_prompt_against_system_map
+
+        index = uri_map or build_uri_index(ir)
+        matches = resolve_prompt_against_system_map(prompt, ir, uri_map=index)
+        if not matches:
+            return {"source": "system_map", "uri": None, "matches": []}
+        top = matches[0]
+        return {
+            "source": "system_map",
+            "uri": top.uri,
+            "confidence": top.confidence,
+            "match_reason": top.match_reason,
+            "matches": [item.to_dict() for item in matches],
         }

@@ -7,6 +7,7 @@ from typing import Any, Callable
 
 from nlp2uri.adapters.base import AdapterRequest, AdapterResponse, BaseAdapter
 from nlp2uri.models import HostPlatform
+from nlp2uri.systemmap.context import load_ir_from_arguments
 
 MCP_TOOLS: list[dict[str, Any]] = [
     {
@@ -76,6 +77,50 @@ MCP_TOOLS: list[dict[str, Any]] = [
             "required": ["prompt"],
         },
     },
+    {
+        "name": "nlp2uri_list_system_uris",
+        "description": (
+            "List canonical URIs for all entities in an env2llm SystemMapIR "
+            "(requires system_map, doql_path, or example_dir)."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "system_map": {
+                    "type": "object",
+                    "description": "Inline SystemMapIR dict (env2llm.system_map.v1).",
+                },
+                "doql_path": {
+                    "type": "string",
+                    "description": "Path to environment.doql.less.",
+                },
+                "example_dir": {
+                    "type": "string",
+                    "description": "nlp2dsl example directory for env2llm introspection.",
+                },
+                "example_id": {"type": "string"},
+            },
+        },
+    },
+    {
+        "name": "nlp2uri_resolve_system_map",
+        "description": (
+            "Resolve NL prompt against SystemMapIR URIs; falls back to desktop NL when no match."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "prompt": {"type": "string"},
+                "system_map": {"type": "object"},
+                "doql_path": {"type": "string"},
+                "example_dir": {"type": "string"},
+                "example_id": {"type": "string"},
+                "fallback_desktop": {"type": "boolean", "default": True},
+                "platform": {"type": "string", "enum": ["linux", "darwin", "windows"]},
+            },
+            "required": ["prompt"],
+        },
+    },
 ]
 
 
@@ -99,6 +144,8 @@ class McpAdapter(BaseAdapter):
             "nlp2uri_compile": McpAdapter._tool_compile,
             "nlp2uri_execute": McpAdapter._tool_execute,
             "nlp2uri_handle": McpAdapter._tool_handle,
+            "nlp2uri_list_system_uris": McpAdapter._tool_list_system_uris,
+            "nlp2uri_resolve_system_map": McpAdapter._tool_resolve_system_map,
         }
 
     @staticmethod
@@ -181,3 +228,28 @@ class McpAdapter(BaseAdapter):
         uri = payload.get("plan", {}).get("uri")
         payload["mcp_content"] = self.mcp_content(payload, uri=uri)
         return AdapterResponse(ok=ok, data=payload, status_code=0 if ok else 1)
+
+    def _tool_list_system_uris(self, req: AdapterRequest) -> AdapterResponse:
+        try:
+            ir = load_ir_from_arguments(req.extra)
+        except (ValueError, RuntimeError) as exc:
+            return AdapterResponse(ok=False, error=str(exc), status_code=400)
+        svc = self._service_for(req)
+        payload = svc.list_system_uris(ir)
+        payload["mcp_content"] = self.mcp_content(payload)
+        return AdapterResponse(ok=True, data=payload)
+
+    def _tool_resolve_system_map(self, req: AdapterRequest) -> AdapterResponse:
+        try:
+            ir = load_ir_from_arguments(req.extra)
+        except (ValueError, RuntimeError) as exc:
+            return AdapterResponse(ok=False, error=str(exc), status_code=400)
+        svc = self._service_for(req)
+        payload = svc.resolve_system_map(
+            req.prompt,
+            ir,
+            fallback_desktop=bool(req.extra.get("fallback_desktop", True)),
+        )
+        uri = payload.get("uri")
+        payload["mcp_content"] = self.mcp_content(payload, uri=uri)
+        return AdapterResponse(ok=uri is not None, data=payload, status_code=0 if uri else 1)

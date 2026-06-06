@@ -108,10 +108,11 @@ Stan wyjściowy (2026-06-06): **43 testy OK**, E2E Linux zielone, pipeline
 |---|---------|-------------|--------|
 | 5.0 | `system_map_uri.v1` spec | `docs/system_map_uri.v1.md` | ✅ |
 | 5.1 | `nlp2uri.systemmap` | `build_uri_index`, `resolve_prompt_against_system_map` | ✅ |
-| 5.2 | `command://` compile handoff | nlp2dsl worker / MCP | ⏳ |
-| 5.3 | `IntentIR` → `UriIntent` mapper | `nlp2uri/intent_bridge.py` | ⏳ |
-| 5.4 | Fallback chain | SystemMap → regex parsers (desktop) | ⏳ |
-| 5.5 | TestQL scenariusze | `testql-scenarios/nlp2uri/*.testql.yaml` | ⏳ |
+| 5.2 | `command://` compile handoff | `curl POST …/workflow/run` | ✅ |
+| 5.3 | MCP SystemMap tools | `nlp2uri_list_system_uris`, `nlp2uri_resolve_system_map` | ✅ |
+| 5.4 | Fallback chain | `resolve_prompt_with_fallback` | ✅ |
+| 5.5 | `IntentIR` → `UriIntent` mapper | `nlp2uri/intent_bridge.py` | ⏳ |
+| 5.6 | TestQL scenariusze | `testql-scenarios/nlp2uri/*.testql.yaml` | ⏳ |
 
 **Zależności:** Faza 4 + `env2llm>=0.1.3` (`pip install nlp2uri[envmap]`).
 

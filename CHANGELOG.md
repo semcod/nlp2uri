@@ -78,6 +78,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/mcp-tools.md
+- Update docs/roadmap.md
+
+### Test
+- Update tests/test_adapters.py
+- Update tests/test_systemmap.py
+
+### Other
+- Update examples/integrators/mcp-stdio/e2e.sh
+- Update scripts/install-editable.sh
+
 ## [0.4.2] - 2026-06-06
 
 ### Docs
@@ -109,6 +125,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - 2026-06-06
 
 ### Added
+- `command://` handoff compile → `POST $NLP2DSL_BACKEND_URL/workflow/run` (curl)
+- MCP tools: `nlp2uri_list_system_uris`, `nlp2uri_resolve_system_map`
+- `resolve_prompt_with_fallback` — SystemMap match first, desktop NL second
 - `nlp2uri.systemmap` — URI layer over `env2llm.SystemMapIR` (`system_map_uri.v1`)
 - `build_uri_index`, `resolve_prompt_against_system_map`, `uri_for_*` builders
 - Optional `env2llm` loader: `load_system_map_from_doql`, `load_system_map_from_example`
