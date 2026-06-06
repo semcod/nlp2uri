@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-06-06
+
+### Docs
+- Update README.md
+- Update examples/README.md
+- Update examples/execute/dry-run/README.md
+- Update examples/integrators/mcp-stdio/README.md
+- Update examples/integrators/rest-api/README.md
+- Update examples/integrators/shell-export/README.md
+- Update examples/mcp/tool-handoff/README.md
+- Update examples/resolve/nl-to-uri/README.md
+
+### Test
+- Update tests/conftest.py
+- Update tests/test_adapters.py
+- Update tests/test_config.py
+- Update tests/test_rest_server.py
+- Update tests/test_service.py
+
+### Other
+- Update .idea/pyLspTools.xml
+- Update examples/execute/dry-run/e2e.sh
+- Update examples/execute/dry-run/main.py
+- Update examples/integrators/mcp-stdio/e2e.sh
+- Update examples/integrators/rest-api/e2e.sh
+- Update examples/integrators/shell-export/e2e.sh
+- Update examples/mcp/tool-handoff/e2e.sh
+- Update examples/mcp/tool-handoff/main.py
+- Update examples/resolve/nl-to-uri/e2e.sh
+- Update examples/resolve/nl-to-uri/main.py
+- ... and 3 more files
+
 ## [0.1.1] - 2026-06-06
 
 ### Docs

@@ -5,8 +5,8 @@ from __future__ import annotations
 import subprocess
 
 from nlp2uri.compile import compile_uri_to_actions
+from nlp2uri.config import get_effective_platform
 from nlp2uri.models import ActionResult, HostPlatform
-from nlp2uri.platform_detect import detect_platform
 from nlp2uri.platforms.registry import get_executor as _get_executor
 
 
@@ -20,7 +20,7 @@ def execute_uri(
     platform: HostPlatform | None = None,
     dry_run: bool = False,
 ) -> ActionResult:
-    host = platform or detect_platform()
+    host = get_effective_platform(platform)
     try:
         actions = tuple(compile_uri_to_actions(uri, host))
     except ValueError as exc:

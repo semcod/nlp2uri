@@ -1,4 +1,4 @@
-"""nlp2uri CLI."""
+"""nlp2uri CLI — uses CliAdapter and ShellAdapter."""
 
 from __future__ import annotations
 
@@ -6,17 +6,18 @@ import argparse
 import json
 import sys
 
-from nlp2uri.compile import compile_uri_to_actions
+from nlp2uri.adapters.base import AdapterRequest
+from nlp2uri.adapters.cli import CliAdapter
+from nlp2uri.adapters.shell import ShellAdapter
+from nlp2uri.config import ensure_config, find_config_path, load_config, save_config
 from nlp2uri.models import HostPlatform
-from nlp2uri.resolve import nlp2uri, resolve_text
-from nlp2uri.runtime import execute_uri
 
 
 def _add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument(
         "--platform",
         choices=[p.value for p in HostPlatform if p != HostPlatform.UNKNOWN],
-        help="override detected host platform for resolution/execution",
+        help="override platform (default: auto-detect via nlp2uri.yaml / host OS)",
     )
     parser.add_argument(
         "--json",
@@ -28,7 +29,7 @@ def _add_common_args(parser: argparse.ArgumentParser) -> None:
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="nlp2uri",
-        description="NL → abstract URI compiler and cross-platform desktop executor",
+        description="NL → URI compiler with CLI, shell, REST, and MCP adapters",
     )
     _add_common_args(parser)
 
@@ -40,7 +41,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     p_resolve = sub.add_parser("resolve", help="resolve natural language to a URI")
     _add_common_args(p_resolve)
-    p_resolve.add_argument("text", help="natural language description")
+    p_resolve.add_argument("text")
 
     p_compile = sub.add_parser("compile", help="compile URI to OS actions")
     _add_common_args(p_compile)
@@ -48,7 +49,7 @@ def _build_parser() -> argparse.ArgumentParser:
 
     p_exec = sub.add_parser("execute", help="resolve and execute (or execute a raw URI)")
     _add_common_args(p_exec)
-    p_exec.add_argument("text", help="natural language description or absolute URI")
+    p_exec.add_argument("text")
     p_exec.add_argument("--dry-run", action="store_true")
     p_exec.add_argument("--uri-only", action="store_true")
 
@@ -56,6 +57,26 @@ def _build_parser() -> argparse.ArgumentParser:
     _add_common_args(p_open)
     p_open.add_argument("text")
     p_open.add_argument("--dry-run", action="store_true")
+
+    p_shell = sub.add_parser("shell", help="bash-friendly exports")
+    shell_sub = p_shell.add_subparsers(dest="shell_command", required=True)
+    p_export = shell_sub.add_parser("export", help="eval exports for a prompt")
+    _add_common_args(p_export)
+    p_export.add_argument("text")
+    p_eval = shell_sub.add_parser("eval-uri", help="eval exports for a raw URI")
+    _add_common_args(p_eval)
+    p_eval.add_argument("uri")
+
+    p_config = sub.add_parser("config", help="show or write nlp2uri.yaml defaults")
+    config_sub = p_config.add_subparsers(dest="config_command", required=True)
+    p_cfg_show = config_sub.add_parser("show", help="print effective config")
+    _add_common_args(p_cfg_show)
+    p_cfg_init = config_sub.add_parser("init", help="write nlp2uri.yaml with detected defaults")
+    p_cfg_init.add_argument(
+        "--path",
+        default="nlp2uri.yaml",
+        help="config file path (default: ./nlp2uri.yaml)",
+    )
 
     return parser
 
@@ -74,42 +95,90 @@ def _emit(payload: dict, *, as_json: bool) -> None:
             print(f"{key}: {value}")
 
 
+def _request_from_args(args: argparse.Namespace, *, operation: str) -> AdapterRequest:
+    return AdapterRequest(
+        operation=operation,
+        prompt=getattr(args, "text", "") or "",
+        uri=getattr(args, "uri", "") or "",
+        platform=_platform(getattr(args, "platform", None)),
+        dry_run=bool(getattr(args, "dry_run", False)),
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
-    platform = _platform(args.platform)
 
-    if args.command == "plan":
-        result = nlp2uri(args.text, os=platform)
-        _emit(result.to_dict(), as_json=args.json)
-        return 0
+    if args.command != "config":
+        ensure_config()
 
-    if args.command == "resolve":
-        spec = resolve_text(args.text, platform=platform)
-        _emit(spec.to_dict(), as_json=args.json)
-        return 0
+    if args.command == "config":
+        if args.config_command == "init":
+            from pathlib import Path
 
-    if args.command == "compile":
-        actions = compile_uri_to_actions(args.uri, platform)
-        payload = {"uri": args.uri, "actions": [a.to_dict() for a in actions]}
+            from nlp2uri.config import default_config
+
+            path = save_config(default_config(), Path(args.path))
+            print(f"wrote {path}")
+            return 0
+        cfg = load_config()
+        found = find_config_path()
+        payload = {
+            "config_path": str(found) if found else None,
+            "effective_platform": cfg.resolved_platform().value,
+            **cfg.to_dict(),
+        }
         _emit(payload, as_json=args.json)
         return 0
 
-    dry_run = bool(getattr(args, "dry_run", False))
+    cli = CliAdapter()
+
+    if args.command == "shell":
+        shell = ShellAdapter()
+        if args.shell_command == "export":
+            response = shell.handle(_request_from_args(args, operation="export"))
+        else:
+            req = AdapterRequest(
+                operation="eval-uri",
+                uri=args.uri,
+                platform=_platform(args.platform),
+            )
+            response = shell.handle(req)
+        if args.json:
+            _emit(response.to_dict(), as_json=True)
+        else:
+            sys.stdout.write(response.data.get("script", "") + "\n")
+        return 0 if response.ok else response.status_code or 1
+
+    if args.command in {"plan", "resolve", "compile"}:
+        if args.command == "compile":
+            req = AdapterRequest(operation="compile", uri=args.uri, platform=_platform(args.platform))
+        else:
+            req = _request_from_args(args, operation=args.command)
+        response = cli.handle(req)
+        payload = response.to_dict()
+        if args.json:
+            payload["platform"] = load_config().resolved_platform().value
+        _emit(payload, as_json=args.json)
+        return 0 if response.ok else response.status_code or 1
+
     uri_only = bool(getattr(args, "uri_only", False))
-
     if uri_only or "://" in args.text:
-        uri = args.text
-        spec_payload = {"uri": uri, "resolved_from": "raw"}
+        req = AdapterRequest(
+            operation="execute",
+            uri=args.text,
+            platform=_platform(args.platform),
+            dry_run=bool(args.dry_run),
+        )
     else:
-        spec = resolve_text(args.text, platform=platform)
-        uri = spec.uri
-        spec_payload = spec.to_dict()
+        req = _request_from_args(args, operation="execute")
 
-    result = execute_uri(uri, platform=platform, dry_run=dry_run)
-    payload = {"spec": spec_payload, "result": result.to_dict()}
+    response = cli.handle(req)
+    payload = response.to_dict()
+    if args.json:
+        payload["platform"] = load_config().resolved_platform().value
     _emit(payload, as_json=args.json)
-    return 0 if result.ok else result.returncode or 1
+    return 0 if response.ok else response.status_code or 1
 
 
 if __name__ == "__main__":

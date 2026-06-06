@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 
-from nlp2uri import nlp2uri, resolve_text
+from nlp2uri import nlp2uri
 from nlp2uri.models import HostPlatform
 
 SAMPLES = [

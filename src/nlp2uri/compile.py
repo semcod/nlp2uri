@@ -23,7 +23,7 @@ def compile_uri_to_actions(
     if scheme in {"http", "https", "file", "cursor", "vscode", "vscode-insiders"}:
         return [_open_uri(host, uri)]
 
-    if scheme in {"ms-settings", "x-apple-systempreferences"}:
+    if scheme in {"ms-settings", "x-apple.systempreferences"}:
         return [_open_uri(host, uri)]
 
     if scheme == "app":

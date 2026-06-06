@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nlp2uri"
-version = "0.1.1"
+version = "0.1.2"
 description = "Natural language to URI resolution and cross-platform local URI execution"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -24,6 +24,8 @@ full = ["psutil>=6.0"]
 
 [project.scripts]
 nlp2uri = "nlp2uri.cli:main"
+nlp2uri-mcp = "nlp2uri.integrators.mcp_server:main"
+nlp2uri-serve = "nlp2uri.integrators.rest_server:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }

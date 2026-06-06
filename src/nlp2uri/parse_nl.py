@@ -10,7 +10,7 @@ from nlp2uri.models import IntentKind, UriIntent
 _OPEN = r"(?:open|otw[oó]rz|uruchom|launch|start|run)"
 _ABSOLUTE_URI_RE = re.compile(
     r"^(?:https?|file|mailto|tel|sms|cursor|vscode|vscode-insiders|"
-    r"ms-settings|x-apple-systempreferences|nlp2uri|app|desktop-screenshot|desktop-window)://\S+",
+    r"ms-settings|x-apple\.systempreferences|nlp2uri|app|desktop-screenshot|desktop-window)://\S+",
     re.IGNORECASE,
 )
 _PATH_RE = re.compile(r"(?:^|[\s'\"])(/?(?:[\w.\-~]+/)+[\w.\-~]+)")

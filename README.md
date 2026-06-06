@@ -3,17 +3,15 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.15-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-1.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.2-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$0.49-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.0h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $0.1500 (1 commits)
-- 👤 **Human dev:** ~$100 (1.0h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $0.4934 (1 commits)
+- 👤 **Human dev:** ~$200 (2.0h @ $100/h, 30min dedup)
 
 Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
 ---
-
-
 
 Python library and CLI — **kompilator NL → URI → akcje OS** dla operacji desktopowych.
 
@@ -64,55 +62,96 @@ flowchart LR
 
 Metadata `native_uri` zawiera deep-link IDE (`vscode://file/...`) gdy istnieje.
 
+## Konfiguracja (`nlp2uri.yaml`)
+
+Domyślne ustawienia w pliku `nlp2uri.yaml` (auto-tworzony przy pierwszym uruchomieniu):
+
+```yaml
+platform: auto          # auto | linux | darwin | windows
+host_platform: linux  # ostatnio wykryty host (informacyjnie)
+locale: null
+dry_run: false
+capture_dir: /tmp/nlp2uri-captures
+```
+
+Kolejność wyboru platformy: `--platform` → `NLP2URI_PLATFORM` → `nlp2uri.yaml` → auto-detect OS.
+
+```bash
+nlp2uri config show --json    # efektywna konfiguracja
+nlp2uri config init           # zapisz domyślny nlp2uri.yaml
+```
+
+Ścieżki szukania configu: `NLP2URI_CONFIG` → `./nlp2uri.yaml` → `~/.config/nlp2uri/nlp2uri.yaml`.
+
 ## Quick start
 
 ```bash
 pip install -e ".[dev]"
 
-# Pełny plan: URI + OSActions
-nlp2uri plan "otwórz vscode w folderze ~/github/semcod/nlp2uri" --platform linux --json
-
-# Tylko URI
-nlp2uri resolve "zrób screenshot aktywnego okna przeglądarki" --platform linux --json
-
-# URI → komendy
-nlp2uri compile "desktop-screenshot://window?title=Chrome&mode=active" --platform linux --json
-
-# Dry-run (bezpieczne w CI/Docker)
-nlp2uri execute "open firefox" --platform linux --dry-run
+# Platforma wykrywana automatycznie (bez --platform)
+nlp2uri plan "otwórz vscode w folderze ~/github/semcod/nlp2uri" --json
+nlp2uri resolve "zrób screenshot aktywnego okna przeglądarki" --json
+nlp2uri execute "open firefox" --dry-run
 ```
 
-## Python API
+## Python API (service facade)
 
 ```python
-from nlp2uri import nlp2uri, compile_uri_to_actions, execute_uri
+from nlp2uri import NLP2URIService
 from nlp2uri.models import HostPlatform
 
-plan = nlp2uri(
-    "otwórz vscode w folderze /tmp/foo",
-    os=HostPlatform.LINUX,
-)
-print(plan.uri)       # app://vscode/open?path=/tmp/foo
-print(plan.intent)    # open_app
-print(plan.slots)     # {"app": "vscode", "resource": "/tmp/foo", ...}
-print(plan.actions[0].argv())  # ['xdg-open', 'vscode://file/tmp/foo']
+svc = NLP2URIService.default()  # ładuje nlp2uri.yaml + auto-detect
 
-result = execute_uri(plan.uri, platform=HostPlatform.LINUX, dry_run=True)
+plan = svc.from_prompt("otwórz vscode w folderze /tmp/foo")
+print(plan.uri)                    # app://vscode/open?path=/tmp/foo
+print(plan.actions[0].argv())      # ['xdg-open', 'vscode://file/tmp/foo']
+
+payload = svc.handle_prompt("open firefox", dry_run=True)  # prompt → URI → run
 ```
 
-## MCP server
+## Adaptery i integratory (reużywalne powierzchnie)
+
+| Warstwa | Użycie | Moduł |
+|---------|--------|-------|
+| **Service** | `NLP2URIService.from_prompt()` / `handle_uri()` | `nlp2uri.service` |
+| **CLI** | `nlp2uri plan\|resolve\|compile\|execute` | `nlp2uri.adapters.cli` |
+| **Shell** | `eval "$(nlp2uri shell export '…')"` | `nlp2uri.adapters.shell` |
+| **REST** | `nlp2uri-serve --port 8766` | `nlp2uri.integrators.rest_server` |
+| **MCP** | `nlp2uri-mcp` (stdio JSON-RPC) | `nlp2uri.integrators.mcp_server` |
+
+### REST (`POST /v1/plan`)
+
+```bash
+curl -s -X POST http://127.0.0.1:8766/v1/plan \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"open firefox"}'
+```
+
+### MCP (Cursor / Windsurf)
+
+```json
+{ "mcpServers": { "nlp2uri": { "command": "nlp2uri-mcp" } } }
+```
+
+Tools: `nlp2uri_plan`, `nlp2uri_resolve`, `nlp2uri_compile`, `nlp2uri_execute`, `nlp2uri_handle`.
+
+### Shell
+
+```bash
+eval "$(nlp2uri shell export 'open firefox')"
+echo "$NLP2URI_URI"    # app://firefox/open
+$nlp2uri-run           # alias do skompilowanej komendy
+```
+
+### Własny adapter
 
 ```python
-from nlp2uri.mcp import tool_resolve_desktop_action, tool_execute_desktop_uri
+from nlp2uri.adapters.base import AdapterRequest
+from nlp2uri.adapters.rest import RestAdapter
 
-# Tool 1: NL → URI + plan (zwraca text/uri-list)
-tool_resolve_desktop_action("screenshot window titled Firefox", platform=HostPlatform.LINUX)
-
-# Tool 2: wykonaj URI (lub dry-run)
-tool_execute_desktop_uri("desktop-screenshot://screen", platform=HostPlatform.LINUX, dry_run=True)
+response = RestAdapter().dispatch("plan", {"prompt": "capture screen", "platform": "linux"})
+print(response.data["uri"])
 ```
-
-Host MCP może mapować `desktop-screenshot://...` na backend typu `mcp-desktop-pro` zamiast bezpośredniego `subprocess`.
 
 ## Standardy
 
@@ -145,8 +184,10 @@ Host MCP może mapować `desktop-screenshot://...` na backend typu `mcp-desktop-
 ```bash
 python -m pytest
 docker compose build && docker compose run --rm nlp2uri-test
-bash examples/run_all.sh
+./examples/run-e2e.sh
 ```
+
+Przykłady per kategoria: [examples/README.md](examples/README.md).
 
 W Dockerze:
 
