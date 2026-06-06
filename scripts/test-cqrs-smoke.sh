@@ -16,6 +16,7 @@ checks = [
     ("getv://llm/groq/GROQ_API_KEY", "getv_cli"),
     ("endpoint://tcp/127.0.0.1/8010/health", "curl"),
     ("service://generated/process-registry", "curl"),
+    ("container://docker/process-registry/status", "docker"),
     ("app://firefox/open", None),
 ]
 

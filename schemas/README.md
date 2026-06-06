@@ -50,8 +50,13 @@ cd schemas
 # Protobuf (wymaga buf CLI)
 brew install bufbuild/buf/buf   # lub https://buf.build/docs/installation
 buf dep update
+python3 codegen/fix_proto_imports.py
+buf lint    # MINIMAL + wyjątki PACKAGE_DIRECTORY_MATCH w buf.yaml
+buf generate
 ./codegen/generate.sh
 ```
+
+**Buf lint:** katalogi `schemes/{scheme}/v1/` nie pasują do reguły STANDARD `PACKAGE_DIRECTORY_MATCH` (wymaga `nlp2uri/cqrs/v1/{scheme}/`). Do czasu restrukturyzacji proto używamy wyjątków w `buf.yaml`; `buf generate` działa poprawnie.
 
 Output:
 
@@ -80,7 +85,20 @@ Zaimplementowane drivery referencyjne w `src/nlp2uri/cqrs/`:
 | `GetvCliDriver` | `getv` | `getv_cli` |
 | `RuntimeCurlDriver` | `runtime` | `curl` |
 | `EndpointCurlDriver` | `endpoint` | `curl` |
+| `ServiceCurlDriver` / `ServiceDockerDriver` | `service` | `curl` / `docker` / `systemd` |
+| `ContainerDockerDriver` | `container` | `docker` |
 | `DelegateCompileDriver` | desktop schemes | `linux`/`darwin`/… |
+
+### Plugin registry (entry points)
+
+Zewnętrzne pakiety rejestrują drivery przez `[project.entry-points."nlp2uri.drivers"]`:
+
+```toml
+[project.entry-points."nlp2uri.drivers"]
+myscheme-mytarget = "my_pkg.drivers:MyDriver"
+```
+
+Nazwa: `{scheme}-{target}` (np. `container-docker`). Runtime ładuje przez `nlp2uri.cqrs.plugins.load_driver_plugins()`.
 
 ```python
 from nlp2uri.cqrs import CqrsDispatcher
@@ -96,8 +114,8 @@ Testy: `pytest tests/test_cqrs_drivers.py` · smoke: `./scripts/test-cqrs-smoke.
 
 1. Wpis w `registry.yaml`
 2. `./codegen/generate.sh --scheme nowy_scheme`
-3. Implementacja stubów w `generated/python/drivers/nowy_scheme/`
-4. Podłączenie w `nlp2uri.compile.compile_uri_to_actions()`
+3. Implementacja w `src/nlp2uri/cqrs/drivers/` + wpis entry-point w `pyproject.toml`
+4. Stub w `generated/python/drivers/nowy_scheme/` (opcjonalnie, z codegen)
 
 ## Dokumentacja
 

@@ -1,8 +1,8 @@
-# nlp2uri | 339 func | 65f | 13795L | proto | 2026-06-06
+# nlp2uri | 346 func | 67f | 14257L | proto | 2026-06-06
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.5  critical=19 (limit:10)  dup=0  cycles=0
+  CC̄=3.5  critical=20 (limit:10)  dup=0  cycles=0
 
 ALERTS[20]:
   !!! cc_exceeded      build_uri_index = 31 (limit:15)
@@ -12,12 +12,12 @@ ALERTS[20]:
   !!! high_fan_out     build_getv_uri_index = 20 (limit:10)
   !!  high_fan_out     compile_uri_to_actions = 17 (limit:10)
   !!  high_fan_out     _build_parser = 16 (limit:10)
-  !!  high_fan_out     RestAdapter.dispatch = 16 (limit:10)
   !!  high_fan_out     _compile_app = 16 (limit:10)
+  !!  high_fan_out     RestAdapter.dispatch = 16 (limit:10)
   !   cc_exceeded      _compile_app = 16 (limit:15)
 
-MODULES[260] (top by size):
-  M[planfile.yaml] 1033L C:0 F:0 CC↑0 D:0 (yaml)
+MODULES[262] (top by size):
+  M[planfile.yaml] 1319L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/nlp2uri/compile.py] 431L C:0 F:23 CC↑16 D:5 (python)
   M[src/nlp2uri/adapters/mcp.py] 382L C:1 F:18 CC↑6 D:0 (python)
@@ -32,7 +32,7 @@ MODULES[260] (top by size):
   M[src/nlp2uri/systemmap/compile.py] 179L C:0 F:11 CC↑12 D:5 (python)
   M[src/nlp2uri/schemes/desktop.py] 166L C:0 F:6 CC↑6 D:0 (python)
   M[src/nlp2uri/service.py] 151L C:1 F:15 CC↑5 D:0 (python)
-  LANGS: proto:138/python:70/yaml:31/shell:15/other:2/json:2/yml:1/toml:1
+  LANGS: proto:138/python:72/yaml:31/shell:15/other:2/json:2/yml:1/toml:1
 
 HOTSPOTS[10]:
   ★ main fan=21  // Orchestrates 21 calls
@@ -45,8 +45,8 @@ REFACTOR[9]:
   [1] H/L Split build_uri_index (CC=31)
   [2] H/L Split resolve_prompt_against_system_map (CC=26)
   [3] H/H Split god module goal.yaml (511L, 0 classes)
-  [4] H/H Split god module planfile.yaml (1033L, 0 classes)
+  [4] H/H Split god module planfile.yaml (1319L, 0 classes)
   [5] M/L Split _compile_app (CC=16)
 
 EVOLUTION:
-  2026-06-06 CC̄=3.5 crit=19 13795L // Automated analysis
+  2026-06-06 CC̄=3.5 crit=20 14257L // Automated analysis

@@ -1,6 +1,6 @@
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.15s
-# nodes: 217 | edges: 289 | modules: 50
+# generated in 0.26s
+# nodes: 225 | edges: 295 | modules: 52
 # CC̄=3.5
 
 HUBS[20]:
@@ -14,12 +14,12 @@ HUBS[20]:
     CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map
     CC=26  in:2  out:23  total:25
-  schemas.codegen.export_driver_stubs.main
-    CC=11  in:0  out:23  total:23
-  src.nlp2uri.systemmap.encode.encode_segment
-    CC=1  in:22  out:1  total:23
   src.nlp2uri.host.artifact.resolve_artifact_path
     CC=12  in:1  out:22  total:23
+  src.nlp2uri.systemmap.encode.encode_segment
+    CC=1  in:22  out:1  total:23
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
   src.nlp2uri.compile.compile_uri_to_actions
     CC=13  in:5  out:18  total:23
   src.nlp2uri.compile._compile_app
@@ -30,20 +30,20 @@ HUBS[20]:
     CC=14  in:2  out:18  total:20
   examples.resolve.new-intents.e2e.print
     CC=0  in:19  out:0  total:19
-  src.nlp2uri.systemmap.compile._compile_runtime
-    CC=12  in:1  out:18  total:19
-  src.nlp2uri.host.artifact.build_artifact_actions
-    CC=13  in:2  out:17  total:19
   src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
     CC=13  in:1  out:18  total:19
+  src.nlp2uri.host.artifact.build_artifact_actions
+    CC=13  in:2  out:17  total:19
+  src.nlp2uri.systemmap.compile._compile_runtime
+    CC=12  in:1  out:18  total:19
   src.nlp2uri.systemmap.context.load_ir_from_arguments
     CC=8  in:2  out:16  total:18
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:12  out:5  total:17
   src.nlp2uri.systemmap.index._ir_field
     CC=2  in:14  out:3  total:17
-  src.nlp2uri.systemmap.index._add_entry
-    CC=3  in:13  out:4  total:17
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:12  out:5  total:17
+  src.nlp2uri.schemes.build.build_uri
+    CC=13  in:2  out:15  total:17
 
 MODULES:
   examples.execute.dry-run.main  [1 funcs]
@@ -118,6 +118,10 @@ MODULES:
     compile  CC=7  out:7
   src.nlp2uri.cqrs.drivers.command_curl  [1 funcs]
     compile  CC=5  out:6
+  src.nlp2uri.cqrs.drivers.container_docker  [3 funcs]
+    compile  CC=5  out:9
+    probe  CC=1  out:3
+    parse_container_uri  CC=8  out:8
   src.nlp2uri.cqrs.drivers.delegate  [1 funcs]
     compile  CC=2  out:4
   src.nlp2uri.cqrs.drivers.endpoint_curl  [2 funcs]
@@ -138,7 +142,13 @@ MODULES:
     probe  CC=1  out:2
     _compose_dir  CC=3  out:5
     parse_service_name  CC=4  out:4
-  src.nlp2uri.cqrs.registry  [1 funcs]
+  src.nlp2uri.cqrs.plugins  [3 funcs]
+    _parse_entry_point_name  CC=4  out:2
+    load_driver_plugins  CC=7  out:10
+    resolve_driver_class  CC=2  out:2
+  src.nlp2uri.cqrs.registry  [3 funcs]
+    __init__  CC=2  out:3
+    get_driver  CC=8  out:8
     default_registry  CC=1  out:2
   src.nlp2uri.host.artifact  [3 funcs]
     _decode  CC=2  out:1
@@ -283,6 +293,36 @@ MODULES:
     uri_for_resource  CC=2  out:4
 
 EDGES:
+  schemas.codegen.fix_proto_imports.fix_api → schemas.codegen.fix_proto_imports._pascal
+  schemas.codegen.fix_proto_imports.fix_driver → schemas.codegen.fix_proto_imports._pascal
+  schemas.codegen.fix_proto_imports.main → schemas.codegen.fix_proto_imports.fix_api
+  schemas.codegen.fix_proto_imports.main → schemas.codegen.fix_proto_imports.fix_driver
+  schemas.codegen.fix_proto_imports.main → examples.resolve.new-intents.e2e.print
+  schemas.codegen.export_mcp_schemas.main → examples.resolve.new-intents.e2e.print
+  schemas.codegen.export_driver_stubs.main → examples.resolve.new-intents.e2e.print
+  schemas.codegen.scaffold_scheme.aggregate_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.aggregate_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.commands_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.commands_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.events_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.events_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.queries_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.queries_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.driver_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.driver_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.api_proto → schemas.codegen.scaffold_scheme._proto_package
+  schemas.codegen.scaffold_scheme.api_proto → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.openapi_yaml → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.readme_md → schemas.codegen.scaffold_scheme._pascal
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.aggregate_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.commands_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.events_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.queries_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.driver_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.api_proto
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.openapi_yaml
+  schemas.codegen.scaffold_scheme.scaffold_scheme → schemas.codegen.scaffold_scheme.readme_md
+  schemas.codegen.scaffold_scheme.main → examples.resolve.new-intents.e2e.print
   examples.mcp.tool-handoff.main.main → examples.resolve.new-intents.e2e.print
   examples.mcp.tool-handoff.main.main → src.nlp2uri.mcp.mcp_handoff_payload
   examples.mcp.tool-handoff.main.main → src.nlp2uri.mcp.tool_resolve_desktop_action
@@ -303,33 +343,3 @@ EDGES:
   src.nlp2uri.config._load_from_path → src.nlp2uri.config._parse_simple_yaml
   src.nlp2uri.config._load_from_path → src.nlp2uri.config.payload_keys
   src.nlp2uri.config.load_config → src.nlp2uri.config.find_config_path
-  src.nlp2uri.config.load_config → src.nlp2uri.config._load_from_path
-  src.nlp2uri.config.load_config → src.nlp2uri.config.default_config
-  src.nlp2uri.config.save_config → src.nlp2uri.platform_detect.detect_platform
-  src.nlp2uri.config.ensure_config → src.nlp2uri.config.find_config_path
-  src.nlp2uri.config.ensure_config → src.nlp2uri.config.default_config
-  src.nlp2uri.config.ensure_config → src.nlp2uri.config.save_config
-  src.nlp2uri.config.ensure_config → src.nlp2uri.config._load_from_path
-  src.nlp2uri.config.get_effective_platform → src.nlp2uri.config.load_config
-  src.nlp2uri.cli._build_parser → src.nlp2uri.cli._add_common_args
-  src.nlp2uri.cli._emit → examples.resolve.new-intents.e2e.print
-  src.nlp2uri.cli._request_from_args → src.nlp2uri.cli._platform
-  src.nlp2uri.cli._with_platform → src.nlp2uri.config.load_config
-  src.nlp2uri.cli._run_config → src.nlp2uri.config.load_config
-  src.nlp2uri.cli._run_config → src.nlp2uri.config.find_config_path
-  src.nlp2uri.cli._run_config → src.nlp2uri.cli._emit
-  src.nlp2uri.cli._run_config → src.nlp2uri.config.save_config
-  src.nlp2uri.cli._run_config → examples.resolve.new-intents.e2e.print
-  src.nlp2uri.cli._run_config → src.nlp2uri.config.default_config
-  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._emit
-  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._request_from_args
-  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._platform
-  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._emit
-  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._request_from_args
-  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._with_platform
-  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._platform
-  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._emit
-  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._request_from_args
-  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._with_platform
-  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._platform
-  src.nlp2uri.cli.main → src.nlp2uri.config.ensure_config

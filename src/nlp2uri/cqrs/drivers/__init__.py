@@ -12,6 +12,7 @@ from nlp2uri.cqrs.drivers.service_ops import (
     ServiceDockerDriver,
     ServiceSystemdDriver,
 )
+from nlp2uri.cqrs.drivers.container_docker import ContainerDockerDriver
 
 __all__ = [
     "ArtifactFilesystemDriver",
@@ -24,4 +25,5 @@ __all__ = [
     "ServiceCurlDriver",
     "ServiceDockerDriver",
     "ServiceSystemdDriver",
+    "ContainerDockerDriver",
 ]

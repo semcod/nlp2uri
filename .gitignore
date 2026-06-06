@@ -1,4 +1,12 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1780775249005788253_772.pkl
+.code2llm_cache/__init___1780775333712259744_1041.pkl
+.code2llm_cache/container_docker_1780775347273270210_3474.pkl
+.code2llm_cache/planfile_1780775282226533525_36994.pkl
+.code2llm_cache/plugins_1780775371079539702_1986.pkl
+.code2llm_cache/pyproject_1780775334182121988_2641.pkl
+.code2llm_cache/registry_1780775332985881470_3457.pkl
+.code2llm_cache/test-cqrs-smoke_1780775341112200455_1750.pkl
 .idea/pyProjectModel.xml
 .idea/pyLspTools.xml
 .env.example

@@ -1,288 +1,189 @@
-# nlp2uri | 260f 13795L | yaml:31,yml:1,shell:15,json:2,python:70,toml:1,proto:138 | 2026-06-06
-# generated in 0.03s
-# stats: 339 func | 0 cls | 260 mod | CC̄=3.5 | critical:4 | cycles:0
-# alerts[5]: CC build_uri_index=31; CC resolve_prompt_against_system_map=26; fan-out main=21; fan-out build_getv_uri_index=20; fan-out build_uri_index=20
-# hotspots[5]: main fan=21; build_uri_index fan=20; build_getv_uri_index fan=20; compile_uri_to_actions fan=17; _build_parser fan=16
-# evolution: CC̄ 3.6→3.5 (improved -0.1)
+# nlp2uri | 109f 8551L | python:93,shell:15,less:1 | 2026-06-06
+# stats: 316 func | 47 cls | 109 mod | CC̄=3.6 | critical:14 | cycles:0
+# alerts[5]: CC build_uri_index=31; CC resolve_prompt_against_system_map=26; CC _compile_app=16; CC _compile_terminal=16; CC build_resource_actions=14
+# hotspots[5]: build_uri_index fan=20; build_getv_uri_index fan=19; main fan=18; compile_uri_to_actions fan=17; _compile_app fan=15
+# evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[260]:
-  Dockerfile,29
-  docker-compose.yml,6
-  examples/execute/dry-run/e2e.sh,11
-  examples/execute/dry-run/main.py,29
-  examples/integrators/mcp-stdio/e2e.sh,15
-  examples/integrators/mcp-stdio/mcp-config.json,10
-  examples/integrators/mcp-stdio/mcp-config.cursor.json,11
-  examples/integrators/rest-api/e2e.sh,23
-  examples/integrators/shell-export/e2e.sh,12
-  examples/mcp/tool-handoff/e2e.sh,11
-  examples/mcp/tool-handoff/main.py,27
-  examples/resolve/new-intents/e2e.sh,25
-  examples/resolve/nl-to-uri/e2e.sh,11
-  examples/resolve/nl-to-uri/main.py,46
-  examples/run-e2e.sh,40
-  goal.yaml,511
-  nlp2uri.yaml,8
-  planfile.yaml,1033
-  prefact.yaml,94
+M[109]:
+  app.doql.less,30
+  examples/execute/dry-run/e2e.sh,12
+  examples/execute/dry-run/main.py,30
+  examples/integrators/mcp-stdio/e2e.sh,16
+  examples/integrators/rest-api/e2e.sh,24
+  examples/integrators/shell-export/e2e.sh,13
+  examples/mcp/tool-handoff/e2e.sh,12
+  examples/mcp/tool-handoff/main.py,28
+  examples/resolve/new-intents/e2e.sh,26
+  examples/resolve/nl-to-uri/e2e.sh,12
+  examples/resolve/nl-to-uri/main.py,47
+  examples/run-e2e.sh,41
   project.sh,59
-  pyproject.toml,72
-  schemas/Makefile,24
-  schemas/buf.yaml,15
-  schemas/buf.gen.yaml,13
-  schemas/codegen/export_driver_stubs.py,97
-  schemas/codegen/export_mcp_schemas.py,53
-  schemas/codegen/fix_proto_imports.py,83
-  schemas/codegen/generate.sh,53
-  schemas/codegen/scaffold_scheme.py,357
-  schemas/common/v1/api.proto,32
-  schemas/common/v1/commands.proto,45
-  schemas/common/v1/driver.proto,70
-  schemas/common/v1/events.proto,66
-  schemas/common/v1/queries.proto,60
-  schemas/common/v1/uri.proto,60
-  schemas/registry.yaml,184
-  schemas/schemes/access/v1/aggregate.proto,13
-  schemas/schemes/access/v1/api.proto,26
-  schemas/schemes/access/v1/commands.proto,31
-  schemas/schemes/access/v1/driver.proto,14
-  schemas/schemes/access/v1/events.proto,42
-  schemas/schemes/access/v1/openapi.yaml,68
-  schemas/schemes/access/v1/queries.proto,10
-  schemas/schemes/app/v1/aggregate.proto,13
-  schemas/schemes/app/v1/api.proto,26
-  schemas/schemes/app/v1/commands.proto,29
-  schemas/schemes/app/v1/driver.proto,14
-  schemas/schemes/app/v1/events.proto,42
-  schemas/schemes/app/v1/openapi.yaml,68
-  schemas/schemes/app/v1/queries.proto,10
-  schemas/schemes/artifact/v1/aggregate.proto,13
-  schemas/schemes/artifact/v1/api.proto,26
-  schemas/schemes/artifact/v1/commands.proto,31
-  schemas/schemes/artifact/v1/driver.proto,14
-  schemas/schemes/artifact/v1/events.proto,42
-  schemas/schemes/artifact/v1/openapi.yaml,68
-  schemas/schemes/artifact/v1/queries.proto,10
-  schemas/schemes/command/v1/aggregate.proto,13
-  schemas/schemes/command/v1/api.proto,26
-  schemas/schemes/command/v1/commands.proto,41
-  schemas/schemes/command/v1/driver.proto,14
-  schemas/schemes/command/v1/events.proto,42
-  schemas/schemes/command/v1/openapi.yaml,68
-  schemas/schemes/command/v1/queries.proto,10
-  schemas/schemes/container/v1/aggregate.proto,13
-  schemas/schemes/container/v1/api.proto,26
-  schemas/schemes/container/v1/commands.proto,31
-  schemas/schemes/container/v1/driver.proto,14
-  schemas/schemes/container/v1/events.proto,42
-  schemas/schemes/container/v1/openapi.yaml,68
-  schemas/schemes/container/v1/queries.proto,10
-  schemas/schemes/conversation/v1/aggregate.proto,13
-  schemas/schemes/conversation/v1/api.proto,26
-  schemas/schemes/conversation/v1/commands.proto,31
-  schemas/schemes/conversation/v1/driver.proto,14
-  schemas/schemes/conversation/v1/events.proto,42
-  schemas/schemes/conversation/v1/openapi.yaml,68
-  schemas/schemes/conversation/v1/queries.proto,10
-  schemas/schemes/deploy/v1/aggregate.proto,13
-  schemas/schemes/deploy/v1/api.proto,26
-  schemas/schemes/deploy/v1/commands.proto,31
-  schemas/schemes/deploy/v1/driver.proto,14
-  schemas/schemes/deploy/v1/events.proto,42
-  schemas/schemes/deploy/v1/openapi.yaml,68
-  schemas/schemes/deploy/v1/queries.proto,10
-  schemas/schemes/desktop_screenshot/v1/aggregate.proto,13
-  schemas/schemes/desktop_screenshot/v1/api.proto,26
-  schemas/schemes/desktop_screenshot/v1/commands.proto,31
-  schemas/schemes/desktop_screenshot/v1/driver.proto,14
-  schemas/schemes/desktop_screenshot/v1/events.proto,42
-  schemas/schemes/desktop_screenshot/v1/openapi.yaml,68
-  schemas/schemes/desktop_screenshot/v1/queries.proto,10
-  schemas/schemes/desktop_window/v1/aggregate.proto,13
-  schemas/schemes/desktop_window/v1/api.proto,26
-  schemas/schemes/desktop_window/v1/commands.proto,31
-  schemas/schemes/desktop_window/v1/driver.proto,14
-  schemas/schemes/desktop_window/v1/events.proto,42
-  schemas/schemes/desktop_window/v1/openapi.yaml,68
-  schemas/schemes/desktop_window/v1/queries.proto,10
-  schemas/schemes/device/v1/aggregate.proto,13
-  schemas/schemes/device/v1/api.proto,26
-  schemas/schemes/device/v1/commands.proto,31
-  schemas/schemes/device/v1/driver.proto,14
-  schemas/schemes/device/v1/events.proto,42
-  schemas/schemes/device/v1/openapi.yaml,68
-  schemas/schemes/device/v1/queries.proto,10
-  schemas/schemes/endpoint/v1/aggregate.proto,13
-  schemas/schemes/endpoint/v1/api.proto,26
-  schemas/schemes/endpoint/v1/commands.proto,31
-  schemas/schemes/endpoint/v1/driver.proto,14
-  schemas/schemes/endpoint/v1/events.proto,42
-  schemas/schemes/endpoint/v1/openapi.yaml,68
-  schemas/schemes/endpoint/v1/queries.proto,10
-  schemas/schemes/environment/v1/aggregate.proto,13
-  schemas/schemes/environment/v1/api.proto,26
-  schemas/schemes/environment/v1/commands.proto,31
-  schemas/schemes/environment/v1/driver.proto,14
-  schemas/schemes/environment/v1/events.proto,42
-  schemas/schemes/environment/v1/openapi.yaml,68
-  schemas/schemes/environment/v1/queries.proto,10
-  schemas/schemes/file/v1/aggregate.proto,13
-  schemas/schemes/file/v1/api.proto,26
-  schemas/schemes/file/v1/commands.proto,31
-  schemas/schemes/file/v1/driver.proto,14
-  schemas/schemes/file/v1/events.proto,42
-  schemas/schemes/file/v1/openapi.yaml,68
-  schemas/schemes/file/v1/queries.proto,10
-  schemas/schemes/getv/v1/aggregate.proto,13
-  schemas/schemes/getv/v1/api.proto,26
-  schemas/schemes/getv/v1/commands.proto,45
-  schemas/schemes/getv/v1/driver.proto,14
-  schemas/schemes/getv/v1/events.proto,42
-  schemas/schemes/getv/v1/openapi.yaml,68
-  schemas/schemes/getv/v1/queries.proto,10
-  schemas/schemes/http/v1/aggregate.proto,13
-  schemas/schemes/http/v1/api.proto,26
-  schemas/schemes/http/v1/commands.proto,31
-  schemas/schemes/http/v1/driver.proto,14
-  schemas/schemes/http/v1/events.proto,42
-  schemas/schemes/http/v1/openapi.yaml,68
-  schemas/schemes/http/v1/queries.proto,10
-  schemas/schemes/mount/v1/aggregate.proto,13
-  schemas/schemes/mount/v1/api.proto,26
-  schemas/schemes/mount/v1/commands.proto,31
-  schemas/schemes/mount/v1/driver.proto,14
-  schemas/schemes/mount/v1/events.proto,42
-  schemas/schemes/mount/v1/openapi.yaml,68
-  schemas/schemes/mount/v1/queries.proto,10
-  schemas/schemes/process/v1/aggregate.proto,13
-  schemas/schemes/process/v1/api.proto,26
-  schemas/schemes/process/v1/commands.proto,31
-  schemas/schemes/process/v1/driver.proto,14
-  schemas/schemes/process/v1/events.proto,42
-  schemas/schemes/process/v1/openapi.yaml,68
-  schemas/schemes/process/v1/queries.proto,10
-  schemas/schemes/resource/v1/aggregate.proto,13
-  schemas/schemes/resource/v1/api.proto,26
-  schemas/schemes/resource/v1/commands.proto,31
-  schemas/schemes/resource/v1/driver.proto,14
-  schemas/schemes/resource/v1/events.proto,42
-  schemas/schemes/resource/v1/openapi.yaml,68
-  schemas/schemes/resource/v1/queries.proto,10
-  schemas/schemes/runtime/v1/aggregate.proto,13
-  schemas/schemes/runtime/v1/api.proto,26
-  schemas/schemes/runtime/v1/commands.proto,31
-  schemas/schemes/runtime/v1/driver.proto,14
-  schemas/schemes/runtime/v1/events.proto,42
-  schemas/schemes/runtime/v1/openapi.yaml,68
-  schemas/schemes/runtime/v1/queries.proto,10
-  schemas/schemes/schedule/v1/aggregate.proto,13
-  schemas/schemes/schedule/v1/api.proto,26
-  schemas/schemes/schedule/v1/commands.proto,31
-  schemas/schemes/schedule/v1/driver.proto,14
-  schemas/schemes/schedule/v1/events.proto,42
-  schemas/schemes/schedule/v1/openapi.yaml,68
-  schemas/schemes/schedule/v1/queries.proto,10
-  schemas/schemes/service/v1/aggregate.proto,13
-  schemas/schemes/service/v1/api.proto,26
-  schemas/schemes/service/v1/commands.proto,31
-  schemas/schemes/service/v1/driver.proto,14
-  schemas/schemes/service/v1/events.proto,42
-  schemas/schemes/service/v1/openapi.yaml,68
-  schemas/schemes/service/v1/queries.proto,10
-  schemas/schemes/validation/v1/aggregate.proto,13
-  schemas/schemes/validation/v1/api.proto,26
-  schemas/schemes/validation/v1/commands.proto,31
-  schemas/schemes/validation/v1/driver.proto,14
-  schemas/schemes/validation/v1/events.proto,42
-  schemas/schemes/validation/v1/openapi.yaml,68
-  schemas/schemes/validation/v1/queries.proto,10
-  scripts/install-editable.sh,22
-  scripts/test-cqrs-smoke.sh,54
-  scripts/test-live-registry.sh,66
-  scripts/testapp-handler.sh,6
-  src/nlp2uri/__init__.py,28
-  src/nlp2uri/adapters/__init__.py,17
-  src/nlp2uri/adapters/base.py,59
-  src/nlp2uri/adapters/cli.py,39
-  src/nlp2uri/adapters/mcp.py,382
-  src/nlp2uri/adapters/rest.py,87
-  src/nlp2uri/adapters/shell.py,66
-  src/nlp2uri/cli.py,199
-  src/nlp2uri/compile.py,431
-  src/nlp2uri/config.py,230
-  src/nlp2uri/cqrs/__init__.py,8
-  src/nlp2uri/cqrs/base.py,97
-  src/nlp2uri/cqrs/dispatcher.py,117
-  src/nlp2uri/cqrs/drivers/__init__.py,27
-  src/nlp2uri/cqrs/drivers/artifact_filesystem.py,32
-  src/nlp2uri/cqrs/drivers/command_curl.py,39
-  src/nlp2uri/cqrs/drivers/delegate.py,29
-  src/nlp2uri/cqrs/drivers/endpoint_curl.py,33
-  src/nlp2uri/cqrs/drivers/getv_cli.py,27
-  src/nlp2uri/cqrs/drivers/resource_probe.py,35
-  src/nlp2uri/cqrs/drivers/runtime_curl.py,34
-  src/nlp2uri/cqrs/drivers/service_ops.py,128
-  src/nlp2uri/cqrs/event_store.py,67
-  src/nlp2uri/cqrs/http_store.py,52
-  src/nlp2uri/cqrs/registry.py,88
-  src/nlp2uri/host/__init__.py,15
-  src/nlp2uri/host/artifact.py,94
-  src/nlp2uri/host/endpoint.py,34
-  src/nlp2uri/host/resource.py,69
-  src/nlp2uri/integrators/__init__.py,22
-  src/nlp2uri/integrators/mcp_server.py,128
-  src/nlp2uri/integrators/rest_server.py,90
-  src/nlp2uri/mcp.py,81
-  src/nlp2uri/models.py,180
-  src/nlp2uri/parse_nl.py,376
-  src/nlp2uri/platform_detect.py,18
-  src/nlp2uri/platforms/__init__.py,6
-  src/nlp2uri/platforms/base.py,130
-  src/nlp2uri/platforms/linux.py,145
-  src/nlp2uri/platforms/macos.py,94
-  src/nlp2uri/platforms/registry.py,24
-  src/nlp2uri/platforms/windows.py,94
-  src/nlp2uri/resolve.py,40
-  src/nlp2uri/runtime.py,92
-  src/nlp2uri/schemes/__init__.py,5
-  src/nlp2uri/schemes/build.py,64
-  src/nlp2uri/schemes/desktop.py,166
-  src/nlp2uri/schemes/file.py,25
-  src/nlp2uri/schemes/http.py,22
-  src/nlp2uri/schemes/ide.py,35
-  src/nlp2uri/schemes/util.py,47
-  src/nlp2uri/service.py,151
-  src/nlp2uri/systemmap/__init__.py,68
-  src/nlp2uri/systemmap/compile.py,179
-  src/nlp2uri/systemmap/context.py,47
-  src/nlp2uri/systemmap/encode.py,15
-  src/nlp2uri/systemmap/fallback.py,52
-  src/nlp2uri/systemmap/getv_load.py,97
-  src/nlp2uri/systemmap/getv_uri.py,225
-  src/nlp2uri/systemmap/index.py,267
-  src/nlp2uri/systemmap/load.py,46
-  src/nlp2uri/systemmap/resolve.py,122
-  src/nlp2uri/systemmap/uri.py,93
-  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
-  testql-scenarios/generated-from-pytests.testql.toon.yaml,12
-  tree.sh,1
+  schemas/codegen/export_driver_stubs.py,98
+  schemas/codegen/export_mcp_schemas.py,54
+  schemas/codegen/fix_proto_imports.py,84
+  schemas/codegen/generate.sh,54
+  schemas/codegen/scaffold_scheme.py,358
+  scripts/install-editable.sh,23
+  scripts/test-cqrs-smoke.sh,56
+  scripts/test-live-registry.sh,67
+  scripts/testapp-handler.sh,7
+  src/nlp2uri/__init__.py,29
+  src/nlp2uri/adapters/__init__.py,18
+  src/nlp2uri/adapters/base.py,60
+  src/nlp2uri/adapters/cli.py,40
+  src/nlp2uri/adapters/mcp.py,383
+  src/nlp2uri/adapters/rest.py,88
+  src/nlp2uri/adapters/shell.py,67
+  src/nlp2uri/cli.py,200
+  src/nlp2uri/compile.py,432
+  src/nlp2uri/config.py,231
+  src/nlp2uri/cqrs/__init__.py,9
+  src/nlp2uri/cqrs/base.py,98
+  src/nlp2uri/cqrs/dispatcher.py,118
+  src/nlp2uri/cqrs/drivers/__init__.py,30
+  src/nlp2uri/cqrs/drivers/artifact_filesystem.py,33
+  src/nlp2uri/cqrs/drivers/command_curl.py,40
+  src/nlp2uri/cqrs/drivers/container_docker.py,89
+  src/nlp2uri/cqrs/drivers/delegate.py,30
+  src/nlp2uri/cqrs/drivers/endpoint_curl.py,34
+  src/nlp2uri/cqrs/drivers/getv_cli.py,28
+  src/nlp2uri/cqrs/drivers/resource_probe.py,36
+  src/nlp2uri/cqrs/drivers/runtime_curl.py,35
+  src/nlp2uri/cqrs/drivers/service_ops.py,129
+  src/nlp2uri/cqrs/event_store.py,68
+  src/nlp2uri/cqrs/http_store.py,53
+  src/nlp2uri/cqrs/plugins.py,65
+  src/nlp2uri/cqrs/registry.py,98
+  src/nlp2uri/host/__init__.py,16
+  src/nlp2uri/host/artifact.py,95
+  src/nlp2uri/host/endpoint.py,35
+  src/nlp2uri/host/resource.py,70
+  src/nlp2uri/integrators/__init__.py,23
+  src/nlp2uri/integrators/mcp_server.py,129
+  src/nlp2uri/integrators/rest_server.py,91
+  src/nlp2uri/mcp.py,82
+  src/nlp2uri/models.py,181
+  src/nlp2uri/parse_nl.py,377
+  src/nlp2uri/platform_detect.py,19
+  src/nlp2uri/platforms/__init__.py,7
+  src/nlp2uri/platforms/base.py,131
+  src/nlp2uri/platforms/linux.py,146
+  src/nlp2uri/platforms/macos.py,95
+  src/nlp2uri/platforms/registry.py,25
+  src/nlp2uri/platforms/windows.py,95
+  src/nlp2uri/resolve.py,41
+  src/nlp2uri/runtime.py,93
+  src/nlp2uri/schemes/__init__.py,6
+  src/nlp2uri/schemes/build.py,65
+  src/nlp2uri/schemes/desktop.py,167
+  src/nlp2uri/schemes/file.py,26
+  src/nlp2uri/schemes/http.py,23
+  src/nlp2uri/schemes/ide.py,36
+  src/nlp2uri/schemes/util.py,48
+  src/nlp2uri/service.py,152
+  src/nlp2uri/systemmap/__init__.py,69
+  src/nlp2uri/systemmap/compile.py,180
+  src/nlp2uri/systemmap/context.py,48
+  src/nlp2uri/systemmap/encode.py,16
+  src/nlp2uri/systemmap/fallback.py,53
+  src/nlp2uri/systemmap/getv_load.py,98
+  src/nlp2uri/systemmap/getv_uri.py,226
+  src/nlp2uri/systemmap/index.py,268
+  src/nlp2uri/systemmap/load.py,47
+  src/nlp2uri/systemmap/resolve.py,123
+  src/nlp2uri/systemmap/uri.py,94
+  tests/conftest.py,18
+  tests/integration/test_xdg_handler.py,99
+  tests/test_adapters.py,120
+  tests/test_artifact_driver.py,57
+  tests/test_cli.py,31
+  tests/test_compile.py,34
+  tests/test_config.py,65
+  tests/test_container_driver.py,56
+  tests/test_cqrs_drivers.py,115
+  tests/test_getv_uri.py,74
+  tests/test_http_event_store.py,51
+  tests/test_intents_phase2.py,112
+  tests/test_mcp.py,25
+  tests/test_platforms.py,48
+  tests/test_plugins.py,33
+  tests/test_resolve.py,77
+  tests/test_resource_driver.py,44
+  tests/test_rest_server.py,48
+  tests/test_schemas_registry.py,53
+  tests/test_service.py,27
+  tests/test_systemmap.py,174
+  tree.sh,2
 D:
-  src/nlp2uri/systemmap/index.py:
-    e: UriMapEntry,UriMap,_model_dump,_ir_field,_add_entry,build_uri_index,_get_id,_get_id_field
-    UriMapEntry: to_dict(0)  # One addressable entity in a SystemMap...
-    UriMap: lookup(1),find_by_kind(1),find_command(1),to_dict(0)  # ``system_map_uri.v1`` — canonical addressing layer over Syst...
-    _model_dump(obj)
-    _ir_field(ir;name;default)
-    _add_entry(uri_map)
-    build_uri_index(ir)
-    _get_id(obj)
-    _get_id_field(obj;key)
-  src/nlp2uri/systemmap/resolve.py:
-    e: ResolvedSystemUri,_normalize_token,_name_variants,resolve_prompt_against_system_map
-    ResolvedSystemUri: to_dict(0)  # One NL match against the SystemMap...
-    _normalize_token(text)
-    _name_variants(name)
-    resolve_prompt_against_system_map(prompt;ir)
+  examples/execute/dry-run/main.py:
+    e: main
+    main()
+  examples/mcp/tool-handoff/main.py:
+    e: main
+    main()
+  examples/resolve/nl-to-uri/main.py:
+    e: main
+    main()
+  schemas/codegen/export_driver_stubs.py:
+    e: main
+    main()
+  schemas/codegen/export_mcp_schemas.py:
+    e: tool_schema,main
+    tool_schema(scheme;meta)
+    main()
+  schemas/codegen/fix_proto_imports.py:
+    e: _pascal,fix_api,fix_driver,main
+    _pascal(scheme)
+    fix_api(path;scheme)
+    fix_driver(path;scheme)
+    main()
+  schemas/codegen/scaffold_scheme.py:
+    e: _pascal,_proto_package,_write,aggregate_proto,commands_proto,events_proto,queries_proto,driver_proto,api_proto,openapi_yaml,readme_md,scaffold_scheme,main
+    _pascal(name)
+    _proto_package(scheme;meta)
+    _write(path;content)
+    aggregate_proto(scheme;meta)
+    commands_proto(scheme;meta)
+    events_proto(scheme;meta)
+    queries_proto(scheme;meta)
+    driver_proto(scheme;meta)
+    api_proto(scheme;meta)
+    openapi_yaml(scheme;meta)
+    readme_md(scheme;meta)
+    scaffold_scheme(scheme;meta)
+    main()
+  src/nlp2uri/__init__.py:
+  src/nlp2uri/adapters/__init__.py:
+  src/nlp2uri/adapters/base.py:
+    e: AdapterRequest,AdapterResponse,BaseAdapter
+    AdapterRequest:
+    AdapterResponse: to_dict(0)
+    BaseAdapter: __init__(1),with_platform(1),handle(1),_service_for(1)
+  src/nlp2uri/adapters/cli.py:
+    e: CliAdapter
+    CliAdapter: handle(1)
+  src/nlp2uri/adapters/mcp.py:
+    e: McpAdapter
+    McpAdapter: handle(1),call_tool(2),tool_dispatch(0),_args_from_request(1),_args_to_request(2),mcp_content(1),_tool_plan(1),_tool_resolve(1),_tool_compile(1),_tool_execute(1),_tool_handle(1),_tool_list_system_uris(1),_tool_resolve_system_map(1),_tool_list_getv_uris(1),_tool_resolve_getv(1),_tool_get_getv_var(1),_tool_cqrs_compile(1),_tool_cqrs_execute(1)
+  src/nlp2uri/adapters/rest.py:
+    e: RestAdapter
+    RestAdapter: handle(1),dispatch(2),body_to_request(1),match_route(2)
+  src/nlp2uri/adapters/shell.py:
+    e: ShellAdapter
+    ShellAdapter: handle(1),_export_script(0)
+  src/nlp2uri/cli.py:
+    e: _add_common_args,_build_parser,_platform,_emit,_request_from_args,_with_platform,_run_config,_run_shell,_run_adapter_command,_run_execute,main
+    _add_common_args(parser)
+    _build_parser()
+    _platform(raw)
+    _emit(payload)
+    _request_from_args(args)
+    _with_platform(payload)
+    _run_config(args)
+    _run_shell(args)
+    _run_adapter_command(args)
+    _run_execute(args)
+    main(argv)
   src/nlp2uri/compile.py:
     e: compile_uri_to_actions,_query_params,_first_available,_open_uri,_compile_app,_compile_settings_panel,_compile_terminal,_compile_settings,_compile_launch_app,_capture_outfile,_linux_screen_capture,_macos_screen_capture,_windows_screen_capture,_compile_screen_capture,_linux_window_capture,_macos_window_capture,_windows_window_capture,_compile_window_capture,_compile_screenshot,_compile_window_move,_compile_window,_compile_legacy_nlp2uri,_desktop_id_for_app
     compile_uri_to_actions(uri;os)
@@ -308,84 +209,9 @@ D:
     _compile_window(host;authority;params;uri)
     _compile_legacy_nlp2uri(host;uri)
     _desktop_id_for_app(name)
-  src/nlp2uri/adapters/rest.py:
-    e: RestAdapter
-    RestAdapter(BaseAdapter): handle(1),dispatch(2),body_to_request(0),match_route(1)
-  src/nlp2uri/host/resource.py:
-    e: is_resource_uri,_decode,_filesystem_probe_path,build_resource_actions
-    is_resource_uri(uri)
-    _decode(value)
-    _filesystem_probe_path(resource_id)
-    build_resource_actions(uri;host)
-  src/nlp2uri/systemmap/getv_uri.py:
-    e: ResolvedGetvUri,uri_for_getv_profile,uri_for_getv_var,is_getv_uri,_decode_segment,build_getv_uri_index,resolve_prompt_against_getv,compile_getv_uri,get_getv_var_value
-    ResolvedGetvUri: to_dict(0)
-    uri_for_getv_profile(category;profile)
-    uri_for_getv_var(category;profile;var_name)
-    is_getv_uri(uri)
-    _decode_segment(value)
-    build_getv_uri_index()
-    resolve_prompt_against_getv(prompt)
-    compile_getv_uri(uri;host)
-    get_getv_var_value(uri)
-  src/nlp2uri/schemes/build.py:
-    e: build_uri,_build_navigate
-    build_uri(intent)
-    _build_navigate(intent)
-  src/nlp2uri/host/artifact.py:
-    e: is_artifact_uri,_decode,resolve_artifact_path,build_artifact_actions
-    is_artifact_uri(uri)
-    _decode(value)
-    resolve_artifact_path(uri)
-    build_artifact_actions(uri;host)
-  src/nlp2uri/models.py:
-    e: HostPlatform,IntentKind,UriIntent,UriSpec,OSAction,NLP2URIResult,ActionResult
-    HostPlatform(str,Enum):
-    IntentKind(str,Enum):
-    UriIntent: with_params(0),to_slots(0)  # Structured intent parsed from natural language...
-    UriSpec: to_dict(0)  # Resolved abstract URI ready for execution or MCP handoff...
-    OSAction: argv(0),to_dict(0)  # Concrete host command derived from an abstract URI...
-    NLP2URIResult: to_dict(0)  # Full compiler output: NL → URI + OS action plan...
-    ActionResult: to_dict(0)
-  src/nlp2uri/systemmap/compile.py:
-    e: is_system_map_uri,_decode_segment,_backend_url,_worker_url,compile_system_map_uri,_compile_command,_compile_runtime,_compile_resource,_compile_artifact,_compile_access,_compile_metadata
-    is_system_map_uri(uri)
-    _decode_segment(value)
-    _backend_url()
-    _worker_url()
-    compile_system_map_uri(uri;host)
-    _compile_command(host;parsed)
-    _compile_runtime(host;parsed)
-    _compile_resource(host;parsed)
-    _compile_artifact(host;parsed)
-    _compile_access(host;parsed)
-    _compile_metadata(host;scheme;parsed)
-  src/nlp2uri/platforms/linux.py:
-    e: LinuxExecutor
-    LinuxExecutor(UriExecutor): execute(1),_open_generic(1),_open_settings(0),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/adapters/shell.py:
-    e: ShellAdapter
-    ShellAdapter(BaseAdapter): handle(1),_export_script(-1)
-  schemas/codegen/export_driver_stubs.py:
-    e: main
-    main()
-  src/nlp2uri/adapters/cli.py:
-    e: CliAdapter
-    CliAdapter(BaseAdapter): handle(1)
-  src/nlp2uri/runtime.py:
-    e: get_executor,execute_uri
-    get_executor(platform)
-    execute_uri(uri)
-  src/nlp2uri/schemes/util.py:
-    e: abstract_url,nlp2uri_url,normalize_path,file_uri,percent_encode_segment
-    abstract_url(scheme;authority;path;params)
-    nlp2uri_url(path;params)
-    normalize_path(path)
-    file_uri(path)
-    percent_encode_segment(value)
   src/nlp2uri/config.py:
-    e: NLP2URIConfig,payload_keys,_yaml_scalar,_parse_scalar,_parse_simple_yaml,config_search_paths,find_config_path,default_config,_load_from_path,load_config,save_config,ensure_config,get_effective_platform,reset_config_cache
-    NLP2URIConfig: resolved_platform(0),apply_runtime_env(0),to_dict(0),to_yaml(0)  # Persisted defaults (nlp2uri.yaml)...
+    e: payload_keys,_yaml_scalar,_parse_scalar,_parse_simple_yaml,config_search_paths,find_config_path,default_config,_load_from_path,load_config,save_config,ensure_config,get_effective_platform,reset_config_cache,NLP2URIConfig
+    NLP2URIConfig: resolved_platform(0),apply_runtime_env(0),to_dict(0),to_yaml(0)  # Persisted defaults (nlp2uri.yaml).
     payload_keys()
     _yaml_scalar(value)
     _parse_scalar(raw)
@@ -399,6 +225,87 @@ D:
     ensure_config(path)
     get_effective_platform(override)
     reset_config_cache()
+  src/nlp2uri/cqrs/__init__.py:
+  src/nlp2uri/cqrs/base.py:
+    e: DriverCapabilities,CompileResult,ExecuteResult,ProbeResult,UriDriver
+    DriverCapabilities:
+    CompileResult:
+    ExecuteResult:
+    ProbeResult:
+    UriDriver: capabilities(0),compile(1),execute(2),probe(1)
+  src/nlp2uri/cqrs/dispatcher.py:
+    e: CqrsDispatcher
+    CqrsDispatcher: __init__(0),compile_uri(1),execute_uri(1),probe_uri(1)
+  src/nlp2uri/cqrs/drivers/__init__.py:
+  src/nlp2uri/cqrs/drivers/artifact_filesystem.py:
+    e: ArtifactFilesystemDriver
+    ArtifactFilesystemDriver: compile(1)
+  src/nlp2uri/cqrs/drivers/command_curl.py:
+    e: CommandCurlDriver
+    CommandCurlDriver: compile(1),probe(1)
+  src/nlp2uri/cqrs/drivers/container_docker.py:
+    e: parse_container_uri,ContainerDockerDriver
+    ContainerDockerDriver: compile(1),probe(1),_docker_argv(4)
+    parse_container_uri(uri)
+  src/nlp2uri/cqrs/drivers/delegate.py:
+    e: DelegateCompileDriver
+    DelegateCompileDriver: __init__(2),compile(1)
+  src/nlp2uri/cqrs/drivers/endpoint_curl.py:
+    e: EndpointCurlDriver
+    EndpointCurlDriver: compile(1),probe(1)
+  src/nlp2uri/cqrs/drivers/getv_cli.py:
+    e: GetvCliDriver
+    GetvCliDriver: compile(1)
+  src/nlp2uri/cqrs/drivers/resource_probe.py:
+    e: ResourceProbeDriver
+    ResourceProbeDriver: compile(1),probe(1)
+  src/nlp2uri/cqrs/drivers/runtime_curl.py:
+    e: RuntimeCurlDriver
+    RuntimeCurlDriver: compile(1),probe(1)
+  src/nlp2uri/cqrs/drivers/service_ops.py:
+    e: parse_service_name,_compose_dir,ServiceCurlDriver,ServiceDockerDriver,ServiceSystemdDriver
+    ServiceCurlDriver: compile(1),probe(1)
+    ServiceDockerDriver: compile(1),probe(1)
+    ServiceSystemdDriver: compile(1),probe(1)
+    parse_service_name(uri)
+    _compose_dir(config)
+  src/nlp2uri/cqrs/event_store.py:
+    e: StoredEvent,InMemoryEventStore
+    StoredEvent: to_dict(0)
+    InMemoryEventStore: __init__(0),append(1),get_stream(1),all_events(0)
+  src/nlp2uri/cqrs/http_store.py:
+    e: HttpEventStore
+    HttpEventStore: __init__(1),append(1),_post_remote(1)  # In-memory store with async-safe HTTP mirror to process-regis
+  src/nlp2uri/cqrs/plugins.py:
+    e: _parse_entry_point_name,load_driver_plugins,resolve_driver_class
+    _parse_entry_point_name(name)
+    load_driver_plugins()
+    resolve_driver_class(scheme;target;builtins)
+  src/nlp2uri/cqrs/registry.py:
+    e: default_registry,DriverRegistry
+    DriverRegistry: __init__(1),schemes(0),plugin_drivers(0),targets_for(1),default_target(1),get_driver(2),driver_for_uri(2)
+    default_registry()
+  src/nlp2uri/host/__init__.py:
+  src/nlp2uri/host/artifact.py:
+    e: is_artifact_uri,_decode,resolve_artifact_path,build_artifact_actions
+    is_artifact_uri(uri)
+    _decode(value)
+    resolve_artifact_path(uri)
+    build_artifact_actions(uri;host)
+  src/nlp2uri/host/endpoint.py:
+    e: is_endpoint_uri,build_endpoint_url,build_endpoint_actions
+    is_endpoint_uri(uri)
+    build_endpoint_url(uri)
+    build_endpoint_actions(uri;host)
+  src/nlp2uri/host/resource.py:
+    e: is_resource_uri,_decode,_filesystem_probe_path,build_resource_actions
+    is_resource_uri(uri)
+    _decode(value)
+    _filesystem_probe_path(resource_id)
+    build_resource_actions(uri;host)
+  src/nlp2uri/integrators/__init__.py:
+    e: __getattr__
+    __getattr__(name)
   src/nlp2uri/integrators/mcp_server.py:
     e: _jsonrpc_response,_jsonrpc_error,_write_json,_log,_handle_initialize,_handle_tools_list,_handle_tools_call,handle_message,run_stdio,main
     _jsonrpc_response(req_id;result)
@@ -411,49 +318,27 @@ D:
     handle_message(msg)
     run_stdio()
     main(argv)
-  src/nlp2uri/systemmap/context.py:
-    e: load_ir_from_arguments,_coerce_ir
-    load_ir_from_arguments(arguments)
-    _coerce_ir(raw)
-  src/nlp2uri/host/endpoint.py:
-    e: is_endpoint_uri,build_endpoint_url,build_endpoint_actions
-    is_endpoint_uri(uri)
-    build_endpoint_url(uri)
-    build_endpoint_actions(uri;host)
-  src/nlp2uri/cqrs/registry.py:
-    e: DriverRegistry,default_registry
-    DriverRegistry: __init__(1),targets_for(1),default_target(1),get_driver(2),driver_for_uri(2)
-    default_registry()
-  src/nlp2uri/systemmap/getv_load.py:
-    e: getv_available,getv_missing_message,getv_home,_parse_env_file,discover_profiles,load_profile_dict,mask_var_value,profile_manager
-    getv_available()
-    getv_missing_message()
-    getv_home()
-    _parse_env_file(path)
-    discover_profiles(home)
-    load_profile_dict(category;profile)
-    mask_var_value(key;value)
-    profile_manager(home)
-  src/nlp2uri/cqrs/base.py:
-    e: DriverCapabilities,CompileResult,ExecuteResult,ProbeResult,UriDriver
-    DriverCapabilities:
-    CompileResult:
-    ExecuteResult:
-    ProbeResult:
-    UriDriver(ABC): capabilities(0),compile(1),execute(2),probe(1)
-  src/nlp2uri/platforms/base.py:
-    e: UriExecutor,slugify_app_name
-    UriExecutor(ABC): execute(1),_result(0),_dry(2),_run(2),_first_available(1),_open_with_browser(1),_parse_nlp2uri(1),_desktop_id_for_app(1)
-    slugify_app_name(name)
-  src/nlp2uri/platforms/macos.py:
-    e: MacOSExecutor
-    MacOSExecutor(UriExecutor): execute(1),_open(1),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/platforms/windows.py:
-    e: WindowsExecutor
-    WindowsExecutor(UriExecutor): execute(1),_start(1),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/cqrs/drivers/artifact_filesystem.py:
-    e: ArtifactFilesystemDriver
-    ArtifactFilesystemDriver(UriDriver): compile(1)
+  src/nlp2uri/integrators/rest_server.py:
+    e: run_server,main,NLP2URIRequestHandler
+    NLP2URIRequestHandler: log_message(1),_read_json(0),_send(2),do_GET(0),do_POST(0)
+    run_server(host;port)
+    main(argv)
+  src/nlp2uri/mcp.py:
+    e: text_uri_list,ui_resource,tool_resolve_desktop_action,tool_execute_desktop_uri,mcp_handoff_payload
+    text_uri_list(uris)
+    ui_resource(uri)
+    tool_resolve_desktop_action(text)
+    tool_execute_desktop_uri(uri)
+    mcp_handoff_payload(text)
+  src/nlp2uri/models.py:
+    e: HostPlatform,IntentKind,UriIntent,UriSpec,OSAction,NLP2URIResult,ActionResult
+    HostPlatform:
+    IntentKind:
+    UriIntent: with_params(0),intent_name(0),to_slots(0)  # Structured intent parsed from natural language.
+    UriSpec: to_dict(0)  # Resolved abstract URI ready for execution or MCP handoff.
+    OSAction: argv(0),to_dict(0)  # Concrete host command derived from an abstract URI.
+    NLP2URIResult: to_dict(0)  # Full compiler output: NL → URI + OS action plan.
+    ActionResult: to_dict(0)
   src/nlp2uri/parse_nl.py:
     e: _strip_quotes,_normalize_aliases,_parse_absolute_uri,_parse_http_url,_parse_ide_project,_parse_file_open,_normalize_panel,_parse_settings_panel,_parse_terminal,_parse_window_move,_parse_settings,_parse_active_window,_capture_target,_parse_capture,_parse_focus,_normalize_app_name,_parse_app_open,_parse_path,_parse_open_prefix,_parse_fallback,parse_text
     _strip_quotes(value)
@@ -477,6 +362,39 @@ D:
     _parse_open_prefix(raw;lowered)
     _parse_fallback(raw;_lowered)
     parse_text(text)
+  src/nlp2uri/platform_detect.py:
+    e: detect_platform
+    detect_platform()
+  src/nlp2uri/platforms/__init__.py:
+  src/nlp2uri/platforms/base.py:
+    e: slugify_app_name,UriExecutor
+    UriExecutor: execute(1),_result(0),_dry(2),_run(2),_first_available(1),_open_with_browser(1),_parse_nlp2uri(1),_desktop_id_for_app(1)
+    slugify_app_name(name)
+  src/nlp2uri/platforms/linux.py:
+    e: LinuxExecutor
+    LinuxExecutor: execute(1),_open_generic(1),_open_settings(0),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/macos.py:
+    e: MacOSExecutor
+    MacOSExecutor: execute(1),_open(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/registry.py:
+    e: get_executor
+    get_executor(platform)
+  src/nlp2uri/platforms/windows.py:
+    e: WindowsExecutor
+    WindowsExecutor: execute(1),_start(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/resolve.py:
+    e: resolve_text,nlp2uri
+    resolve_text(text)
+    nlp2uri(prompt)
+  src/nlp2uri/runtime.py:
+    e: get_executor,execute_uri
+    get_executor(platform)
+    execute_uri(uri)
+  src/nlp2uri/schemes/__init__.py:
+  src/nlp2uri/schemes/build.py:
+    e: build_uri,_build_navigate
+    build_uri(intent)
+    _build_navigate(intent)
   src/nlp2uri/schemes/desktop.py:
     e: build_capture,build_focus,build_app_open,build_move,build_terminal,build_settings
     build_capture(intent)
@@ -485,28 +403,93 @@ D:
     build_move(intent)
     build_terminal(intent)
     build_settings()
+  src/nlp2uri/schemes/file.py:
+    e: build_file
+    build_file(intent)
+  src/nlp2uri/schemes/http.py:
+    e: build_http
+    build_http(intent)
+  src/nlp2uri/schemes/ide.py:
+    e: build_ide
+    build_ide(intent)
+  src/nlp2uri/schemes/util.py:
+    e: abstract_url,nlp2uri_url,normalize_path,file_uri,percent_encode_segment
+    abstract_url(scheme;authority;path;params)
+    nlp2uri_url(path;params)
+    normalize_path(path)
+    file_uri(path)
+    percent_encode_segment(value)
+  src/nlp2uri/service.py:
+    e: NLP2URIService
+    NLP2URIService: default(1),for_platform(2),_cfg(0),_host(0),from_prompt(1),resolve(1),compile(1),execute(1),handle_prompt(1),handle_uri(1),list_system_uris(1),resolve_system_map(2),list_getv_uris(0),resolve_getv(1),read_getv_var(1)  # Reusable facade: prompt → URI → compile → execute.
+  src/nlp2uri/systemmap/__init__.py:
+  src/nlp2uri/systemmap/compile.py:
+    e: is_system_map_uri,_decode_segment,_backend_url,_worker_url,compile_system_map_uri,_compile_command,_compile_runtime,_compile_resource,_compile_artifact,_compile_access,_compile_metadata
+    is_system_map_uri(uri)
+    _decode_segment(value)
+    _backend_url()
+    _worker_url()
+    compile_system_map_uri(uri;host)
+    _compile_command(host;parsed)
+    _compile_runtime(host;parsed)
+    _compile_resource(host;parsed)
+    _compile_artifact(host;parsed)
+    _compile_access(host;parsed)
+    _compile_metadata(host;scheme;parsed)
+  src/nlp2uri/systemmap/context.py:
+    e: load_ir_from_arguments,_coerce_ir
+    load_ir_from_arguments(arguments)
+    _coerce_ir(raw)
+  src/nlp2uri/systemmap/encode.py:
+    e: encode_segment,encode_path
+    encode_segment(value)
+    encode_path(value)
   src/nlp2uri/systemmap/fallback.py:
     e: resolve_prompt_with_fallback
     resolve_prompt_with_fallback(prompt;ir)
-  src/nlp2uri/adapters/mcp.py:
-    e: McpAdapter
-    McpAdapter(BaseAdapter): handle(1),call_tool(2),tool_dispatch(0),_args_from_request(0),_args_to_request(1),mcp_content(0),_tool_plan(1),_tool_resolve(1),_tool_compile(1),_tool_execute(1),_tool_handle(1),_tool_list_system_uris(1),_tool_resolve_system_map(1),_tool_list_getv_uris(1),_tool_resolve_getv(1),_tool_get_getv_var(1),_tool_cqrs_compile(1),_tool_cqrs_execute(1)
-  src/nlp2uri/cli.py:
-    e: _add_common_args,_build_parser,_platform,_emit,_request_from_args,_with_platform,_run_config,_run_shell,_run_adapter_command,_run_execute,main
-    _add_common_args(parser)
-    _build_parser()
-    _platform(raw)
-    _emit(payload)
-    _request_from_args(args)
-    _with_platform(payload)
-    _run_config(args)
-    _run_shell(args)
-    _run_adapter_command(args)
-    _run_execute(args)
-    main(argv)
-  src/nlp2uri/platform_detect.py:
-    e: detect_platform
-    detect_platform()
+  src/nlp2uri/systemmap/getv_load.py:
+    e: getv_available,getv_missing_message,getv_home,_parse_env_file,discover_profiles,load_profile_dict,mask_var_value,profile_manager
+    getv_available()
+    getv_missing_message()
+    getv_home()
+    _parse_env_file(path)
+    discover_profiles(home)
+    load_profile_dict(category;profile)
+    mask_var_value(key;value)
+    profile_manager(home)
+  src/nlp2uri/systemmap/getv_uri.py:
+    e: uri_for_getv_profile,uri_for_getv_var,is_getv_uri,_decode_segment,build_getv_uri_index,resolve_prompt_against_getv,compile_getv_uri,get_getv_var_value,ResolvedGetvUri
+    ResolvedGetvUri: to_dict(0)
+    uri_for_getv_profile(category;profile)
+    uri_for_getv_var(category;profile;var_name)
+    is_getv_uri(uri)
+    _decode_segment(value)
+    build_getv_uri_index()
+    resolve_prompt_against_getv(prompt)
+    compile_getv_uri(uri;host)
+    get_getv_var_value(uri)
+  src/nlp2uri/systemmap/index.py:
+    e: _model_dump,_ir_field,_add_entry,build_uri_index,_get_id,_get_id_field,UriMapEntry,UriMap
+    UriMapEntry: to_dict(0)  # One addressable entity in a SystemMap.
+    UriMap: lookup(1),find_by_kind(1),find_command(1),to_dict(0)  # ``system_map_uri.v1`` — canonical addressing layer over Syst
+    _model_dump(obj)
+    _ir_field(ir;name;default)
+    _add_entry(uri_map)
+    build_uri_index(ir)
+    _get_id(obj)
+    _get_id_field(obj;key)
+  src/nlp2uri/systemmap/load.py:
+    e: env2llm_available,env2llm_missing_message,load_system_map_from_doql,load_system_map_from_example
+    env2llm_available()
+    env2llm_missing_message()
+    load_system_map_from_doql(path)
+    load_system_map_from_example(example_dir)
+  src/nlp2uri/systemmap/resolve.py:
+    e: _normalize_token,_name_variants,resolve_prompt_against_system_map,ResolvedSystemUri
+    ResolvedSystemUri: to_dict(0)  # One NL match against the SystemMap.
+    _normalize_token(text)
+    _name_variants(name)
+    resolve_prompt_against_system_map(prompt;ir)
   src/nlp2uri/systemmap/uri.py:
     e: _get,_get_list,uri_for_runtime,uri_for_command,uri_for_resource,uri_for_access,uri_for_artifact,uri_for_conversation,uri_for_process,uri_for_validation,uri_for_schedule,uri_for_generated_service,uri_for_environment
     _get(obj;key;default)
@@ -522,334 +505,154 @@ D:
     uri_for_schedule(sched)
     uri_for_generated_service(svc)
     uri_for_environment(example_id)
-  src/nlp2uri/cqrs/dispatcher.py:
-    e: CqrsDispatcher
-    CqrsDispatcher: __init__(0),compile_uri(1),execute_uri(1),probe_uri(1)
-  src/nlp2uri/service.py:
-    e: NLP2URIService
-    NLP2URIService: default(0),for_platform(1),_cfg(0),_host(0),from_prompt(1),resolve(1),compile(1),execute(1),handle_prompt(1),handle_uri(1),list_system_uris(1),resolve_system_map(2),list_getv_uris(0),resolve_getv(1),read_getv_var(1)  # Reusable facade: prompt → URI → compile → execute...
-  src/nlp2uri/cqrs/drivers/resource_probe.py:
-    e: ResourceProbeDriver
-    ResourceProbeDriver(UriDriver): compile(1),probe(1)
-  src/nlp2uri/cqrs/drivers/service_ops.py:
-    e: ServiceCurlDriver,ServiceDockerDriver,ServiceSystemdDriver,parse_service_name,_compose_dir
-    ServiceCurlDriver(UriDriver): compile(1),probe(1)
-    ServiceDockerDriver(UriDriver): compile(1),probe(1)
-    ServiceSystemdDriver(UriDriver): compile(1),probe(1)
-    parse_service_name(uri)
-    _compose_dir(config)
-  src/nlp2uri/cqrs/drivers/command_curl.py:
-    e: CommandCurlDriver
-    CommandCurlDriver(UriDriver): compile(1),probe(1)
-  src/nlp2uri/resolve.py:
-    e: resolve_text,nlp2uri
-    resolve_text(text)
-    nlp2uri(prompt)
-  src/nlp2uri/integrators/rest_server.py:
-    e: NLP2URIRequestHandler,run_server,main
-    NLP2URIRequestHandler(BaseHTTPRequestHandler): log_message(1),_read_json(0),_send(2),do_GET(0),do_POST(0)
-    run_server(host;port)
-    main(argv)
-  src/nlp2uri/schemes/http.py:
-    e: build_http
-    build_http(intent)
-  src/nlp2uri/schemes/ide.py:
-    e: build_ide
-    build_ide(intent)
-  schemas/codegen/scaffold_scheme.py:
-    e: _pascal,_proto_package,_write,aggregate_proto,commands_proto,events_proto,queries_proto,driver_proto,api_proto,openapi_yaml,readme_md,scaffold_scheme,main
-    _pascal(name)
-    _proto_package(scheme;meta)
-    _write(path;content)
-    aggregate_proto(scheme;meta)
-    commands_proto(scheme;meta)
-    events_proto(scheme;meta)
-    queries_proto(scheme;meta)
-    driver_proto(scheme;meta)
-    api_proto(scheme;meta)
-    openapi_yaml(scheme;meta)
-    readme_md(scheme;meta)
-    scaffold_scheme(scheme;meta)
-    main()
-  schemas/codegen/export_mcp_schemas.py:
-    e: tool_schema,main
-    tool_schema(scheme;meta)
-    main()
-  schemas/codegen/fix_proto_imports.py:
-    e: _pascal,fix_api,fix_driver,main
-    _pascal(scheme)
-    fix_api(path;scheme)
-    fix_driver(path;scheme)
-    main()
-  examples/execute/dry-run/main.py:
-    e: main
-    main()
-  examples/resolve/nl-to-uri/main.py:
-    e: main
-    main()
-  src/nlp2uri/integrators/__init__.py:
-    e: __getattr__
-    __getattr__(name)
-  src/nlp2uri/platforms/registry.py:
-    e: get_executor
-    get_executor(platform)
-  src/nlp2uri/schemes/file.py:
-    e: build_file
-    build_file(intent)
-  src/nlp2uri/systemmap/load.py:
-    e: env2llm_available,env2llm_missing_message,load_system_map_from_doql,load_system_map_from_example
-    env2llm_available()
-    env2llm_missing_message()
-    load_system_map_from_doql(path)
-    load_system_map_from_example(example_dir)
-  src/nlp2uri/cqrs/event_store.py:
-    e: StoredEvent,InMemoryEventStore
-    StoredEvent: to_dict(0)
-    InMemoryEventStore: __init__(0),append(1),get_stream(1),all_events(0)
-  src/nlp2uri/cqrs/http_store.py:
-    e: HttpEventStore
-    HttpEventStore(InMemoryEventStore): __init__(1),append(1),_post_remote(1)  # In-memory store with async-safe HTTP mirror to process-regis...
-  src/nlp2uri/cqrs/drivers/runtime_curl.py:
-    e: RuntimeCurlDriver
-    RuntimeCurlDriver(UriDriver): compile(1),probe(1)
-  examples/mcp/tool-handoff/main.py:
-    e: main
-    main()
-  src/nlp2uri/mcp.py:
-    e: text_uri_list,ui_resource,tool_resolve_desktop_action,tool_execute_desktop_uri,mcp_handoff_payload
-    text_uri_list(uris)
-    ui_resource(uri)
-    tool_resolve_desktop_action(text)
-    tool_execute_desktop_uri(uri)
-    mcp_handoff_payload(text)
-  src/nlp2uri/adapters/base.py:
-    e: AdapterRequest,AdapterResponse,BaseAdapter
-    AdapterRequest:
-    AdapterResponse: to_dict(0)
-    BaseAdapter(ABC): __init__(1),with_platform(1),handle(1),_service_for(1)
-  src/nlp2uri/cqrs/drivers/endpoint_curl.py:
-    e: EndpointCurlDriver
-    EndpointCurlDriver(UriDriver): compile(1),probe(1)
-  src/nlp2uri/cqrs/drivers/delegate.py:
-    e: DelegateCompileDriver
-    DelegateCompileDriver(UriDriver): __init__(2),compile(1)
-  src/nlp2uri/cqrs/drivers/getv_cli.py:
-    e: GetvCliDriver
-    GetvCliDriver(UriDriver): compile(1)
-  src/nlp2uri/systemmap/encode.py:
-    e: encode_segment,encode_path
-    encode_segment(value)
-    encode_path(value)
-  goal.yaml:
-  docker-compose.yml:
-  nlp2uri.yaml:
-  tree.sh:
-  prefact.yaml:
-  Dockerfile:
-  project.sh:
-  examples/run-e2e.sh:
-  examples/integrators/shell-export/e2e.sh:
-  examples/integrators/rest-api/e2e.sh:
-  examples/integrators/mcp-stdio/e2e.sh:
-  examples/integrators/mcp-stdio/mcp-config.cursor.json:
-  examples/integrators/mcp-stdio/mcp-config.json:
-  examples/mcp/tool-handoff/e2e.sh:
-  examples/execute/dry-run/e2e.sh:
-  examples/resolve/nl-to-uri/e2e.sh:
-  examples/resolve/new-intents/e2e.sh:
-    e: print
-    print()
-  src/nlp2uri/platforms/__init__.py:
-  src/nlp2uri/adapters/__init__.py:
-  src/nlp2uri/schemes/__init__.py:
-  scripts/testapp-handler.sh:
-  scripts/install-editable.sh:
-  testql-scenarios/generated-from-pytests.testql.toon.yaml:
-  testql-scenarios/generated-cli-tests.testql.toon.yaml:
-  planfile.yaml:
-  schemas/Makefile:
-  pyproject.toml:
-  schemas/registry.yaml:
-  schemas/buf.yaml:
-  schemas/schemes/desktop_window/v1/api.proto:
-  schemas/buf.gen.yaml:
-  schemas/schemes/desktop_window/v1/queries.proto:
-  schemas/schemes/desktop_window/v1/driver.proto:
-  schemas/schemes/schedule/v1/api.proto:
-  schemas/schemes/desktop_window/v1/commands.proto:
-  schemas/schemes/desktop_window/v1/openapi.yaml:
-  schemas/schemes/schedule/v1/aggregate.proto:
-  schemas/schemes/schedule/v1/commands.proto:
-  schemas/schemes/schedule/v1/events.proto:
-  schemas/schemes/container/v1/events.proto:
-  schemas/schemes/schedule/v1/openapi.yaml:
-  schemas/schemes/container/v1/api.proto:
-  schemas/schemes/schedule/v1/driver.proto:
-  schemas/schemes/container/v1/aggregate.proto:
-  schemas/schemes/device/v1/events.proto:
-  schemas/schemes/container/v1/queries.proto:
-  schemas/schemes/device/v1/commands.proto:
-  schemas/schemes/device/v1/api.proto:
-  schemas/schemes/schedule/v1/queries.proto:
-  schemas/schemes/device/v1/openapi.yaml:
-  schemas/schemes/device/v1/driver.proto:
-  schemas/schemes/device/v1/aggregate.proto:
-  schemas/schemes/device/v1/queries.proto:
-  schemas/schemes/service/v1/events.proto:
-  schemas/schemes/service/v1/api.proto:
-  schemas/schemes/service/v1/aggregate.proto:
-  schemas/schemes/service/v1/queries.proto:
-  schemas/schemes/service/v1/openapi.yaml:
-  schemas/schemes/service/v1/commands.proto:
-  schemas/schemes/container/v1/driver.proto:
-  schemas/schemes/app/v1/api.proto:
-  schemas/schemes/app/v1/events.proto:
-  schemas/schemes/desktop_window/v1/events.proto:
-  schemas/schemes/container/v1/openapi.yaml:
-  schemas/schemes/app/v1/queries.proto:
-  schemas/codegen/generate.sh:
-  schemas/schemes/app/v1/commands.proto:
-  schemas/schemes/service/v1/driver.proto:
-  schemas/schemes/desktop_window/v1/aggregate.proto:
-  schemas/schemes/container/v1/commands.proto:
-  schemas/schemes/app/v1/driver.proto:
-  schemas/schemes/getv/v1/events.proto:
-  schemas/schemes/getv/v1/api.proto:
-  schemas/schemes/app/v1/openapi.yaml:
-  schemas/schemes/getv/v1/driver.proto:
-  schemas/schemes/app/v1/aggregate.proto:
-  schemas/schemes/getv/v1/queries.proto:
-  schemas/schemes/getv/v1/commands.proto:
-  schemas/schemes/deploy/v1/events.proto:
-  schemas/schemes/deploy/v1/aggregate.proto:
-  schemas/schemes/getv/v1/openapi.yaml:
-  schemas/schemes/deploy/v1/api.proto:
-  schemas/schemes/deploy/v1/commands.proto:
-  schemas/schemes/deploy/v1/driver.proto:
-  schemas/schemes/conversation/v1/events.proto:
-  schemas/schemes/deploy/v1/openapi.yaml:
-  schemas/schemes/conversation/v1/api.proto:
-  schemas/schemes/conversation/v1/aggregate.proto:
-  schemas/schemes/conversation/v1/driver.proto:
-  schemas/schemes/conversation/v1/commands.proto:
-  schemas/schemes/conversation/v1/queries.proto:
-  schemas/schemes/file/v1/events.proto:
-  schemas/schemes/file/v1/aggregate.proto:
-  schemas/schemes/file/v1/queries.proto:
-  schemas/schemes/file/v1/commands.proto:
-  schemas/schemes/file/v1/api.proto:
-  schemas/schemes/file/v1/driver.proto:
-  schemas/schemes/access/v1/events.proto:
-  schemas/schemes/file/v1/openapi.yaml:
-  schemas/schemes/access/v1/driver.proto:
-  schemas/schemes/access/v1/queries.proto:
-  schemas/schemes/deploy/v1/queries.proto:
-  schemas/schemes/access/v1/commands.proto:
-  schemas/schemes/access/v1/openapi.yaml:
-  schemas/schemes/runtime/v1/events.proto:
-  schemas/schemes/runtime/v1/api.proto:
-  schemas/schemes/runtime/v1/queries.proto:
-  schemas/schemes/runtime/v1/commands.proto:
-  schemas/schemes/runtime/v1/driver.proto:
-  schemas/schemes/runtime/v1/openapi.yaml:
-  schemas/schemes/command/v1/events.proto:
-  schemas/schemes/access/v1/aggregate.proto:
-  schemas/schemes/conversation/v1/openapi.yaml:
-  schemas/schemes/getv/v1/aggregate.proto:
-  schemas/schemes/access/v1/api.proto:
-  schemas/schemes/runtime/v1/aggregate.proto:
-  schemas/schemes/command/v1/driver.proto:
-  schemas/schemes/command/v1/aggregate.proto:
-  schemas/schemes/command/v1/commands.proto:
-  schemas/schemes/command/v1/api.proto:
-  schemas/schemes/mount/v1/aggregate.proto:
-  schemas/schemes/mount/v1/queries.proto:
-  schemas/schemes/command/v1/openapi.yaml:
-  schemas/schemes/mount/v1/events.proto:
-  schemas/schemes/mount/v1/commands.proto:
-  schemas/schemes/http/v1/aggregate.proto:
-  schemas/schemes/http/v1/api.proto:
-  schemas/schemes/mount/v1/openapi.yaml:
-  schemas/schemes/http/v1/events.proto:
-  schemas/schemes/mount/v1/driver.proto:
-  schemas/schemes/http/v1/queries.proto:
-  schemas/schemes/http/v1/driver.proto:
-  schemas/schemes/http/v1/commands.proto:
-  schemas/schemes/http/v1/openapi.yaml:
-  schemas/schemes/process/v1/events.proto:
-  schemas/schemes/process/v1/commands.proto:
-  schemas/schemes/process/v1/api.proto:
-  schemas/schemes/mount/v1/api.proto:
-  schemas/schemes/process/v1/aggregate.proto:
-  schemas/schemes/process/v1/driver.proto:
-  schemas/schemes/validation/v1/api.proto:
-  schemas/schemes/process/v1/openapi.yaml:
-  schemas/schemes/validation/v1/events.proto:
-  schemas/schemes/validation/v1/openapi.yaml:
-  schemas/schemes/validation/v1/commands.proto:
-  schemas/schemes/validation/v1/aggregate.proto:
-  schemas/schemes/validation/v1/queries.proto:
-  schemas/schemes/desktop_screenshot/v1/events.proto:
-  schemas/schemes/desktop_screenshot/v1/api.proto:
-  schemas/schemes/process/v1/queries.proto:
-  schemas/schemes/desktop_screenshot/v1/queries.proto:
-  schemas/schemes/desktop_screenshot/v1/aggregate.proto:
-  schemas/schemes/desktop_screenshot/v1/commands.proto:
-  schemas/schemes/desktop_screenshot/v1/openapi.yaml:
-  schemas/schemes/environment/v1/events.proto:
-  schemas/schemes/environment/v1/aggregate.proto:
-  schemas/schemes/environment/v1/queries.proto:
-  schemas/schemes/environment/v1/commands.proto:
-  schemas/schemes/environment/v1/driver.proto:
-  schemas/schemes/environment/v1/openapi.yaml:
-  schemas/schemes/resource/v1/events.proto:
-  schemas/schemes/resource/v1/api.proto:
-  schemas/schemes/resource/v1/queries.proto:
-  schemas/schemes/resource/v1/commands.proto:
-  schemas/schemes/resource/v1/driver.proto:
-  schemas/schemes/artifact/v1/api.proto:
-  schemas/schemes/artifact/v1/queries.proto:
-  schemas/schemes/artifact/v1/commands.proto:
-  schemas/schemes/artifact/v1/events.proto:
-  schemas/schemes/endpoint/v1/api.proto:
-  schemas/schemes/artifact/v1/openapi.yaml:
-  schemas/schemes/endpoint/v1/events.proto:
-  schemas/schemes/desktop_screenshot/v1/driver.proto:
-  schemas/schemes/endpoint/v1/aggregate.proto:
-  schemas/schemes/endpoint/v1/queries.proto:
-  schemas/schemes/endpoint/v1/driver.proto:
-  schemas/common/v1/events.proto:
-  schemas/schemes/endpoint/v1/openapi.yaml:
-  schemas/schemes/artifact/v1/driver.proto:
-  schemas/common/v1/api.proto:
-  schemas/common/v1/queries.proto:
-  schemas/schemes/command/v1/queries.proto:
-  schemas/schemes/resource/v1/aggregate.proto:
-  schemas/common/v1/uri.proto:
-  schemas/schemes/endpoint/v1/commands.proto:
-  schemas/schemes/resource/v1/openapi.yaml:
-  schemas/schemes/validation/v1/driver.proto:
-  schemas/schemes/environment/v1/api.proto:
-  schemas/schemes/artifact/v1/aggregate.proto:
-  schemas/common/v1/driver.proto:
-  schemas/common/v1/commands.proto:
-  src/nlp2uri/host/__init__.py:
-  src/nlp2uri/__init__.py:
-  src/nlp2uri/cqrs/__init__.py:
-  src/nlp2uri/cqrs/drivers/__init__.py:
-  src/nlp2uri/systemmap/__init__.py:
-  scripts/test-cqrs-smoke.sh:
-    e: print,print,print,print
-    print()
-    print()
-    print()
-    print()
-  scripts/test-live-registry.sh:
-    e: check,print,print,check,print,print,print
-    check()
-    print()
-    print()
-    check()
-    print()
-    print()
-    print()
+  tests/conftest.py:
+    e: isolated_config
+    isolated_config(tmp_path;monkeypatch)
+  tests/integration/test_xdg_handler.py:
+    e: test_xdg_custom_scheme_handler
+    test_xdg_custom_scheme_handler(tmp_path)
+  tests/test_adapters.py:
+    e: test_cli_adapter_plan,test_rest_adapter_plan,test_shell_adapter_export,test_mcp_adapter_tools,test_mcp_stdio_initialize,test_mcp_list_system_uris_inline_map,test_mcp_resolve_system_map_with_fallback,test_mcp_stdio_tools_call
+    test_cli_adapter_plan()
+    test_rest_adapter_plan()
+    test_shell_adapter_export()
+    test_mcp_adapter_tools()
+    test_mcp_stdio_initialize()
+    test_mcp_list_system_uris_inline_map()
+    test_mcp_resolve_system_map_with_fallback()
+    test_mcp_stdio_tools_call()
+  tests/test_artifact_driver.py:
+    e: test_resolve_artifact_path_with_example_dir,test_build_artifact_actions_read,test_build_artifact_actions_open,test_cqrs_artifact_driver_compile
+    test_resolve_artifact_path_with_example_dir()
+    test_build_artifact_actions_read()
+    test_build_artifact_actions_open()
+    test_cqrs_artifact_driver_compile()
+  tests/test_cli.py:
+    e: test_cli_resolve_json,test_cli_execute_dry_run
+    test_cli_resolve_json(capsys)
+    test_cli_execute_dry_run(capsys)
+  tests/test_compile.py:
+    e: test_compile_app_open_linux,test_compile_screenshot_macos,test_compile_ide_native_deep_link,test_compile_settings_windows
+    test_compile_app_open_linux()
+    test_compile_screenshot_macos()
+    test_compile_ide_native_deep_link()
+    test_compile_settings_windows()
+  tests/test_config.py:
+    e: test_auto_platform_detection,test_config_resolved_platform_auto,test_env_platform_override,test_save_and_load_yaml,test_ensure_config_writes_defaults
+    test_auto_platform_detection()
+    test_config_resolved_platform_auto()
+    test_env_platform_override(monkeypatch)
+    test_save_and_load_yaml(tmp_path;monkeypatch)
+    test_ensure_config_writes_defaults(tmp_path;monkeypatch)
+  tests/test_container_driver.py:
+    e: test_parse_container_uri,test_container_status_compile,test_container_logs_compile,test_container_exec_requires_cmd,test_container_exec_compile,test_registry_lists_container_target
+    test_parse_container_uri()
+    test_container_status_compile()
+    test_container_logs_compile()
+    test_container_exec_requires_cmd()
+    test_container_exec_compile()
+    test_registry_lists_container_target()
+  tests/test_cqrs_drivers.py:
+    e: test_registry_loads_all_schemes,test_command_curl_driver_compile,test_getv_driver_compile,test_endpoint_driver_compile,test_endpoint_via_compile_uri_to_actions,test_app_delegate_driver,test_execute_dry_run_appends_events,test_probe_endpoint,test_runtime_curl_probe,test_driver_registry_get_builtin,test_service_curl_driver_maps_todomat_health,test_service_docker_driver_compose_ps,test_service_systemd_driver_unit
+    test_registry_loads_all_schemes()
+    test_command_curl_driver_compile()
+    test_getv_driver_compile()
+    test_endpoint_driver_compile()
+    test_endpoint_via_compile_uri_to_actions()
+    test_app_delegate_driver()
+    test_execute_dry_run_appends_events()
+    test_probe_endpoint()
+    test_runtime_curl_probe()
+    test_driver_registry_get_builtin()
+    test_service_curl_driver_maps_todomat_health()
+    test_service_docker_driver_compose_ps()
+    test_service_systemd_driver_unit()
+  tests/test_getv_uri.py:
+    e: getv_home,test_uri_for_getv_var,test_build_getv_uri_index,test_resolve_prompt_env_key,test_get_var_masked,test_compile_get_var,test_compile_getv_via_top_level
+    getv_home(tmp_path)
+    test_uri_for_getv_var()
+    test_build_getv_uri_index(getv_home)
+    test_resolve_prompt_env_key(getv_home)
+    test_get_var_masked(getv_home)
+    test_compile_get_var()
+    test_compile_getv_via_top_level()
+  tests/test_http_event_store.py:
+    e: test_http_event_store_posts_to_registry,_Handler
+    _Handler: do_POST(0),log_message(1)
+    test_http_event_store_posts_to_registry()
+  tests/test_intents_phase2.py:
+    e: test_phase2_resolve_linux,test_terminal_path_in_uri,test_window_move_screen_param,test_settings_panel_windows,test_settings_panel_macos,test_polish_cursor_project_regression,test_capture_window_edge_title,test_compile_window_move_dry_run_linux,test_compile_terminal_linux,test_compile_settings_panel_windows
+    test_phase2_resolve_linux(text;expected_uri_prefix;expected_action)
+    test_terminal_path_in_uri()
+    test_window_move_screen_param()
+    test_settings_panel_windows()
+    test_settings_panel_macos()
+    test_polish_cursor_project_regression()
+    test_capture_window_edge_title()
+    test_compile_window_move_dry_run_linux()
+    test_compile_terminal_linux()
+    test_compile_settings_panel_windows()
+  tests/test_mcp.py:
+    e: test_text_uri_list_mime,test_tool_resolve_desktop_action,test_mcp_handoff_includes_actions
+    test_text_uri_list_mime()
+    test_tool_resolve_desktop_action()
+    test_mcp_handoff_includes_actions()
+  tests/test_platforms.py:
+    e: test_linux_dry_run_open_app,test_macos_dry_run_capture_screen,test_windows_dry_run_settings,test_linux_dry_run_file_uri
+    test_linux_dry_run_open_app()
+    test_macos_dry_run_capture_screen()
+    test_windows_dry_run_settings()
+    test_linux_dry_run_file_uri()
+  tests/test_plugins.py:
+    e: test_load_driver_plugins_includes_container,test_resolve_driver_class_builtin_priority,test_registry_plugin_drivers_property,test_entry_point_group_name
+    test_load_driver_plugins_includes_container()
+    test_resolve_driver_class_builtin_priority()
+    test_registry_plugin_drivers_property()
+    test_entry_point_group_name()
+  tests/test_resolve.py:
+    e: test_resolve_linux,test_polish_open_vscode_in_folder,test_polish_active_browser_screenshot,test_nlp2uri_returns_actions,test_parse_absolute_uri_passthrough,test_settings_windows,test_settings_macos,test_empty_input_raises
+    test_resolve_linux(text;expected_uri_prefix;expected_action)
+    test_polish_open_vscode_in_folder()
+    test_polish_active_browser_screenshot()
+    test_nlp2uri_returns_actions()
+    test_parse_absolute_uri_passthrough()
+    test_settings_windows()
+    test_settings_macos()
+    test_empty_input_raises()
+  tests/test_resource_driver.py:
+    e: test_resource_filesystem_probe,test_resource_smtp_probe,test_cqrs_resource_driver,test_resource_from_systemmap_index
+    test_resource_filesystem_probe()
+    test_resource_smtp_probe()
+    test_cqrs_resource_driver()
+    test_resource_from_systemmap_index()
+  tests/test_rest_server.py:
+    e: _post,test_rest_server_plan
+    _post(url;payload)
+    test_rest_server_plan()
+  tests/test_schemas_registry.py:
+    e: test_registry_loads,test_every_scheme_has_cqrs_tree,test_common_protos_exist,test_generated_mcp_tools_match_registry
+    test_registry_loads()
+    test_every_scheme_has_cqrs_tree()
+    test_common_protos_exist()
+    test_generated_mcp_tools_match_registry()
+  tests/test_service.py:
+    e: test_from_prompt,test_handle_prompt_dry_run,test_handle_uri
+    test_from_prompt()
+    test_handle_prompt_dry_run()
+    test_handle_uri()
+  tests/test_systemmap.py:
+    e: _sample_ir,test_encode_segment_colon,test_uri_for_runtime_and_command,test_build_uri_index_covers_entities,test_resolve_prompt_command_name,test_resolve_prompt_command_spaced_name,test_resolve_prompt_runtime,test_is_system_map_uri,test_compile_command_handoff,test_compile_uri_to_actions_command_scheme,test_resolve_fallback_system_map_first,test_resolve_fallback_desktop_when_no_ir_match,test_resolve_fallback_desktop_without_ir,test_env2llm_roundtrip_index
+    _sample_ir()
+    test_encode_segment_colon()
+    test_uri_for_runtime_and_command()
+    test_build_uri_index_covers_entities()
+    test_resolve_prompt_command_name()
+    test_resolve_prompt_command_spaced_name()
+    test_resolve_prompt_runtime()
+    test_is_system_map_uri()
+    test_compile_command_handoff()
+    test_compile_uri_to_actions_command_scheme()
+    test_resolve_fallback_system_map_first()
+    test_resolve_fallback_desktop_when_no_ir_match()
+    test_resolve_fallback_desktop_without_ir()
+    test_env2llm_roundtrip_index(tmp_path)

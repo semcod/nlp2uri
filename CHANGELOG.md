@@ -8,6 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-06
 
 ### Fixed
+- Fix unused-imports issues (ticket-2fe23654)
+- Fix ai-boilerplate issues (ticket-e5b8aad2)
+- Fix string-concat issues (ticket-ac5cfed6)
+- Fix unused-imports issues (ticket-fb672a81)
+- Fix llm-hallucinations issues (ticket-6edbec0c)
+- Fix ai-boilerplate issues (ticket-061b2eed)
+- Fix unused-imports issues (ticket-e825fe0d)
+- Fix ai-boilerplate issues (ticket-00db9e65)
+- Fix unused-imports issues (ticket-de3aecf9)
+- Fix ai-boilerplate issues (ticket-ce0cb469)
+- Fix unused-imports issues (ticket-dc3fcb36)
+- Fix unused-imports issues (ticket-2013d283)
+- Fix unused-imports issues (ticket-c14ba956)
+- Fix unused-imports issues (ticket-d30588e5)
+- Fix unused-imports issues (ticket-79f73339)
+- Fix unused-imports issues (ticket-7f9a58c4)
+- Fix unused-imports issues (ticket-0a950263)
+- Fix unused-imports issues (ticket-800ca6cc)
+- Fix unused-imports issues (ticket-3bf5cac7)
+- Fix unused-imports issues (ticket-6ba2d01c)
+- Fix string-concat issues (ticket-176652c1)
+- Fix unused-imports issues (ticket-ecde6f28)
+
+## [0.1.10] - 2026-06-06
+
+### Fixed
 - Fix unused-imports issues (ticket-3633046a)
 - Fix unused-imports issues (ticket-1a53a30a)
 - Fix unused-imports issues (ticket-fe05d296)
@@ -92,6 +118,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-958c03f6)
 
 ## [Unreleased]
+
+## [0.4.7] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+- Update schemas/README.md
+
+### Test
+- Update tests/test_container_driver.py
+- Update tests/test_plugins.py
+
+### Other
+- Update .code2llm_cache/__init___1780775249005788253_772.pkl
+- Update .code2llm_cache/__init___1780775333712259744_1041.pkl
+- Update .code2llm_cache/container_docker_1780775347273270210_3474.pkl
+- Update .code2llm_cache/planfile_1780775282226533525_36994.pkl
+- Update .code2llm_cache/plugins_1780775371079539702_1986.pkl
+- Update .code2llm_cache/pyproject_1780775334182121988_2641.pkl
+- Update .code2llm_cache/registry_1780775332985881470_3457.pkl
+- Update .code2llm_cache/test-cqrs-smoke_1780775341112200455_1750.pkl
+- Update app.doql.less
+- Update planfile.yaml
+- ... and 19 more files
 
 ## [0.4.6] - 2026-06-06
 

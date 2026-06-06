@@ -5,12 +5,12 @@
 
 - **Project**: /home/tom/github/semcod/nlp2uri
 - **Primary Language**: proto
-- **Languages**: proto: 138, python: 70, yaml: 31, shell: 15, json: 2
+- **Languages**: proto: 138, python: 72, yaml: 31, shell: 15, json: 2
 - **Analysis Mode**: static
-- **Total Functions**: 339
-- **Total Classes**: 45
-- **Modules**: 260
-- **Entry Points**: 183
+- **Total Functions**: 346
+- **Total Classes**: 46
+- **Modules**: 262
+- **Entry Points**: 186
 
 ## Architecture by Module
 
@@ -37,13 +37,13 @@
 - **Classes**: 1
 - **File**: `service.py`
 
-### src.nlp2uri.systemmap.uri
-- **Functions**: 13
-- **File**: `uri.py`
-
 ### schemas.codegen.scaffold_scheme
 - **Functions**: 13
 - **File**: `scaffold_scheme.py`
+
+### src.nlp2uri.systemmap.uri
+- **Functions**: 13
+- **File**: `uri.py`
 
 ### src.nlp2uri.cli
 - **Functions**: 11
@@ -72,14 +72,14 @@
 - **Classes**: 1
 - **File**: `getv_uri.py`
 
-### src.nlp2uri.systemmap.getv_load
-- **Functions**: 8
-- **File**: `getv_load.py`
-
 ### src.nlp2uri.cqrs.drivers.service_ops
 - **Functions**: 8
 - **Classes**: 3
 - **File**: `service_ops.py`
+
+### src.nlp2uri.systemmap.getv_load
+- **Functions**: 8
+- **File**: `getv_load.py`
 
 ### src.nlp2uri.models
 - **Functions**: 7
@@ -126,11 +126,11 @@ Main execution flows into the system:
 ### schemas.codegen.scaffold_scheme.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.parse_args, yaml.safe_load, schemes.items, examples.resolve.new-intents.e2e.print, REGISTRY.read_text
 
-### src.nlp2uri.platforms.linux.LinuxExecutor.execute
-- **Calls**: urlparse, self._result, self._open_generic, self._open_generic, self._parse_nlp2uri, path.startswith, self._open_settings, self._open_app
-
 ### schemas.codegen.export_mcp_schemas.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.parse_args, yaml.safe_load, OUT.mkdir, None.items, None.write_text, examples.resolve.new-intents.e2e.print
+
+### src.nlp2uri.platforms.linux.LinuxExecutor.execute
+- **Calls**: urlparse, self._result, self._open_generic, self._open_generic, self._parse_nlp2uri, path.startswith, self._open_settings, self._open_app
 
 ### src.nlp2uri.platforms.macos.MacOSExecutor.execute
 - **Calls**: urlparse, self._result, self._open, self._parse_nlp2uri, path.startswith, self._open, self._open_app, self._focus_app
@@ -138,20 +138,29 @@ Main execution flows into the system:
 ### src.nlp2uri.platforms.windows.WindowsExecutor.execute
 - **Calls**: urlparse, self._result, self._start, self._parse_nlp2uri, path.startswith, self._start, self._open_app, self._focus_app
 
+### src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver._docker_argv
+- **Calls**: ValueError, None.get, params.get, params.get, argv.append, params.get, None.get, str
+
 ### src.nlp2uri.config.NLP2URIConfig.to_yaml
 - **Calls**: lines.append, lines.append, sorted, lines.append, lines.append, self.extra.items, lines.append, None.join
 
 ### src.nlp2uri.platforms.macos.MacOSExecutor._capture
 - **Calls**: Path, out_dir.mkdir, self._run, os.environ.get, params.get, self._dry, self._result, str
 
-### src.nlp2uri.cqrs.base.UriDriver.execute
-- **Calls**: ExecuteResult, ExecuteResult, subprocess.run, outputs.append, None.join, action.argv, ExecuteResult, None.join
-
 ### src.nlp2uri.adapters.mcp.McpAdapter._tool_cqrs_execute
 - **Calls**: dict, req.extra.get, req.extra.get, CqrsDispatcher, d.execute_uri, self.mcp_content, AdapterResponse, req.extra.get
 
+### src.nlp2uri.cqrs.base.UriDriver.execute
+- **Calls**: ExecuteResult, ExecuteResult, subprocess.run, outputs.append, None.join, action.argv, ExecuteResult, None.join
+
 ### src.nlp2uri.platforms.windows.WindowsExecutor._capture
 - **Calls**: Path, out_dir.mkdir, self._run, outfile.exists, os.environ.get, params.get, self._dry, self._result
+
+### src.nlp2uri.adapters.mcp.McpAdapter._args_to_request
+- **Calls**: arguments.get, AdapterRequest, HostPlatform, str, str, bool, arguments.get, arguments.get
+
+### src.nlp2uri.adapters.mcp.McpAdapter._tool_resolve_system_map
+- **Calls**: self._service_for, svc.resolve_system_map, payload.get, self.mcp_content, AdapterResponse, src.nlp2uri.systemmap.context.load_ir_from_arguments, AdapterResponse, bool
 
 ### src.nlp2uri.adapters.rest.RestAdapter.body_to_request
 - **Calls**: body.get, AdapterRequest, HostPlatform, str, str, bool, body.get, body.get
@@ -162,26 +171,23 @@ Main execution flows into the system:
 ### src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.execute_uri
 - **Calls**: self.compile_uri, self.registry.driver_for_uri, driver.execute, None.scheme.lower, self.events.append, OSAction, HostPlatform, list
 
-### src.nlp2uri.adapters.mcp.McpAdapter._args_to_request
-- **Calls**: arguments.get, AdapterRequest, HostPlatform, str, str, bool, arguments.get, arguments.get
-
-### src.nlp2uri.adapters.mcp.McpAdapter._tool_resolve_system_map
-- **Calls**: self._service_for, svc.resolve_system_map, payload.get, self.mcp_content, AdapterResponse, src.nlp2uri.systemmap.context.load_ir_from_arguments, AdapterResponse, bool
-
 ### src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler._send
 - **Calls**: None.encode, self.send_response, self.send_header, self.send_header, self.end_headers, self.wfile.write, str, json.dumps
 
 ### src.nlp2uri.platforms.linux.LinuxExecutor._open_app
 - **Calls**: self._desktop_id_for_app, self._first_available, self._first_available, self._result, self._result, self._run, self._run, self._dry
 
-### src.nlp2uri.cqrs.drivers.service_ops.ServiceCurlDriver.compile
-- **Calls**: src.nlp2uri.cqrs.drivers.service_ops.parse_service_name, None.get, _TODOMAT_HEALTH.get, CompileResult, src.nlp2uri.systemmap.compile.compile_system_map_uri, CompileResult, CompileResult, OSAction
-
 ### src.nlp2uri.adapters.mcp.McpAdapter._tool_handle
 - **Calls**: self._service_for, svc.handle_prompt, bool, None.get, self.mcp_content, AdapterResponse, None.get, payload.get
 
 ### src.nlp2uri.adapters.mcp.McpAdapter._tool_cqrs_compile
 - **Calls**: dict, req.extra.get, CqrsDispatcher, d.compile_uri, self.mcp_content, AdapterResponse, req.extra.get, req.extra.get
+
+### src.nlp2uri.cqrs.drivers.service_ops.ServiceCurlDriver.compile
+- **Calls**: src.nlp2uri.cqrs.drivers.service_ops.parse_service_name, None.get, _TODOMAT_HEALTH.get, CompileResult, src.nlp2uri.systemmap.compile.compile_system_map_uri, CompileResult, CompileResult, OSAction
+
+### src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver.compile
+- **Calls**: src.nlp2uri.cqrs.drivers.container_docker.parse_container_uri, CompileResult, CompileResult, CompileResult, CompileResult, self._docker_argv, CompileResult, OSAction
 
 ### examples.mcp.tool-handoff.main.main
 - **Calls**: examples.resolve.new-intents.e2e.print, examples.resolve.new-intents.e2e.print, examples.resolve.new-intents.e2e.print, examples.resolve.new-intents.e2e.print, json.dumps, json.dumps, src.nlp2uri.mcp.mcp_handoff_payload, src.nlp2uri.mcp.tool_resolve_desktop_action
@@ -191,12 +197,6 @@ Main execution flows into the system:
 
 ### src.nlp2uri.parse_nl._parse_capture
 - **Calls**: _CAPTURE_RE.search, src.nlp2uri.parse_nl._strip_quotes, src.nlp2uri.parse_nl._capture_target, UriIntent, None.strip, title.lower, params.setdefault, match.group
-
-### src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler.do_POST
-- **Calls**: RestAdapter.match_route, self.adapter.dispatch, self._send, self._send, self._read_json, response.to_dict, urlparse, self._send
-
-### src.nlp2uri.platforms.linux.LinuxExecutor._focus_app
-- **Calls**: self._first_available, self._first_available, self._open_app, self._result, self._run, self._run, self._dry, self._dry
 
 ## Process Flows
 
@@ -227,31 +227,29 @@ _capture [src.nlp2uri.platforms.linux.LinuxExecutor]
 execute [src.nlp2uri.platforms.linux.LinuxExecutor]
 ```
 
-### Flow 6: to_yaml
+### Flow 6: _docker_argv
+```
+_docker_argv [src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver]
+```
+
+### Flow 7: to_yaml
 ```
 to_yaml [src.nlp2uri.config.NLP2URIConfig]
 ```
 
-### Flow 7: _tool_cqrs_execute
+### Flow 8: _tool_cqrs_execute
 ```
 _tool_cqrs_execute [src.nlp2uri.adapters.mcp.McpAdapter]
 ```
 
-### Flow 8: body_to_request
+### Flow 9: _args_to_request
 ```
-body_to_request [src.nlp2uri.adapters.rest.RestAdapter]
-```
-
-### Flow 9: build_ide
-```
-build_ide [src.nlp2uri.schemes.ide]
-  └─ →> normalize_path
-  └─ →> abstract_url
+_args_to_request [src.nlp2uri.adapters.mcp.McpAdapter]
 ```
 
-### Flow 10: execute_uri
+### Flow 10: _tool_resolve_system_map
 ```
-execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
+_tool_resolve_system_map [src.nlp2uri.adapters.mcp.McpAdapter]
 ```
 
 ## Key Classes
@@ -271,14 +269,14 @@ execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
 - **Key Methods**: src.nlp2uri.platforms.base.UriExecutor.execute, src.nlp2uri.platforms.base.UriExecutor._result, src.nlp2uri.platforms.base.UriExecutor._dry, src.nlp2uri.platforms.base.UriExecutor._run, src.nlp2uri.platforms.base.UriExecutor._first_available, src.nlp2uri.platforms.base.UriExecutor._open_with_browser, src.nlp2uri.platforms.base.UriExecutor._parse_nlp2uri, src.nlp2uri.platforms.base.UriExecutor._desktop_id_for_app
 - **Inherits**: ABC
 
+### src.nlp2uri.cqrs.registry.DriverRegistry
+- **Methods**: 7
+- **Key Methods**: src.nlp2uri.cqrs.registry.DriverRegistry.__init__, src.nlp2uri.cqrs.registry.DriverRegistry.schemes, src.nlp2uri.cqrs.registry.DriverRegistry.plugin_drivers, src.nlp2uri.cqrs.registry.DriverRegistry.targets_for, src.nlp2uri.cqrs.registry.DriverRegistry.default_target, src.nlp2uri.cqrs.registry.DriverRegistry.get_driver, src.nlp2uri.cqrs.registry.DriverRegistry.driver_for_uri
+
 ### src.nlp2uri.platforms.linux.LinuxExecutor
 - **Methods**: 6
 - **Key Methods**: src.nlp2uri.platforms.linux.LinuxExecutor.execute, src.nlp2uri.platforms.linux.LinuxExecutor._open_generic, src.nlp2uri.platforms.linux.LinuxExecutor._open_settings, src.nlp2uri.platforms.linux.LinuxExecutor._open_app, src.nlp2uri.platforms.linux.LinuxExecutor._focus_app, src.nlp2uri.platforms.linux.LinuxExecutor._capture
 - **Inherits**: UriExecutor
-
-### src.nlp2uri.cqrs.registry.DriverRegistry
-- **Methods**: 6
-- **Key Methods**: src.nlp2uri.cqrs.registry.DriverRegistry.__init__, src.nlp2uri.cqrs.registry.DriverRegistry.schemes, src.nlp2uri.cqrs.registry.DriverRegistry.targets_for, src.nlp2uri.cqrs.registry.DriverRegistry.default_target, src.nlp2uri.cqrs.registry.DriverRegistry.get_driver, src.nlp2uri.cqrs.registry.DriverRegistry.driver_for_uri
 
 ### src.nlp2uri.integrators.rest_server.NLP2URIRequestHandler
 - **Methods**: 5
@@ -310,10 +308,10 @@ execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
 - **Key Methods**: src.nlp2uri.adapters.rest.RestAdapter.handle, src.nlp2uri.adapters.rest.RestAdapter.dispatch, src.nlp2uri.adapters.rest.RestAdapter.body_to_request, src.nlp2uri.adapters.rest.RestAdapter.match_route
 - **Inherits**: BaseAdapter
 
-### src.nlp2uri.systemmap.index.UriMap
-> ``system_map_uri.v1`` — canonical addressing layer over SystemMapIR.
+### src.nlp2uri.cqrs.base.UriDriver
 - **Methods**: 4
-- **Key Methods**: src.nlp2uri.systemmap.index.UriMap.lookup, src.nlp2uri.systemmap.index.UriMap.find_by_kind, src.nlp2uri.systemmap.index.UriMap.find_command, src.nlp2uri.systemmap.index.UriMap.to_dict
+- **Key Methods**: src.nlp2uri.cqrs.base.UriDriver.capabilities, src.nlp2uri.cqrs.base.UriDriver.compile, src.nlp2uri.cqrs.base.UriDriver.execute, src.nlp2uri.cqrs.base.UriDriver.probe
+- **Inherits**: ABC
 
 ### src.nlp2uri.cqrs.event_store.InMemoryEventStore
 - **Methods**: 4
@@ -323,10 +321,10 @@ execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
 - **Methods**: 4
 - **Key Methods**: src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.__init__, src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.compile_uri, src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.execute_uri, src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.probe_uri
 
-### src.nlp2uri.cqrs.base.UriDriver
+### src.nlp2uri.systemmap.index.UriMap
+> ``system_map_uri.v1`` — canonical addressing layer over SystemMapIR.
 - **Methods**: 4
-- **Key Methods**: src.nlp2uri.cqrs.base.UriDriver.capabilities, src.nlp2uri.cqrs.base.UriDriver.compile, src.nlp2uri.cqrs.base.UriDriver.execute, src.nlp2uri.cqrs.base.UriDriver.probe
-- **Inherits**: ABC
+- **Key Methods**: src.nlp2uri.systemmap.index.UriMap.lookup, src.nlp2uri.systemmap.index.UriMap.find_by_kind, src.nlp2uri.systemmap.index.UriMap.find_command, src.nlp2uri.systemmap.index.UriMap.to_dict
 
 ### src.nlp2uri.models.UriIntent
 > Structured intent parsed from natural language.
@@ -339,6 +337,11 @@ execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
 - **Key Methods**: src.nlp2uri.cqrs.http_store.HttpEventStore.__init__, src.nlp2uri.cqrs.http_store.HttpEventStore.append, src.nlp2uri.cqrs.http_store.HttpEventStore._post_remote
 - **Inherits**: InMemoryEventStore
 
+### src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver
+- **Methods**: 3
+- **Key Methods**: src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver.compile, src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver.probe, src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver._docker_argv
+- **Inherits**: UriDriver
+
 ### src.nlp2uri.models.OSAction
 > Concrete host command derived from an abstract URI.
 - **Methods**: 2
@@ -348,11 +351,6 @@ execute_uri [src.nlp2uri.cqrs.dispatcher.CqrsDispatcher]
 - **Methods**: 2
 - **Key Methods**: src.nlp2uri.adapters.shell.ShellAdapter.handle, src.nlp2uri.adapters.shell.ShellAdapter._export_script
 - **Inherits**: BaseAdapter
-
-### src.nlp2uri.cqrs.drivers.runtime_curl.RuntimeCurlDriver
-- **Methods**: 2
-- **Key Methods**: src.nlp2uri.cqrs.drivers.runtime_curl.RuntimeCurlDriver.compile, src.nlp2uri.cqrs.drivers.runtime_curl.RuntimeCurlDriver.probe
-- **Inherits**: UriDriver
 
 ## Data Transformation Functions
 
@@ -418,34 +416,32 @@ Key functions that process and transform data:
 ### src.nlp2uri.platforms.base.UriExecutor._parse_nlp2uri
 - **Output to**: urlparse, None.join, parse_qs, ValueError, parsed.path.lstrip
 
+### src.nlp2uri.host.artifact._decode
+- **Output to**: unquote
+
+### src.nlp2uri.host.resource._decode
+- **Output to**: unquote
+
 ### src.nlp2uri.schemes.util.percent_encode_segment
 - **Output to**: quote
+
+### src.nlp2uri.cqrs.drivers.service_ops.parse_service_name
+- **Output to**: urlparse, unquote, unquote, parsed.path.lstrip
 
 ### src.nlp2uri.systemmap.uri.uri_for_process
 > ``process://{example_id}/policy``.
 - **Output to**: src.nlp2uri.systemmap.encode.encode_segment
-
-### src.nlp2uri.systemmap.encode.encode_segment
-> Encode a single URI path/authority segment (preserves unreserved).
-- **Output to**: quote
-
-### src.nlp2uri.systemmap.encode.encode_path
-> Encode a slash-separated path while keeping path separators.
-- **Output to**: quote, value.lstrip
-
-### src.nlp2uri.systemmap.getv_load._parse_env_file
-- **Output to**: None.splitlines, path.is_file, raw.strip, line.startswith, line.partition
 
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
 
 - `src.nlp2uri.systemmap.index.build_uri_index` - 52 calls
-- `src.nlp2uri.adapters.rest.RestAdapter.dispatch` - 29 calls
 - `src.nlp2uri.host.resource.build_resource_actions` - 29 calls
+- `src.nlp2uri.adapters.rest.RestAdapter.dispatch` - 29 calls
 - `src.nlp2uri.systemmap.getv_uri.build_getv_uri_index` - 24 calls
-- `src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map` - 23 calls
 - `schemas.codegen.export_driver_stubs.main` - 23 calls
+- `src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map` - 23 calls
 - `src.nlp2uri.host.artifact.resolve_artifact_path` - 22 calls
 - `src.nlp2uri.adapters.cli.CliAdapter.handle` - 21 calls
 - `src.nlp2uri.adapters.shell.ShellAdapter.handle` - 19 calls
@@ -458,28 +454,28 @@ Functions exposed as public API (no underscore prefix):
 - `src.nlp2uri.config.config_search_paths` - 15 calls
 - `src.nlp2uri.schemes.build.build_uri` - 15 calls
 - `schemas.codegen.scaffold_scheme.main` - 14 calls
-- `src.nlp2uri.platforms.linux.LinuxExecutor.execute` - 13 calls
-- `schemas.codegen.scaffold_scheme.readme_md` - 13 calls
 - `schemas.codegen.export_mcp_schemas.main` - 13 calls
+- `schemas.codegen.scaffold_scheme.readme_md` - 13 calls
+- `src.nlp2uri.platforms.linux.LinuxExecutor.execute` - 13 calls
+- `schemas.codegen.scaffold_scheme.scaffold_scheme` - 12 calls
 - `src.nlp2uri.integrators.mcp_server.handle_message` - 12 calls
 - `src.nlp2uri.integrators.mcp_server.run_stdio` - 12 calls
 - `src.nlp2uri.platforms.macos.MacOSExecutor.execute` - 12 calls
 - `src.nlp2uri.platforms.windows.WindowsExecutor.execute` - 12 calls
-- `schemas.codegen.scaffold_scheme.scaffold_scheme` - 12 calls
 - `src.nlp2uri.config.NLP2URIConfig.to_yaml` - 11 calls
 - `src.nlp2uri.cqrs.base.UriDriver.execute` - 11 calls
+- `src.nlp2uri.host.endpoint.build_endpoint_url` - 10 calls
 - `src.nlp2uri.adapters.rest.RestAdapter.body_to_request` - 10 calls
 - `src.nlp2uri.schemes.ide.build_ide` - 10 calls
 - `src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.execute_uri` - 10 calls
-- `src.nlp2uri.host.endpoint.build_endpoint_url` - 10 calls
 - `src.nlp2uri.systemmap.compile.compile_system_map_uri` - 10 calls
 - `src.nlp2uri.systemmap.getv_uri.get_getv_var_value` - 10 calls
+- `src.nlp2uri.cqrs.plugins.load_driver_plugins` - 10 calls
 - `src.nlp2uri.config.ensure_config` - 9 calls
 - `src.nlp2uri.cqrs.drivers.service_ops.ServiceCurlDriver.compile` - 9 calls
+- `src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver.compile` - 9 calls
 - `examples.mcp.tool-handoff.main.main` - 8 calls
 - `src.nlp2uri.config.NLP2URIConfig.resolved_platform` - 8 calls
-- `src.nlp2uri.config.save_config` - 8 calls
-- `src.nlp2uri.resolve.nlp2uri` - 8 calls
 
 ## System Interactions
 
@@ -506,17 +502,17 @@ graph TD
     _capture --> get
     _capture --> _first_available
     handle --> _export_script
+    main --> mkdir
     execute --> urlparse
     execute --> _result
     execute --> _open_generic
     execute --> _parse_nlp2uri
-    main --> mkdir
     execute --> _open
     execute --> startswith
     execute --> _start
-    to_yaml --> append
-    to_yaml --> sorted
-    execute --> ExecuteResult
+    _docker_argv --> ValueError
+    _docker_argv --> get
+    _docker_argv --> append
 ```
 
 ## Reverse Engineering Guidelines

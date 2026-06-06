@@ -1,15 +1,15 @@
-# redup/duplication | 7 groups | 70f 6501L | 2026-06-06
+# redup/duplication | 7 groups | 72f 6664L | 2026-06-06
 
 SUMMARY:
-  files_scanned: 70
-  total_lines:   6501
+  files_scanned: 72
+  total_lines:   6664
   dup_groups:    7
   dup_fragments: 14
   saved_lines:   62
-  scan_ms:       3535
+  scan_ms:       4215
 
 HOTSPOTS[7] (files with most duplication):
-  src/nlp2uri/schemes/desktop.py  dup=36L  groups=1  frags=2  (0.6%)
+  src/nlp2uri/schemes/desktop.py  dup=36L  groups=1  frags=2  (0.5%)
   src/nlp2uri/systemmap/compile.py  dup=24L  groups=1  frags=2  (0.4%)
   src/nlp2uri/parse_nl.py  dup=22L  groups=1  frags=2  (0.3%)
   src/nlp2uri/systemmap/uri.py  dup=14L  groups=2  frags=4  (0.2%)

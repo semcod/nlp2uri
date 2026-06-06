@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nlp2uri"
-version = "0.4.6"
+version = "0.4.7"
 description = "Natural language to URI resolution and cross-platform local URI execution"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -28,6 +28,18 @@ codegen = ["pyyaml>=6.0", "grpcio-tools>=1.60", "protobuf>=4.25"]
 nlp2uri = "nlp2uri.cli:main"
 nlp2uri-mcp = "nlp2uri.integrators.mcp_server:main"
 nlp2uri-serve = "nlp2uri.integrators.rest_server:main"
+
+[project.entry-points."nlp2uri.drivers"]
+artifact-filesystem = "nlp2uri.cqrs.drivers.artifact_filesystem:ArtifactFilesystemDriver"
+command-curl = "nlp2uri.cqrs.drivers.command_curl:CommandCurlDriver"
+container-docker = "nlp2uri.cqrs.drivers.container_docker:ContainerDockerDriver"
+endpoint-curl = "nlp2uri.cqrs.drivers.endpoint_curl:EndpointCurlDriver"
+getv-getv_cli = "nlp2uri.cqrs.drivers.getv_cli:GetvCliDriver"
+resource-probe = "nlp2uri.cqrs.drivers.resource_probe:ResourceProbeDriver"
+runtime-curl = "nlp2uri.cqrs.drivers.runtime_curl:RuntimeCurlDriver"
+service-curl = "nlp2uri.cqrs.drivers.service_ops:ServiceCurlDriver"
+service-docker = "nlp2uri.cqrs.drivers.service_ops:ServiceDockerDriver"
+service-systemd = "nlp2uri.cqrs.drivers.service_ops:ServiceSystemdDriver"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
