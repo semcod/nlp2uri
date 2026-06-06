@@ -2,6 +2,9 @@
 
 Server: `nlp2uri-mcp` (stdio JSON-RPC, MCP 2024-11-05).
 
+**Pełny przewodnik orchestracji** (wiele usług, artefaktów, zmiennych, todomat, koru):  
+→ [orchestration.md](./orchestration.md)
+
 ## Konfiguracja Cursor
 
 Skopiuj do `.cursor/mcp.json` lub merge z szablonem:
@@ -134,6 +137,63 @@ NL → URI względem SystemMap; przy braku trafienia → desktop (`open firefox`
 }
 ```
 
+### `nlp2uri_list_getv_uris`
+
+Indeks profili `~/.getv` jako `getv://category/profile/VAR`.
+
+```json
+{ "getv_home": "/home/tom/.getv" }
+```
+
+### `nlp2uri_resolve_getv`
+
+NL → URI zmiennej środowiskowej.
+
+```json
+{ "prompt": "GROQ_API_KEY" }
+```
+
+→ `getv://llm/groq/GROQ_API_KEY`
+
+### `nlp2uri_get_getv_var`
+
+Metadane zmiennej (wartość zamaskowana).
+
+```json
+{ "uri": "getv://llm/groq/GROQ_API_KEY" }
+```
+
+---
+
+## Orchestracja przez todomat-mcp
+
+Jeden router MCP zamiast ręcznego wyboru narzędzia:
+
+```text
+todomat_run("otwórz firefox")                    → nlp2uri_handle
+todomat_run("pokaż GROQ_API_KEY z getv")         → nlp2uri_resolve_getv
+todomat_run("wyślij fakturę do klienta")         → nlp2dsl
+todomat_trigger("...", pipeline="nlp2uri")       → HTTP nlp2uri-adapter
+```
+
+Konfiguracja: [todomat examples/mcp-cursor.json](https://github.com/wronai/todomat/blob/main/examples/mcp-cursor.json)
+
+## Koru bridge
+
+Te same operacje przez `koru_desktop_uri_*` gdy agent ma tylko serwer koru:
+
+| nlp2uri tool | koru tool |
+|--------------|-----------|
+| `nlp2uri_plan` | `koru_desktop_uri_plan` |
+| `nlp2uri_handle` | `koru_desktop_uri_handle` |
+| `nlp2uri_list_getv_uris` | `koru_desktop_uri_list_getv_uris` |
+| `nlp2uri_resolve_getv` | `koru_desktop_uri_resolve_getv` |
+| `nlp2uri_get_getv_var` | `koru_desktop_uri_get_getv_var` |
+| `nlp2uri_list_system_uris` | `koru_desktop_uri_list_system_uris` |
+| `nlp2uri_resolve_system_map` | `koru_desktop_uri_resolve_system_map` |
+
+→ [koru/docs/desktop-uri-orchestration.md](https://github.com/semcod/koru/blob/main/docs/desktop-uri-orchestration.md)
+
 ---
 
 ## Przepływ z innym MCP (desktop automation)
@@ -159,3 +219,7 @@ Te same operacje przez HTTP (`nlp2uri-serve`):
 | `nlp2uri_compile` | `POST /v1/compile` |
 | `nlp2uri_execute` | `POST /v1/execute` |
 | `nlp2uri_handle` | `POST /v1/handle` |
+| `nlp2uri_list_getv_uris` | (MCP only; CLI: `nlp2uri list-getv`) |
+| `nlp2uri_resolve_getv` | (MCP only) |
+| `nlp2uri_list_system_uris` | (MCP only; CLI: `nlp2uri list-system-uris`) |
+| `nlp2uri_resolve_system_map` | (MCP only) |

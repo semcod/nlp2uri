@@ -1,96 +1,123 @@
-# nlp2uri | 68f 6256L | yml:1,yaml:6,shell:12,python:45,toml:1,json:2 | 2026-06-06
-# generated in 0.01s
-# stats: 238 func | 0 cls | 68 mod | CC̄=3.6 | critical:4 | cycles:0
-# alerts[5]: CC build_uri_index=31; CC resolve_prompt_against_system_map=26; fan-out build_uri_index=20; CC _compile_app=16; CC _compile_terminal=16
-# hotspots[5]: build_uri_index fan=20; RestAdapter.dispatch fan=16; _build_parser fan=16; _compile_app fan=16; CliAdapter.handle fan=14
-# evolution: CC̄ 3.9→3.6 (improved -0.3)
+# nlp2uri | 71f 5557L | python:58,shell:12,less:1 | 2026-06-06
+# stats: 219 func | 24 cls | 71 mod | CC̄=3.5 | critical:8 | cycles:0
+# alerts[5]: CC build_uri_index=31; CC resolve_prompt_against_system_map=26; CC _compile_app=16; CC _compile_terminal=16; CC build_uri=13
+# hotspots[5]: build_uri_index fan=20; _compile_app fan=15; compile_uri_to_actions fan=13; _compile_legacy_nlp2uri fan=12; build_uri fan=12
+# evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[68]:
-  Dockerfile,29
-  docker-compose.yml,6
-  examples/execute/dry-run/e2e.sh,11
-  examples/execute/dry-run/main.py,29
-  examples/integrators/mcp-stdio/e2e.sh,15
-  examples/integrators/mcp-stdio/mcp-config.json,10
-  examples/integrators/mcp-stdio/mcp-config.cursor.json,11
-  examples/integrators/rest-api/e2e.sh,23
-  examples/integrators/shell-export/e2e.sh,12
-  examples/mcp/tool-handoff/e2e.sh,11
-  examples/mcp/tool-handoff/main.py,27
-  examples/resolve/new-intents/e2e.sh,25
-  examples/resolve/nl-to-uri/e2e.sh,11
-  examples/resolve/nl-to-uri/main.py,46
-  examples/run-e2e.sh,40
-  goal.yaml,511
-  nlp2uri.yaml,8
-  planfile.yaml,890
-  prefact.yaml,94
+M[71]:
+  app.doql.less,29
+  examples/execute/dry-run/e2e.sh,12
+  examples/execute/dry-run/main.py,30
+  examples/integrators/mcp-stdio/e2e.sh,16
+  examples/integrators/rest-api/e2e.sh,24
+  examples/integrators/shell-export/e2e.sh,13
+  examples/mcp/tool-handoff/e2e.sh,12
+  examples/mcp/tool-handoff/main.py,28
+  examples/resolve/new-intents/e2e.sh,26
+  examples/resolve/nl-to-uri/e2e.sh,12
+  examples/resolve/nl-to-uri/main.py,47
+  examples/run-e2e.sh,41
   project.sh,59
-  pyproject.toml,71
-  scripts/install-editable.sh,22
-  scripts/testapp-handler.sh,6
-  src/nlp2uri/__init__.py,28
-  src/nlp2uri/adapters/__init__.py,17
-  src/nlp2uri/adapters/base.py,59
-  src/nlp2uri/adapters/cli.py,39
-  src/nlp2uri/adapters/mcp.py,255
-  src/nlp2uri/adapters/rest.py,87
-  src/nlp2uri/adapters/shell.py,66
-  src/nlp2uri/cli.py,199
-  src/nlp2uri/compile.py,423
-  src/nlp2uri/config.py,230
-  src/nlp2uri/integrators/__init__.py,22
-  src/nlp2uri/integrators/mcp_server.py,128
-  src/nlp2uri/integrators/rest_server.py,90
-  src/nlp2uri/mcp.py,81
-  src/nlp2uri/models.py,180
-  src/nlp2uri/parse_nl.py,376
-  src/nlp2uri/platform_detect.py,18
-  src/nlp2uri/platforms/__init__.py,6
-  src/nlp2uri/platforms/base.py,130
-  src/nlp2uri/platforms/linux.py,145
-  src/nlp2uri/platforms/macos.py,94
-  src/nlp2uri/platforms/registry.py,24
-  src/nlp2uri/platforms/windows.py,94
-  src/nlp2uri/resolve.py,40
-  src/nlp2uri/runtime.py,92
-  src/nlp2uri/schemes/__init__.py,5
-  src/nlp2uri/schemes/build.py,64
-  src/nlp2uri/schemes/desktop.py,166
-  src/nlp2uri/schemes/file.py,25
-  src/nlp2uri/schemes/http.py,22
-  src/nlp2uri/schemes/ide.py,35
-  src/nlp2uri/schemes/util.py,47
-  src/nlp2uri/service.py,113
-  src/nlp2uri/systemmap/__init__.py,51
-  src/nlp2uri/systemmap/compile.py,163
-  src/nlp2uri/systemmap/context.py,47
-  src/nlp2uri/systemmap/encode.py,15
-  src/nlp2uri/systemmap/fallback.py,52
-  src/nlp2uri/systemmap/index.py,267
-  src/nlp2uri/systemmap/load.py,46
-  src/nlp2uri/systemmap/resolve.py,122
-  src/nlp2uri/systemmap/uri.py,93
-  testql-scenarios/generated-cli-tests.testql.toon.yaml,20
-  testql-scenarios/generated-from-pytests.testql.toon.yaml,12
-  tree.sh,1
+  scripts/install-editable.sh,23
+  scripts/testapp-handler.sh,7
+  src/nlp2uri/__init__.py,29
+  src/nlp2uri/adapters/__init__.py,18
+  src/nlp2uri/adapters/base.py,60
+  src/nlp2uri/adapters/cli.py,40
+  src/nlp2uri/adapters/mcp.py,256
+  src/nlp2uri/adapters/rest.py,88
+  src/nlp2uri/adapters/shell.py,67
+  src/nlp2uri/cli.py,200
+  src/nlp2uri/compile.py,424
+  src/nlp2uri/config.py,231
+  src/nlp2uri/integrators/__init__.py,23
+  src/nlp2uri/integrators/mcp_server.py,129
+  src/nlp2uri/integrators/rest_server.py,91
+  src/nlp2uri/mcp.py,82
+  src/nlp2uri/models.py,181
+  src/nlp2uri/parse_nl.py,377
+  src/nlp2uri/platform_detect.py,19
+  src/nlp2uri/platforms/__init__.py,7
+  src/nlp2uri/platforms/base.py,131
+  src/nlp2uri/platforms/linux.py,146
+  src/nlp2uri/platforms/macos.py,95
+  src/nlp2uri/platforms/registry.py,25
+  src/nlp2uri/platforms/windows.py,95
+  src/nlp2uri/resolve.py,41
+  src/nlp2uri/runtime.py,93
+  src/nlp2uri/schemes/__init__.py,6
+  src/nlp2uri/schemes/build.py,65
+  src/nlp2uri/schemes/desktop.py,167
+  src/nlp2uri/schemes/file.py,26
+  src/nlp2uri/schemes/http.py,23
+  src/nlp2uri/schemes/ide.py,36
+  src/nlp2uri/schemes/util.py,48
+  src/nlp2uri/service.py,114
+  src/nlp2uri/systemmap/__init__.py,52
+  src/nlp2uri/systemmap/compile.py,164
+  src/nlp2uri/systemmap/context.py,48
+  src/nlp2uri/systemmap/encode.py,16
+  src/nlp2uri/systemmap/fallback.py,53
+  src/nlp2uri/systemmap/index.py,268
+  src/nlp2uri/systemmap/load.py,47
+  src/nlp2uri/systemmap/resolve.py,123
+  src/nlp2uri/systemmap/uri.py,94
+  tests/conftest.py,18
+  tests/integration/test_xdg_handler.py,99
+  tests/test_adapters.py,120
+  tests/test_cli.py,31
+  tests/test_compile.py,34
+  tests/test_config.py,65
+  tests/test_intents_phase2.py,112
+  tests/test_mcp.py,25
+  tests/test_platforms.py,48
+  tests/test_resolve.py,77
+  tests/test_rest_server.py,48
+  tests/test_service.py,27
+  tests/test_systemmap.py,174
+  tree.sh,2
 D:
-  src/nlp2uri/systemmap/index.py:
-    e: UriMapEntry,UriMap,_model_dump,_ir_field,_add_entry,build_uri_index,_get_id,_get_id_field
-    UriMapEntry: to_dict(0)  # One addressable entity in a SystemMap...
-    UriMap: lookup(1),find_by_kind(1),find_command(1),to_dict(0)  # ``system_map_uri.v1`` — canonical addressing layer over Syst...
-    _model_dump(obj)
-    _ir_field(ir;name;default)
-    _add_entry(uri_map)
-    build_uri_index(ir)
-    _get_id(obj)
-    _get_id_field(obj;key)
-  src/nlp2uri/systemmap/resolve.py:
-    e: ResolvedSystemUri,_normalize_token,_name_variants,resolve_prompt_against_system_map
-    ResolvedSystemUri: to_dict(0)  # One NL match against the SystemMap...
-    _normalize_token(text)
-    _name_variants(name)
-    resolve_prompt_against_system_map(prompt;ir)
+  examples/execute/dry-run/main.py:
+    e: main
+    main()
+  examples/mcp/tool-handoff/main.py:
+    e: main
+    main()
+  examples/resolve/nl-to-uri/main.py:
+    e: main
+    main()
+  src/nlp2uri/__init__.py:
+  src/nlp2uri/adapters/__init__.py:
+  src/nlp2uri/adapters/base.py:
+    e: AdapterRequest,AdapterResponse,BaseAdapter
+    AdapterRequest:
+    AdapterResponse: to_dict(0)
+    BaseAdapter: __init__(1),with_platform(1),handle(1),_service_for(1)
+  src/nlp2uri/adapters/cli.py:
+    e: CliAdapter
+    CliAdapter: handle(1)
+  src/nlp2uri/adapters/mcp.py:
+    e: McpAdapter
+    McpAdapter: handle(1),call_tool(2),tool_dispatch(0),_args_from_request(1),_args_to_request(2),mcp_content(1),_tool_plan(1),_tool_resolve(1),_tool_compile(1),_tool_execute(1),_tool_handle(1),_tool_list_system_uris(1),_tool_resolve_system_map(1)
+  src/nlp2uri/adapters/rest.py:
+    e: RestAdapter
+    RestAdapter: handle(1),dispatch(2),body_to_request(1),match_route(2)
+  src/nlp2uri/adapters/shell.py:
+    e: ShellAdapter
+    ShellAdapter: handle(1),_export_script(0)
+  src/nlp2uri/cli.py:
+    e: _add_common_args,_build_parser,_platform,_emit,_request_from_args,_with_platform,_run_config,_run_shell,_run_adapter_command,_run_execute,main
+    _add_common_args(parser)
+    _build_parser()
+    _platform(raw)
+    _emit(payload)
+    _request_from_args(args)
+    _with_platform(payload)
+    _run_config(args)
+    _run_shell(args)
+    _run_adapter_command(args)
+    _run_execute(args)
+    main(argv)
   src/nlp2uri/compile.py:
     e: compile_uri_to_actions,_query_params,_first_available,_open_uri,_compile_app,_compile_settings_panel,_compile_terminal,_compile_settings,_compile_launch_app,_capture_outfile,_linux_screen_capture,_macos_screen_capture,_windows_screen_capture,_compile_screen_capture,_linux_window_capture,_macos_window_capture,_windows_window_capture,_compile_window_capture,_compile_screenshot,_compile_window_move,_compile_window,_compile_legacy_nlp2uri,_desktop_id_for_app
     compile_uri_to_actions(uri;os)
@@ -116,58 +143,9 @@ D:
     _compile_window(host;authority;params;uri)
     _compile_legacy_nlp2uri(host;uri)
     _desktop_id_for_app(name)
-  src/nlp2uri/adapters/rest.py:
-    e: RestAdapter
-    RestAdapter(BaseAdapter): handle(1),dispatch(2),body_to_request(0),match_route(1)
-  src/nlp2uri/schemes/build.py:
-    e: build_uri,_build_navigate
-    build_uri(intent)
-    _build_navigate(intent)
-  src/nlp2uri/systemmap/compile.py:
-    e: is_system_map_uri,_decode_segment,_backend_url,_worker_url,compile_system_map_uri,_compile_command,_compile_runtime,_compile_resource,_compile_artifact,_compile_access,_compile_metadata
-    is_system_map_uri(uri)
-    _decode_segment(value)
-    _backend_url()
-    _worker_url()
-    compile_system_map_uri(uri;host)
-    _compile_command(host;parsed)
-    _compile_runtime(host;parsed)
-    _compile_resource(host;parsed)
-    _compile_artifact(host;parsed)
-    _compile_access(host;parsed)
-    _compile_metadata(host;scheme;parsed)
-  src/nlp2uri/models.py:
-    e: HostPlatform,IntentKind,UriIntent,UriSpec,OSAction,NLP2URIResult,ActionResult
-    HostPlatform(str,Enum):
-    IntentKind(str,Enum):
-    UriIntent: with_params(0),to_slots(0)  # Structured intent parsed from natural language...
-    UriSpec: to_dict(0)  # Resolved abstract URI ready for execution or MCP handoff...
-    OSAction: argv(0),to_dict(0)  # Concrete host command derived from an abstract URI...
-    NLP2URIResult: to_dict(0)  # Full compiler output: NL → URI + OS action plan...
-    ActionResult: to_dict(0)
-  src/nlp2uri/platforms/linux.py:
-    e: LinuxExecutor
-    LinuxExecutor(UriExecutor): execute(1),_open_generic(1),_open_settings(0),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/adapters/shell.py:
-    e: ShellAdapter
-    ShellAdapter(BaseAdapter): handle(1),_export_script(-1)
-  src/nlp2uri/adapters/cli.py:
-    e: CliAdapter
-    CliAdapter(BaseAdapter): handle(1)
-  src/nlp2uri/runtime.py:
-    e: get_executor,execute_uri
-    get_executor(platform)
-    execute_uri(uri)
-  src/nlp2uri/schemes/util.py:
-    e: abstract_url,nlp2uri_url,normalize_path,file_uri,percent_encode_segment
-    abstract_url(scheme;authority;path;params)
-    nlp2uri_url(path;params)
-    normalize_path(path)
-    file_uri(path)
-    percent_encode_segment(value)
   src/nlp2uri/config.py:
-    e: NLP2URIConfig,payload_keys,_yaml_scalar,_parse_scalar,_parse_simple_yaml,config_search_paths,find_config_path,default_config,_load_from_path,load_config,save_config,ensure_config,get_effective_platform,reset_config_cache
-    NLP2URIConfig: resolved_platform(0),apply_runtime_env(0),to_dict(0),to_yaml(0)  # Persisted defaults (nlp2uri.yaml)...
+    e: payload_keys,_yaml_scalar,_parse_scalar,_parse_simple_yaml,config_search_paths,find_config_path,default_config,_load_from_path,load_config,save_config,ensure_config,get_effective_platform,reset_config_cache,NLP2URIConfig
+    NLP2URIConfig: resolved_platform(0),apply_runtime_env(0),to_dict(0),to_yaml(0)  # Persisted defaults (nlp2uri.yaml).
     payload_keys()
     _yaml_scalar(value)
     _parse_scalar(raw)
@@ -181,6 +159,9 @@ D:
     ensure_config(path)
     get_effective_platform(override)
     reset_config_cache()
+  src/nlp2uri/integrators/__init__.py:
+    e: __getattr__
+    __getattr__(name)
   src/nlp2uri/integrators/mcp_server.py:
     e: _jsonrpc_response,_jsonrpc_error,_write_json,_log,_handle_initialize,_handle_tools_list,_handle_tools_call,handle_message,run_stdio,main
     _jsonrpc_response(req_id;result)
@@ -193,31 +174,27 @@ D:
     handle_message(msg)
     run_stdio()
     main(argv)
-  src/nlp2uri/systemmap/context.py:
-    e: load_ir_from_arguments,_coerce_ir
-    load_ir_from_arguments(arguments)
-    _coerce_ir(raw)
-  src/nlp2uri/platforms/base.py:
-    e: UriExecutor,slugify_app_name
-    UriExecutor(ABC): execute(1),_result(0),_dry(2),_run(2),_first_available(1),_open_with_browser(1),_parse_nlp2uri(1),_desktop_id_for_app(1)
-    slugify_app_name(name)
-  src/nlp2uri/platforms/macos.py:
-    e: MacOSExecutor
-    MacOSExecutor(UriExecutor): execute(1),_open(1),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/platforms/windows.py:
-    e: WindowsExecutor
-    WindowsExecutor(UriExecutor): execute(1),_start(1),_open_app(1),_focus_app(1),_capture(2)
-  src/nlp2uri/systemmap/fallback.py:
-    e: resolve_prompt_with_fallback
-    resolve_prompt_with_fallback(prompt;ir)
-  src/nlp2uri/schemes/desktop.py:
-    e: build_capture,build_focus,build_app_open,build_move,build_terminal,build_settings
-    build_capture(intent)
-    build_focus(intent)
-    build_app_open(intent)
-    build_move(intent)
-    build_terminal(intent)
-    build_settings()
+  src/nlp2uri/integrators/rest_server.py:
+    e: run_server,main,NLP2URIRequestHandler
+    NLP2URIRequestHandler: log_message(1),_read_json(0),_send(2),do_GET(0),do_POST(0)
+    run_server(host;port)
+    main(argv)
+  src/nlp2uri/mcp.py:
+    e: text_uri_list,ui_resource,tool_resolve_desktop_action,tool_execute_desktop_uri,mcp_handoff_payload
+    text_uri_list(uris)
+    ui_resource(uri)
+    tool_resolve_desktop_action(text)
+    tool_execute_desktop_uri(uri)
+    mcp_handoff_payload(text)
+  src/nlp2uri/models.py:
+    e: HostPlatform,IntentKind,UriIntent,UriSpec,OSAction,NLP2URIResult,ActionResult
+    HostPlatform:
+    IntentKind:
+    UriIntent: with_params(0),intent_name(0),to_slots(0)  # Structured intent parsed from natural language.
+    UriSpec: to_dict(0)  # Resolved abstract URI ready for execution or MCP handoff.
+    OSAction: argv(0),to_dict(0)  # Concrete host command derived from an abstract URI.
+    NLP2URIResult: to_dict(0)  # Full compiler output: NL → URI + OS action plan.
+    ActionResult: to_dict(0)
   src/nlp2uri/parse_nl.py:
     e: _strip_quotes,_normalize_aliases,_parse_absolute_uri,_parse_http_url,_parse_ide_project,_parse_file_open,_normalize_panel,_parse_settings_panel,_parse_terminal,_parse_window_move,_parse_settings,_parse_active_window,_capture_target,_parse_capture,_parse_focus,_normalize_app_name,_parse_app_open,_parse_path,_parse_open_prefix,_parse_fallback,parse_text
     _strip_quotes(value)
@@ -241,12 +218,113 @@ D:
     _parse_open_prefix(raw;lowered)
     _parse_fallback(raw;_lowered)
     parse_text(text)
-  src/nlp2uri/adapters/mcp.py:
-    e: McpAdapter
-    McpAdapter(BaseAdapter): handle(1),call_tool(2),tool_dispatch(0),_args_from_request(0),_args_to_request(1),mcp_content(0),_tool_plan(1),_tool_resolve(1),_tool_compile(1),_tool_execute(1),_tool_handle(1),_tool_list_system_uris(1),_tool_resolve_system_map(1)
   src/nlp2uri/platform_detect.py:
     e: detect_platform
     detect_platform()
+  src/nlp2uri/platforms/__init__.py:
+  src/nlp2uri/platforms/base.py:
+    e: slugify_app_name,UriExecutor
+    UriExecutor: execute(1),_result(0),_dry(2),_run(2),_first_available(1),_open_with_browser(1),_parse_nlp2uri(1),_desktop_id_for_app(1)
+    slugify_app_name(name)
+  src/nlp2uri/platforms/linux.py:
+    e: LinuxExecutor
+    LinuxExecutor: execute(1),_open_generic(1),_open_settings(0),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/macos.py:
+    e: MacOSExecutor
+    MacOSExecutor: execute(1),_open(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/platforms/registry.py:
+    e: get_executor
+    get_executor(platform)
+  src/nlp2uri/platforms/windows.py:
+    e: WindowsExecutor
+    WindowsExecutor: execute(1),_start(1),_open_app(1),_focus_app(1),_capture(2)
+  src/nlp2uri/resolve.py:
+    e: resolve_text,nlp2uri
+    resolve_text(text)
+    nlp2uri(prompt)
+  src/nlp2uri/runtime.py:
+    e: get_executor,execute_uri
+    get_executor(platform)
+    execute_uri(uri)
+  src/nlp2uri/schemes/__init__.py:
+  src/nlp2uri/schemes/build.py:
+    e: build_uri,_build_navigate
+    build_uri(intent)
+    _build_navigate(intent)
+  src/nlp2uri/schemes/desktop.py:
+    e: build_capture,build_focus,build_app_open,build_move,build_terminal,build_settings
+    build_capture(intent)
+    build_focus(intent)
+    build_app_open(intent)
+    build_move(intent)
+    build_terminal(intent)
+    build_settings()
+  src/nlp2uri/schemes/file.py:
+    e: build_file
+    build_file(intent)
+  src/nlp2uri/schemes/http.py:
+    e: build_http
+    build_http(intent)
+  src/nlp2uri/schemes/ide.py:
+    e: build_ide
+    build_ide(intent)
+  src/nlp2uri/schemes/util.py:
+    e: abstract_url,nlp2uri_url,normalize_path,file_uri,percent_encode_segment
+    abstract_url(scheme;authority;path;params)
+    nlp2uri_url(path;params)
+    normalize_path(path)
+    file_uri(path)
+    percent_encode_segment(value)
+  src/nlp2uri/service.py:
+    e: NLP2URIService
+    NLP2URIService: default(1),for_platform(2),_cfg(0),_host(0),from_prompt(1),resolve(1),compile(1),execute(1),handle_prompt(1),handle_uri(1),list_system_uris(1),resolve_system_map(2)  # Reusable facade: prompt → URI → compile → execute.
+  src/nlp2uri/systemmap/__init__.py:
+  src/nlp2uri/systemmap/compile.py:
+    e: is_system_map_uri,_decode_segment,_backend_url,_worker_url,compile_system_map_uri,_compile_command,_compile_runtime,_compile_resource,_compile_artifact,_compile_access,_compile_metadata
+    is_system_map_uri(uri)
+    _decode_segment(value)
+    _backend_url()
+    _worker_url()
+    compile_system_map_uri(uri;host)
+    _compile_command(host;parsed)
+    _compile_runtime(host;parsed)
+    _compile_resource(host;parsed)
+    _compile_artifact(host;parsed)
+    _compile_access(host;parsed)
+    _compile_metadata(host;scheme;parsed)
+  src/nlp2uri/systemmap/context.py:
+    e: load_ir_from_arguments,_coerce_ir
+    load_ir_from_arguments(arguments)
+    _coerce_ir(raw)
+  src/nlp2uri/systemmap/encode.py:
+    e: encode_segment,encode_path
+    encode_segment(value)
+    encode_path(value)
+  src/nlp2uri/systemmap/fallback.py:
+    e: resolve_prompt_with_fallback
+    resolve_prompt_with_fallback(prompt;ir)
+  src/nlp2uri/systemmap/index.py:
+    e: _model_dump,_ir_field,_add_entry,build_uri_index,_get_id,_get_id_field,UriMapEntry,UriMap
+    UriMapEntry: to_dict(0)  # One addressable entity in a SystemMap.
+    UriMap: lookup(1),find_by_kind(1),find_command(1),to_dict(0)  # ``system_map_uri.v1`` — canonical addressing layer over Syst
+    _model_dump(obj)
+    _ir_field(ir;name;default)
+    _add_entry(uri_map)
+    build_uri_index(ir)
+    _get_id(obj)
+    _get_id_field(obj;key)
+  src/nlp2uri/systemmap/load.py:
+    e: env2llm_available,env2llm_missing_message,load_system_map_from_doql,load_system_map_from_example
+    env2llm_available()
+    env2llm_missing_message()
+    load_system_map_from_doql(path)
+    load_system_map_from_example(example_dir)
+  src/nlp2uri/systemmap/resolve.py:
+    e: _normalize_token,_name_variants,resolve_prompt_against_system_map,ResolvedSystemUri
+    ResolvedSystemUri: to_dict(0)  # One NL match against the SystemMap.
+    _normalize_token(text)
+    _name_variants(name)
+    resolve_prompt_against_system_map(prompt;ir)
   src/nlp2uri/systemmap/uri.py:
     e: _get,_get_list,uri_for_runtime,uri_for_command,uri_for_resource,uri_for_access,uri_for_artifact,uri_for_conversation,uri_for_process,uri_for_validation,uri_for_schedule,uri_for_generated_service,uri_for_environment
     _get(obj;key;default)
@@ -262,104 +340,94 @@ D:
     uri_for_schedule(sched)
     uri_for_generated_service(svc)
     uri_for_environment(example_id)
-  src/nlp2uri/cli.py:
-    e: _add_common_args,_build_parser,_platform,_emit,_request_from_args,_with_platform,_run_config,_run_shell,_run_adapter_command,_run_execute,main
-    _add_common_args(parser)
-    _build_parser()
-    _platform(raw)
-    _emit(payload)
-    _request_from_args(args)
-    _with_platform(payload)
-    _run_config(args)
-    _run_shell(args)
-    _run_adapter_command(args)
-    _run_execute(args)
-    main(argv)
-  src/nlp2uri/service.py:
-    e: NLP2URIService
-    NLP2URIService: default(0),for_platform(1),_cfg(0),_host(0),from_prompt(1),resolve(1),compile(1),execute(1),handle_prompt(1),handle_uri(1),list_system_uris(1),resolve_system_map(2)  # Reusable facade: prompt → URI → compile → execute...
-  src/nlp2uri/resolve.py:
-    e: resolve_text,nlp2uri
-    resolve_text(text)
-    nlp2uri(prompt)
-  src/nlp2uri/integrators/rest_server.py:
-    e: NLP2URIRequestHandler,run_server,main
-    NLP2URIRequestHandler(BaseHTTPRequestHandler): log_message(1),_read_json(0),_send(2),do_GET(0),do_POST(0)
-    run_server(host;port)
-    main(argv)
-  src/nlp2uri/schemes/http.py:
-    e: build_http
-    build_http(intent)
-  src/nlp2uri/schemes/ide.py:
-    e: build_ide
-    build_ide(intent)
-  examples/execute/dry-run/main.py:
-    e: main
-    main()
-  src/nlp2uri/integrators/__init__.py:
-    e: __getattr__
-    __getattr__(name)
-  src/nlp2uri/platforms/registry.py:
-    e: get_executor
-    get_executor(platform)
-  src/nlp2uri/schemes/file.py:
-    e: build_file
-    build_file(intent)
-  src/nlp2uri/systemmap/load.py:
-    e: env2llm_available,env2llm_missing_message,load_system_map_from_doql,load_system_map_from_example
-    env2llm_available()
-    env2llm_missing_message()
-    load_system_map_from_doql(path)
-    load_system_map_from_example(example_dir)
-  examples/resolve/nl-to-uri/main.py:
-    e: main
-    main()
-  examples/mcp/tool-handoff/main.py:
-    e: main
-    main()
-  src/nlp2uri/mcp.py:
-    e: text_uri_list,ui_resource,tool_resolve_desktop_action,tool_execute_desktop_uri,mcp_handoff_payload
-    text_uri_list(uris)
-    ui_resource(uri)
-    tool_resolve_desktop_action(text)
-    tool_execute_desktop_uri(uri)
-    mcp_handoff_payload(text)
-  src/nlp2uri/adapters/base.py:
-    e: AdapterRequest,AdapterResponse,BaseAdapter
-    AdapterRequest:
-    AdapterResponse: to_dict(0)
-    BaseAdapter(ABC): __init__(1),with_platform(1),handle(1),_service_for(1)
-  src/nlp2uri/systemmap/encode.py:
-    e: encode_segment,encode_path
-    encode_segment(value)
-    encode_path(value)
-  docker-compose.yml:
-  nlp2uri.yaml:
-  tree.sh:
-  Dockerfile:
-  project.sh:
-  examples/integrators/shell-export/e2e.sh:
-  examples/integrators/rest-api/e2e.sh:
-  examples/mcp/tool-handoff/e2e.sh:
-  examples/execute/dry-run/e2e.sh:
-  examples/resolve/nl-to-uri/e2e.sh:
-  src/nlp2uri/platforms/__init__.py:
-  src/nlp2uri/adapters/__init__.py:
-  src/nlp2uri/schemes/__init__.py:
-  scripts/testapp-handler.sh:
-  goal.yaml:
-  pyproject.toml:
-  prefact.yaml:
-  planfile.yaml:
-  examples/run-e2e.sh:
-  examples/integrators/mcp-stdio/mcp-config.cursor.json:
-  examples/integrators/mcp-stdio/e2e.sh:
-  examples/resolve/new-intents/e2e.sh:
-    e: print
-    print()
-  examples/integrators/mcp-stdio/mcp-config.json:
-  testql-scenarios/generated-from-pytests.testql.toon.yaml:
-  scripts/install-editable.sh:
-  testql-scenarios/generated-cli-tests.testql.toon.yaml:
-  src/nlp2uri/systemmap/__init__.py:
-  src/nlp2uri/__init__.py:
+  tests/conftest.py:
+    e: isolated_config
+    isolated_config(tmp_path;monkeypatch)
+  tests/integration/test_xdg_handler.py:
+    e: test_xdg_custom_scheme_handler
+    test_xdg_custom_scheme_handler(tmp_path)
+  tests/test_adapters.py:
+    e: test_cli_adapter_plan,test_rest_adapter_plan,test_shell_adapter_export,test_mcp_adapter_tools,test_mcp_stdio_initialize,test_mcp_list_system_uris_inline_map,test_mcp_resolve_system_map_with_fallback,test_mcp_stdio_tools_call
+    test_cli_adapter_plan()
+    test_rest_adapter_plan()
+    test_shell_adapter_export()
+    test_mcp_adapter_tools()
+    test_mcp_stdio_initialize()
+    test_mcp_list_system_uris_inline_map()
+    test_mcp_resolve_system_map_with_fallback()
+    test_mcp_stdio_tools_call()
+  tests/test_cli.py:
+    e: test_cli_resolve_json,test_cli_execute_dry_run
+    test_cli_resolve_json(capsys)
+    test_cli_execute_dry_run(capsys)
+  tests/test_compile.py:
+    e: test_compile_app_open_linux,test_compile_screenshot_macos,test_compile_ide_native_deep_link,test_compile_settings_windows
+    test_compile_app_open_linux()
+    test_compile_screenshot_macos()
+    test_compile_ide_native_deep_link()
+    test_compile_settings_windows()
+  tests/test_config.py:
+    e: test_auto_platform_detection,test_config_resolved_platform_auto,test_env_platform_override,test_save_and_load_yaml,test_ensure_config_writes_defaults
+    test_auto_platform_detection()
+    test_config_resolved_platform_auto()
+    test_env_platform_override(monkeypatch)
+    test_save_and_load_yaml(tmp_path;monkeypatch)
+    test_ensure_config_writes_defaults(tmp_path;monkeypatch)
+  tests/test_intents_phase2.py:
+    e: test_phase2_resolve_linux,test_terminal_path_in_uri,test_window_move_screen_param,test_settings_panel_windows,test_settings_panel_macos,test_polish_cursor_project_regression,test_capture_window_edge_title,test_compile_window_move_dry_run_linux,test_compile_terminal_linux,test_compile_settings_panel_windows
+    test_phase2_resolve_linux(text;expected_uri_prefix;expected_action)
+    test_terminal_path_in_uri()
+    test_window_move_screen_param()
+    test_settings_panel_windows()
+    test_settings_panel_macos()
+    test_polish_cursor_project_regression()
+    test_capture_window_edge_title()
+    test_compile_window_move_dry_run_linux()
+    test_compile_terminal_linux()
+    test_compile_settings_panel_windows()
+  tests/test_mcp.py:
+    e: test_text_uri_list_mime,test_tool_resolve_desktop_action,test_mcp_handoff_includes_actions
+    test_text_uri_list_mime()
+    test_tool_resolve_desktop_action()
+    test_mcp_handoff_includes_actions()
+  tests/test_platforms.py:
+    e: test_linux_dry_run_open_app,test_macos_dry_run_capture_screen,test_windows_dry_run_settings,test_linux_dry_run_file_uri
+    test_linux_dry_run_open_app()
+    test_macos_dry_run_capture_screen()
+    test_windows_dry_run_settings()
+    test_linux_dry_run_file_uri()
+  tests/test_resolve.py:
+    e: test_resolve_linux,test_polish_open_vscode_in_folder,test_polish_active_browser_screenshot,test_nlp2uri_returns_actions,test_parse_absolute_uri_passthrough,test_settings_windows,test_settings_macos,test_empty_input_raises
+    test_resolve_linux(text;expected_uri_prefix;expected_action)
+    test_polish_open_vscode_in_folder()
+    test_polish_active_browser_screenshot()
+    test_nlp2uri_returns_actions()
+    test_parse_absolute_uri_passthrough()
+    test_settings_windows()
+    test_settings_macos()
+    test_empty_input_raises()
+  tests/test_rest_server.py:
+    e: _post,test_rest_server_plan
+    _post(url;payload)
+    test_rest_server_plan()
+  tests/test_service.py:
+    e: test_from_prompt,test_handle_prompt_dry_run,test_handle_uri
+    test_from_prompt()
+    test_handle_prompt_dry_run()
+    test_handle_uri()
+  tests/test_systemmap.py:
+    e: _sample_ir,test_encode_segment_colon,test_uri_for_runtime_and_command,test_build_uri_index_covers_entities,test_resolve_prompt_command_name,test_resolve_prompt_command_spaced_name,test_resolve_prompt_runtime,test_is_system_map_uri,test_compile_command_handoff,test_compile_uri_to_actions_command_scheme,test_resolve_fallback_system_map_first,test_resolve_fallback_desktop_when_no_ir_match,test_resolve_fallback_desktop_without_ir,test_env2llm_roundtrip_index
+    _sample_ir()
+    test_encode_segment_colon()
+    test_uri_for_runtime_and_command()
+    test_build_uri_index_covers_entities()
+    test_resolve_prompt_command_name()
+    test_resolve_prompt_command_spaced_name()
+    test_resolve_prompt_runtime()
+    test_is_system_map_uri()
+    test_compile_command_handoff()
+    test_compile_uri_to_actions_command_scheme()
+    test_resolve_fallback_system_map_first()
+    test_resolve_fallback_desktop_when_no_ir_match()
+    test_resolve_fallback_desktop_without_ir()
+    test_env2llm_roundtrip_index(tmp_path)

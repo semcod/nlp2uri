@@ -888,3 +888,146 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-3633046a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/context.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1a53a30a
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/compile.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/compile.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fe05d296
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/encode.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/encode.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5340b405
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/fallback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/fallback.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8888abbd
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/index.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/index.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-57bcd6cb
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/load.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/load.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8d10285b
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/uri.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/uri.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-56015e40
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/nlp2uri/systemmap/resolve.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/nlp2uri/systemmap/resolve.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-339f95d6
+    name: Fix smart-return-type issues
+    description: Resolve 10 smart-return-type issues in tests/test_intents_phase2.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - tests/test_intents_phase2.py
+    rule_id: smart-return-type
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e3e490cc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_intents_phase2.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_intents_phase2.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-730a1d14
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in tests/test_systemmap.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - tests/test_systemmap.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

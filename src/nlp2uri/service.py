@@ -11,6 +11,11 @@ from nlp2uri.models import ActionResult, HostPlatform, NLP2URIResult, OSAction, 
 from nlp2uri.resolve import nlp2uri, resolve_text
 from nlp2uri.runtime import execute_uri
 from nlp2uri.systemmap.fallback import resolve_prompt_with_fallback
+from nlp2uri.systemmap.getv_uri import (
+    build_getv_uri_index,
+    get_getv_var_value,
+    resolve_prompt_against_getv,
+)
 from nlp2uri.systemmap.index import UriMap, build_uri_index
 
 
@@ -111,3 +116,36 @@ class NLP2URIService:
             "match_reason": top.match_reason,
             "matches": [item.to_dict() for item in matches],
         }
+
+    def list_getv_uris(self, *, getv_home: str | None = None, uri_map: UriMap | None = None) -> dict[str, Any]:
+        index = uri_map or build_getv_uri_index(home=getv_home)
+        return {
+            "getv_home": index.example_id,
+            "format": index.format,
+            "count": len(index.entries),
+            "entries": [entry.to_dict() for entry in index.entries.values()],
+            "by_name": dict(index.by_name),
+        }
+
+    def resolve_getv(
+        self,
+        prompt: str,
+        *,
+        getv_home: str | None = None,
+        uri_map: UriMap | None = None,
+    ) -> dict[str, Any]:
+        index = uri_map or build_getv_uri_index(home=getv_home)
+        matches = resolve_prompt_against_getv(prompt, uri_map=index)
+        if not matches:
+            return {"source": "getv", "uri": None, "matches": []}
+        top = matches[0]
+        return {
+            "source": "getv",
+            "uri": top.uri,
+            "confidence": top.confidence,
+            "match_reason": top.match_reason,
+            "matches": [item.to_dict() for item in matches],
+        }
+
+    def read_getv_var(self, uri: str) -> dict[str, Any]:
+        return get_getv_var_value(uri)

@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-06-06
 
 ### Fixed
+- Fix unused-imports issues (ticket-3633046a)
+- Fix unused-imports issues (ticket-1a53a30a)
+- Fix unused-imports issues (ticket-fe05d296)
+- Fix unused-imports issues (ticket-5340b405)
+- Fix unused-imports issues (ticket-8888abbd)
+- Fix unused-imports issues (ticket-57bcd6cb)
+- Fix unused-imports issues (ticket-8d10285b)
+- Fix unused-imports issues (ticket-56015e40)
+- Fix smart-return-type issues (ticket-339f95d6)
+- Fix unused-imports issues (ticket-e3e490cc)
+- Fix unused-imports issues (ticket-730a1d14)
+
+## [0.1.10] - 2026-06-06
+
+### Fixed
 - Fix unused-imports issues (ticket-4dbed369)
 - Fix unused-imports issues (ticket-40c5ea4a)
 - Fix magic-numbers issues (ticket-5fc5a367)
@@ -77,6 +92,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-958c03f6)
 
 ## [Unreleased]
+
+## [0.4.5] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update docs/getv_uri.v1.md
+- Update docs/mcp-tools.md
+- Update docs/orchestration.md
+
+### Test
+- Update tests/test_getv_uri.py
+
+### Other
+- Update app.doql.less
+- Update planfile.yaml
+- Update project/logic.pl
+- Update project/map.toon.yaml
+- Update uv.lock
 
 ## [0.4.4] - 2026-06-06
 

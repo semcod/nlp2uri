@@ -121,6 +121,45 @@ MCP_TOOLS: list[dict[str, Any]] = [
             "required": ["prompt"],
         },
     },
+    {
+        "name": "nlp2uri_list_getv_uris",
+        "description": "List getv:// URIs for all ~/.getv profile variables (requires getv profiles on disk).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "getv_home": {
+                    "type": "string",
+                    "description": "Override GETV_HOME (default ~/.getv).",
+                },
+            },
+        },
+    },
+    {
+        "name": "nlp2uri_resolve_getv",
+        "description": "Resolve NL prompt to getv:// env var or profile URI (e.g. GROQ_API_KEY).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "prompt": {"type": "string"},
+                "getv_home": {"type": "string"},
+            },
+            "required": ["prompt"],
+        },
+    },
+    {
+        "name": "nlp2uri_get_getv_var",
+        "description": "Read getv://category/profile/VAR — returns masked value metadata.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "type": "string",
+                    "description": "getv://llm/groq/GROQ_API_KEY",
+                },
+            },
+            "required": ["uri"],
+        },
+    },
 ]
 
 
@@ -146,6 +185,9 @@ class McpAdapter(BaseAdapter):
             "nlp2uri_handle": McpAdapter._tool_handle,
             "nlp2uri_list_system_uris": McpAdapter._tool_list_system_uris,
             "nlp2uri_resolve_system_map": McpAdapter._tool_resolve_system_map,
+            "nlp2uri_list_getv_uris": McpAdapter._tool_list_getv_uris,
+            "nlp2uri_resolve_getv": McpAdapter._tool_resolve_getv,
+            "nlp2uri_get_getv_var": McpAdapter._tool_get_getv_var,
         }
 
     @staticmethod
@@ -253,3 +295,25 @@ class McpAdapter(BaseAdapter):
         uri = payload.get("uri")
         payload["mcp_content"] = self.mcp_content(payload, uri=uri)
         return AdapterResponse(ok=uri is not None, data=payload, status_code=0 if uri else 1)
+
+    def _tool_list_getv_uris(self, req: AdapterRequest) -> AdapterResponse:
+        svc = self._service_for(req)
+        payload = svc.list_getv_uris(getv_home=req.extra.get("getv_home"))
+        payload["mcp_content"] = self.mcp_content(payload)
+        return AdapterResponse(ok=True, data=payload)
+
+    def _tool_resolve_getv(self, req: AdapterRequest) -> AdapterResponse:
+        svc = self._service_for(req)
+        payload = svc.resolve_getv(req.prompt, getv_home=req.extra.get("getv_home"))
+        uri = payload.get("uri")
+        payload["mcp_content"] = self.mcp_content(payload, uri=uri)
+        return AdapterResponse(ok=uri is not None, data=payload, status_code=0 if uri else 1)
+
+    def _tool_get_getv_var(self, req: AdapterRequest) -> AdapterResponse:
+        svc = self._service_for(req)
+        try:
+            payload = svc.read_getv_var(req.uri)
+        except ValueError as exc:
+            return AdapterResponse(ok=False, error=str(exc), status_code=400)
+        payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
+        return AdapterResponse(ok=bool(payload.get("found")), data=payload)

@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.4-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.15-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.3h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.5-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.40-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.1476 (6 commits)
-- 👤 **Human dev:** ~$227 (2.3h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.3997 (7 commits)
+- 👤 **Human dev:** ~$266 (2.7h @ $100/h, 30min dedup)
 
 Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -194,6 +194,22 @@ W Dockerze:
 - unit: NLP → URI → `OSAction`
 - integracja: rejestracja `testapp://` przez `.desktop` + `xdg-open` (`NLP2URI_INTEGRATION=1`)
 
+## Orchestracja ekosystemu (MCP, usługi, artefakty, getv)
+
+Pełny przewodnik z przykładami uruchomienia i kontroli wielu backendów:
+
+- **[docs/orchestration.md](docs/orchestration.md)** — URI + MCP + todomat + koru + scenariusze E2E
+- [docs/system_map_uri.v1.md](docs/system_map_uri.v1.md) — `command://`, `artifact://`, `service://`, …
+- [docs/getv_uri.v1.md](docs/getv_uri.v1.md) — `getv://` zmienne środowiskowe
+- [docs/mcp-tools.md](docs/mcp-tools.md) — lista narzędzi `nlp2uri-mcp`
+
+```bash
+pip install -e ".[envmap]"    # getv + env2llm
+nlp2uri list-getv --json
+nlp2uri resolve-getv "GROQ_API_KEY" --json
+nlp2uri list-system-uris --example-dir ~/github/wronai/nlp2dsl/examples/01-invoice --json
+```
+
 ## Plan rozwoju
 
 [docs/roadmap.md](docs/roadmap.md) · [docs/mcp-tools.md](docs/mcp-tools.md) · CI: `.github/workflows/ci.yml`
@@ -201,8 +217,10 @@ W Dockerze:
 ## Relacja z ekosystemem Semcod
 
 - **`nlpshim`** — NLP → DSL / workflow
-- **`nlp2uri`** — NLP → URI → akcje desktopowe (MCP, screenshot, focus, open app)
-- **`koru`** — `portal_capture.py` jako wzorzec dla Wayland screenshot
+- **`nlp2uri`** — NLP → URI → akcje (desktop, getv, SystemMap, MCP)
+- **`todomat`** — orchestrator MCP/HTTP (curllm, nlp2dsl, iterun, nlp2uri)
+- **`koru`** — bridge MCP `koru_desktop_uri_*` + planfile tickets
+- **`getv`** — zmienne env → `getv://` URI
 
 ## License
 
