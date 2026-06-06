@@ -1,9 +1,66 @@
-# redup/duplication | 0 groups | 36f 2964L | 2026-06-06
+# redup/duplication | 5 groups | 45f 4358L | 2026-06-06
 
 SUMMARY:
-  files_scanned: 36
-  total_lines:   2964
-  dup_groups:    0
-  dup_fragments: 0
-  saved_lines:   0
-  scan_ms:       4217
+  files_scanned: 45
+  total_lines:   4358
+  dup_groups:    5
+  dup_fragments: 10
+  saved_lines:   40
+  scan_ms:       2490
+
+HOTSPOTS[4] (files with most duplication):
+  src/nlp2uri/schemes/desktop.py  dup=36L  groups=1  frags=2  (0.8%)
+  src/nlp2uri/parse_nl.py  dup=22L  groups=1  frags=2  (0.5%)
+  src/nlp2uri/systemmap/uri.py  dup=14L  groups=2  frags=4  (0.3%)
+  src/nlp2uri/systemmap/compile.py  dup=8L  groups=1  frags=2  (0.2%)
+
+DUPLICATES[5] (ranked by impact):
+  [b1482ea46475566a]   STRU  build_focus  L=18 N=2 saved=18 sim=1.00
+      src/nlp2uri/schemes/desktop.py:40-57  (build_focus)
+      src/nlp2uri/schemes/desktop.py:102-119  (build_move)
+  [42faf2df3d26832c]   STRU  _parse_file_open  L=11 N=2 saved=11 sim=1.00
+      src/nlp2uri/parse_nl.py:152-162  (_parse_file_open)
+      src/nlp2uri/parse_nl.py:294-304  (_parse_app_open)
+  [b578baca21b73515]   STRU  _compile_resource  L=4 N=2 saved=4 sim=1.00
+      src/nlp2uri/systemmap/compile.py:141-144  (_compile_resource)
+      src/nlp2uri/systemmap/compile.py:147-150  (_compile_artifact)
+  [3d6c0029f92cde72]   STRU  uri_for_schedule  L=4 N=2 saved=4 sim=1.00
+      src/nlp2uri/systemmap/uri.py:79-82  (uri_for_schedule)
+      src/nlp2uri/systemmap/uri.py:85-88  (uri_for_generated_service)
+  [ff8711d5a6139426]   STRU  uri_for_conversation  L=3 N=2 saved=3 sim=1.00
+      src/nlp2uri/systemmap/uri.py:63-65  (uri_for_conversation)
+      src/nlp2uri/systemmap/uri.py:68-70  (uri_for_process)
+
+REFACTOR[5] (ranked by priority):
+  [1] ○ extract_function   → src/nlp2uri/schemes/utils/build_focus.py
+      WHY: 2 occurrences of 18-line block across 1 files — saves 18 lines
+      FILES: src/nlp2uri/schemes/desktop.py
+  [2] ○ extract_function   → src/nlp2uri/utils/_parse_file_open.py
+      WHY: 2 occurrences of 11-line block across 1 files — saves 11 lines
+      FILES: src/nlp2uri/parse_nl.py
+  [3] ○ extract_function   → src/nlp2uri/systemmap/utils/_compile_resource.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: src/nlp2uri/systemmap/compile.py
+  [4] ○ extract_function   → src/nlp2uri/systemmap/utils/uri_for_schedule.py
+      WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
+      FILES: src/nlp2uri/systemmap/uri.py
+  [5] ○ extract_function   → src/nlp2uri/systemmap/utils/uri_for_conversation.py
+      WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
+      FILES: src/nlp2uri/systemmap/uri.py
+
+QUICK_WINS[2] (low risk, high savings — do first):
+  [1] extract_function   saved=18L  → src/nlp2uri/schemes/utils/build_focus.py
+      FILES: desktop.py
+  [2] extract_function   saved=11L  → src/nlp2uri/utils/_parse_file_open.py
+      FILES: parse_nl.py
+
+EFFORT_ESTIMATE (total ≈ 1.3h):
+  medium build_focus                         saved=18L  ~36min
+  easy   _parse_file_open                    saved=11L  ~22min
+  easy   _compile_resource                   saved=4L  ~8min
+  easy   uri_for_schedule                    saved=4L  ~8min
+  easy   uri_for_conversation                saved=3L  ~6min
+
+METRICS-TARGET:
+  dup_groups:  5 → 0
+  saved_lines: 40 lines recoverable

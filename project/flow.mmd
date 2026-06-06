@@ -5,26 +5,26 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        src__nlp2uri__parse_nl__parse_text{{parse_text CC=27}}
-        src__nlp2uri__integrators__mcp_server__main["main"]
-        src__nlp2uri__cli___add_common_args["_add_common_args"]
-        src__nlp2uri__cli___build_parser["_build_parser"]
-        src__nlp2uri__cli___platform["_platform"]
-        src__nlp2uri__cli___emit["_emit"]
-        src__nlp2uri__cli___request_from_args["_request_from_args"]
-        src__nlp2uri__cli__main["main"]
-        src__nlp2uri__platforms__base__UriExecutor__execute["execute"]
-        src__nlp2uri__platforms__base__UriExecutor___result["_result"]
-        src__nlp2uri__platforms__base__UriExecutor___dry["_dry"]
-        src__nlp2uri__platforms__base__UriExecutor___run["_run"]
-        src__nlp2uri__platforms__base__UriExecutor___first_available["_first_available"]
-        src__nlp2uri__platforms__base__UriExecutor___open_with_browser["_open_with_browser"]
-        src__nlp2uri__platforms__base__UriExecutor___parse_nlp2uri["_parse_nlp2uri"]
-        ...["+88 more"]
+        src__nlp2uri__runtime__get_executor["get_executor"]
+        src__nlp2uri__config__NLP2URIConfig__resolved_platform["resolved_platform"]
+        src__nlp2uri__config__NLP2URIConfig__apply_runtime_env["apply_runtime_env"]
+        src__nlp2uri__config__NLP2URIConfig__to_dict["to_dict"]
+        src__nlp2uri__config__NLP2URIConfig__to_yaml["to_yaml"]
+        src__nlp2uri__config__reset_config_cache["reset_config_cache"]
+        src__nlp2uri__mcp__text_uri_list["text_uri_list"]
+        src__nlp2uri__mcp__ui_resource["ui_resource"]
+        src__nlp2uri__mcp__tool_execute_desktop_uri["tool_execute_desktop_uri"]
+        src__nlp2uri__resolve__nlp2uri["nlp2uri"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__log_message["log_message"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler___read_json["_read_json"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler___send["_send"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__do_GET["do_GET"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__do_POST["do_POST"]
+        ...["+124 more"]
     end
 
     subgraph Exporters
         src__nlp2uri__adapters__shell__ShellAdapter___export_script["_export_script"]
     end
 
-    class src__nlp2uri__integrators__mcp_server__main,src__nlp2uri__cli___add_common_args,src__nlp2uri__cli___build_parser,src__nlp2uri__cli___platform,src__nlp2uri__cli___emit,src__nlp2uri__cli___request_from_args,src__nlp2uri__cli__main,src__nlp2uri__platforms__base__UriExecutor__execute,src__nlp2uri__platforms__base__UriExecutor___result,src__nlp2uri__platforms__base__UriExecutor___dry entry
+    class src__nlp2uri__runtime__get_executor,src__nlp2uri__config__NLP2URIConfig__resolved_platform,src__nlp2uri__config__NLP2URIConfig__apply_runtime_env,src__nlp2uri__config__NLP2URIConfig__to_dict,src__nlp2uri__config__NLP2URIConfig__to_yaml,src__nlp2uri__config__reset_config_cache,src__nlp2uri__mcp__text_uri_list,src__nlp2uri__mcp__ui_resource,src__nlp2uri__mcp__tool_execute_desktop_uri,src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__log_message entry

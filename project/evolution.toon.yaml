@@ -1,32 +1,37 @@
-# code2llm/evolution | 145 func | 29f | 2026-06-06
+# code2llm/evolution | 234 func | 37f | 2026-06-06
 # generated in 0.00s
 
-NEXT[4] (ranked by impact):
-  [1] !! SPLIT-FUNC      parse_text  CC=27  fan=26
-      WHY: CC=27 exceeds 15
-      EFFORT: ~1h  IMPACT: 702
+NEXT[5] (ranked by impact):
+  [1] !! SPLIT-FUNC      build_uri_index  CC=31  fan=20
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 620
 
-  [2] !  SPLIT-FUNC      main  CC=20  fan=26
-      WHY: CC=20 exceeds 15
-      EFFORT: ~1h  IMPACT: 520
+  [2] !! SPLIT-FUNC      resolve_prompt_against_system_map  CC=26  fan=13
+      WHY: CC=26 exceeds 15
+      EFFORT: ~1h  IMPACT: 338
 
-  [3] !  SPLIT-FUNC      _compile_screenshot  CC=17  fan=7
-      WHY: CC=17 exceeds 15
-      EFFORT: ~1h  IMPACT: 119
+  [3] !  SPLIT-FUNC      _compile_app  CC=16  fan=16
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 256
 
-  [4] !! SPLIT           goal.yaml
+  [4] !! SPLIT           planfile.yaml
+      WHY: 890L, 0 classes, max CC=0
+      EFFORT: ~4h  IMPACT: 0
+
+  [5] !! SPLIT           goal.yaml
       WHY: 511L, 0 classes, max CC=0
       EFFORT: ~4h  IMPACT: 0
 
 
-RISKS[1]:
+RISKS[2]:
+  ⚠ Splitting planfile.yaml may break 0 import paths
   ⚠ Splitting goal.yaml may break 0 import paths
 
 METRICS-TARGET:
-  CC̄:          3.9 → ≤2.7
-  max-CC:      27 → ≤13
-  god-modules: 1 → 0
-  high-CC(≥15): 3 → ≤1
+  CC̄:          3.6 → ≤2.5
+  max-CC:      31 → ≤15
+  god-modules: 2 → 0
+  high-CC(≥15): 4 → ≤2
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -54,4 +59,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  (first run — no previous data)
+  prev CC̄=3.9 → now CC̄=3.6

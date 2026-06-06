@@ -1,52 +1,52 @@
-# nlp2uri | 148 func | 32f | 3779L | python | 2026-06-06
+# nlp2uri | 238 func | 41f | 6256L | python | 2026-06-06
 # generated in 0.00s
 
 HEALTH:
-  CC̄=3.9  critical=11 (limit:10)  dup=0  cycles=0
+  CC̄=3.6  critical=13 (limit:10)  dup=0  cycles=0
 
 ALERTS[20]:
-  !!! cc_exceeded      parse_text = 27 (limit:15)
-  !!! high_fan_out     parse_text = 26 (limit:10)
-  !!! high_fan_out     main = 26 (limit:10)
-  !!  cc_exceeded      main = 20 (limit:15)
-  !!  high_fan_out     _build_parser = 16 (limit:10)
+  !!! cc_exceeded      build_uri_index = 31 (limit:15)
+  !!! cc_exceeded      resolve_prompt_against_system_map = 26 (limit:15)
+  !!! high_fan_out     build_uri_index = 20 (limit:10)
   !!  high_fan_out     RestAdapter.dispatch = 16 (limit:10)
-  !   cc_exceeded      _compile_screenshot = 17 (limit:15)
-  !   high_fan_out     _compile_app = 14 (limit:10)
+  !!  high_fan_out     _build_parser = 16 (limit:10)
+  !!  high_fan_out     _compile_app = 16 (limit:10)
+  !   cc_exceeded      _compile_app = 16 (limit:15)
+  !   cc_exceeded      _compile_terminal = 16 (limit:15)
   !   high_fan_out     CliAdapter.handle = 14 (limit:10)
-  !   high_fan_out     _compile_legacy_nlp2uri = 12 (limit:10)
+  !   high_fan_out     compile_uri_to_actions = 13 (limit:10)
 
-MODULES[52] (top by size):
+MODULES[68] (top by size):
+  M[planfile.yaml] 890L C:0 F:0 CC↑0 D:0 (yaml)
   M[goal.yaml] 511L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/nlp2uri/compile.py] 258L C:0 F:11 CC↑17 D:4 (python)
+  M[src/nlp2uri/compile.py] 423L C:0 F:23 CC↑16 D:4 (python)
+  M[src/nlp2uri/parse_nl.py] 376L C:0 F:21 CC↑6 D:1 (python)
+  M[src/nlp2uri/systemmap/index.py] 267L C:2 F:11 CC↑31 D:3 (python)
+  M[src/nlp2uri/adapters/mcp.py] 255L C:1 F:13 CC↑6 D:0 (python)
   M[src/nlp2uri/config.py] 230L C:1 F:17 CC↑8 D:7 (python)
-  M[src/nlp2uri/parse_nl.py] 218L C:0 F:3 CC↑27 D:1 (python)
-  M[src/nlp2uri/cli.py] 185L C:0 F:6 CC↑20 D:0 (python)
-  M[src/nlp2uri/adapters/mcp.py] 183L C:1 F:11 CC↑6 D:0 (python)
-  M[src/nlp2uri/models.py] 174L C:7 F:7 CC↑11 D:0 (python)
+  M[src/nlp2uri/cli.py] 199L C:0 F:11 CC↑5 D:0 (python)
+  M[src/nlp2uri/models.py] 180L C:7 F:7 CC↑12 D:0 (python)
+  M[src/nlp2uri/schemes/desktop.py] 166L C:0 F:6 CC↑6 D:0 (python)
+  M[src/nlp2uri/systemmap/compile.py] 163L C:0 F:11 CC↑12 D:1 (python)
   M[src/nlp2uri/platforms/linux.py] 145L C:1 F:6 CC↑11 D:0 (python)
   M[src/nlp2uri/platforms/base.py] 130L C:1 F:9 CC↑7 D:0 (python)
   M[src/nlp2uri/integrators/mcp_server.py] 128L C:0 F:10 CC↑8 D:0 (python)
-  M[src/nlp2uri/platforms/macos.py] 94L C:1 F:5 CC↑7 D:0 (python)
-  M[src/nlp2uri/platforms/windows.py] 94L C:1 F:5 CC↑7 D:0 (python)
-  M[src/nlp2uri/schemes/desktop.py] 94L C:0 F:4 CC↑5 D:0 (python)
-  M[src/nlp2uri/runtime.py] 92L C:0 F:2 CC↑9 D:1 (python)
-  M[src/nlp2uri/integrators/rest_server.py] 90L C:1 F:7 CC↑4 D:0 (python)
-  LANGS: python:36/shell:10/yaml:3/other:1/yml:1/toml:1
+  M[src/nlp2uri/systemmap/resolve.py] 122L C:1 F:4 CC↑26 D:2 (python)
+  LANGS: python:45/shell:12/yaml:6/json:2/other:1/yml:1/toml:1
 
 HOTSPOTS[10]:
-  ★ parse_text fan=26  // Orchestrates 26 calls
-  ★ main fan=26  // Orchestrates 26 calls
-  ★ _build_parser fan=16  // Orchestrates 16 calls
+  ★ build_uri_index fan=20  // Derive deterministic URIs for all entities in a SystemMapIR.
   ★ RestAdapter.dispatch fan=16  // 16-way dispatch
-  ★ _compile_app fan=14  // Orchestrates 14 calls
+  ★ _build_parser fan=16  // Orchestrates 16 calls
+  ★ _compile_app fan=16  // Orchestrates 16 calls
+  ★ CliAdapter.handle fan=14  // Orchestrates 14 calls
 
-REFACTOR[7]:
-  [1] H/L Split parse_text (CC=27)
-  [2] H/H Split god module goal.yaml (511L, 0 classes)
-  [3] M/L Split main (CC=20)
-  [4] M/L Split _compile_screenshot (CC=17)
-  [5] M/M Reduce parse_text fan-out (currently 26)
+REFACTOR[9]:
+  [1] H/L Split resolve_prompt_against_system_map (CC=26)
+  [2] H/L Split build_uri_index (CC=31)
+  [3] H/H Split god module goal.yaml (511L, 0 classes)
+  [4] H/H Split god module planfile.yaml (890L, 0 classes)
+  [5] M/L Split _compile_app (CC=16)
 
 EVOLUTION:
-  2026-06-06 CC̄=3.9 crit=11 3779L // Automated analysis
+  2026-06-06 CC̄=3.6 crit=13 6256L // Automated analysis
