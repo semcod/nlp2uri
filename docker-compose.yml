@@ -1,0 +1,6 @@
+services:
+  nlp2uri-test:
+    build: .
+    image: nlp2uri:test
+    environment:
+      NLP2URI_CAPTURE_DIR: /tmp/nlp2uri-captures
