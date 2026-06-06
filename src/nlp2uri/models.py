@@ -18,6 +18,7 @@ class IntentKind(str, Enum):
     OPEN = "open"
     CAPTURE = "capture"
     FOCUS = "focus"
+    MOVE = "move"
     NAVIGATE = "navigate"
 
 
@@ -25,6 +26,7 @@ INTENT_NAMES: dict[IntentKind, str] = {
     IntentKind.OPEN: "open_app",
     IntentKind.CAPTURE: "screenshot",
     IntentKind.FOCUS: "focus_window",
+    IntentKind.MOVE: "move_window",
     IntentKind.NAVIGATE: "navigate",
 }
 
@@ -56,6 +58,8 @@ class UriIntent:
             return "open_file"
         if self.kind == IntentKind.OPEN and self.target == "settings":
             return "open_settings"
+        if self.kind == IntentKind.OPEN and self.target == "terminal":
+            return "open_terminal"
         if self.kind == IntentKind.OPEN and self.target == "ide":
             return "open_app"
         return INTENT_NAMES.get(self.kind, self.kind.value)
@@ -63,7 +67,7 @@ class UriIntent:
     def to_slots(self) -> dict[str, Any]:
         slots: dict[str, Any] = {"target": self.target}
         slots.update(self.params)
-        if self.kind == IntentKind.CAPTURE:
+        if self.kind in {IntentKind.CAPTURE, IntentKind.MOVE}:
             window = {}
             if "title" in self.params:
                 window["title"] = self.params["title"]
@@ -71,6 +75,8 @@ class UriIntent:
                 window["mode"] = self.params["mode"]
             if "class" in self.params:
                 window["class"] = self.params["class"]
+            if "screen" in self.params:
+                window["screen"] = self.params["screen"]
             if window:
                 slots["window"] = window
         if self.target == "ide" or self.params.get("ide"):

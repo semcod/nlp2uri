@@ -74,8 +74,15 @@ def _compile_app(
     app = authority.lower()
     action = path.strip("/") or "open"
 
-    if app == "settings" and action == "open":
-        return _compile_settings(host)
+    if app == "settings":
+        panel = path.strip("/")
+        if panel and panel != "open":
+            return _compile_settings_panel(host, panel)
+        if action == "open" or panel == "open":
+            return _compile_settings(host)
+
+    if app == "terminal" and action == "open":
+        return _compile_terminal(host, params)
 
     if app == "file" and action == "open":
         native = params.get("path", "")
@@ -95,6 +102,63 @@ def _compile_app(
         return _compile_launch_app(host, app)
 
     raise ValueError(f"unsupported app uri: {uri}")
+
+
+def _compile_settings_panel(host: HostPlatform, panel: str) -> list[OSAction]:
+    if host == HostPlatform.WINDOWS:
+        uri = {
+            "network": "ms-settings:network",
+            "wifi": "ms-settings:network-wifi",
+            "bluetooth": "ms-settings:bluetooth",
+            "display": "ms-settings:display",
+            "sound": "ms-settings:sound",
+            "privacy": "ms-settings:privacy",
+        }.get(panel, f"ms-settings:{panel}")
+        return [_open_uri(host, uri)]
+    if host == HostPlatform.MACOS:
+        uri = {
+            "network": "x-apple.systempreferences:com.apple.preference.network",
+            "wifi": "x-apple.systempreferences:com.apple.preference.network",
+            "bluetooth": "x-apple.systempreferences:com.apple.preference.security?Privacy_Bluetooth",
+            "display": "x-apple.systempreferences:com.apple.preference.displays",
+            "sound": "x-apple.systempreferences:com.apple.preference.sound",
+            "privacy": "x-apple.systempreferences:com.apple.preference.security",
+        }.get(panel, f"x-apple.systempreferences:{panel}")
+        return [_open_uri(host, uri)]
+    for candidate, args in (
+        ("gnome-control-center", [panel]),
+        ("kcmshell5", [panel]),
+        ("systemsettings", [panel]),
+    ):
+        if _first_available((candidate,)):
+            return [OSAction(host, candidate, args)]
+    return [_open_uri(host, f"app://settings/{panel}")]
+
+
+def _compile_terminal(host: HostPlatform, params: dict[str, str]) -> list[OSAction]:
+    path = params.get("path", "")
+    if host == HostPlatform.LINUX:
+        for tool, args in (
+            ("gnome-terminal", ["--working-directory", path] if path else []),
+            ("konsole", ["--workdir", path] if path else []),
+            ("alacritty", ["--working-directory", path] if path else []),
+            ("xterm", ["-e", f"bash -lc 'cd {path} && exec $SHELL'"] if path else []),
+        ):
+            if _first_available((tool,)):
+                return [OSAction(host, tool, args)]
+        return [OSAction(host, "bash", ["-lc", f"echo terminal:{path or '.'}"])]
+    if host == HostPlatform.MACOS:
+        if path:
+            script = f'tell application "Terminal" to do script "cd {path}"'
+            return [OSAction(host, "osascript", ["-e", script])]
+        return [OSAction(host, "open", ["-a", "Terminal"])]
+    if host == HostPlatform.WINDOWS:
+        if path and _first_available(("wt",)):
+            return [OSAction(host, "wt", ["-d", path])]
+        if path:
+            return [OSAction(host, "cmd", ["/c", "start", "cmd", "/k", f"cd /d {path}"])]
+        return [OSAction(host, "cmd", ["/c", "start", "cmd"])]
+    return [OSAction(host, "echo", [path or "terminal"])]
 
 
 def _compile_settings(host: HostPlatform) -> list[OSAction]:
@@ -224,6 +288,51 @@ def _compile_screenshot(
     raise ValueError(f"unsupported screenshot uri: {uri}")
 
 
+def _compile_window_move(
+    host: HostPlatform,
+    params: dict[str, str],
+) -> list[OSAction]:
+    title = params.get("title", "")
+    screen = params.get("screen", "1")
+    if not title:
+        raise ValueError("desktop-window move requires title")
+
+    if host == HostPlatform.LINUX:
+        xdotool = _first_available(("xdotool",))
+        if xdotool:
+            script = (
+                f"WID=$(xdotool search --name '{title}' | head -n1); "
+                f"xdotool windowmove $WID $(xdotool getdisplaygeometry --screen {screen} | "
+                f"awk '{{print $1/4}}') 0"
+            )
+            return [OSAction(host, "bash", ["-lc", script])]
+        wmctrl = _first_available(("wmctrl",))
+        if wmctrl:
+            return [OSAction(host, wmctrl, ["-r", title, "-e", f"0,0,0,0,0"])]
+        return [OSAction(host, "echo", [f"move:{title}:screen={screen}"])]
+
+    if host == HostPlatform.MACOS:
+        script = (
+            f'tell application "System Events" to set position of '
+            f'first window of (first process whose name contains "{title}") '
+            f'to {{100, 100}}'
+        )
+        return [OSAction(host, "osascript", ["-e", script])]
+
+    if host == HostPlatform.WINDOWS:
+        ps = (
+            f"$p = Get-Process -Name '{title}' -ErrorAction SilentlyContinue | "
+            f"Select-Object -First 1; "
+            f"if ($p) {{ Add-Type @' using System; using System.Runtime.InteropServices; "
+            f"public class Win32 {{ [DllImport(\"user32.dll\")] public static extern bool "
+            f"MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint); "
+            f"}} '@; [Win32]::MoveWindow($p.MainWindowHandle, 0, 0, 800, 600, $true) }}"
+        )
+        return [OSAction(host, "powershell", ["-NoProfile", "-Command", ps])]
+
+    return [OSAction(host, "echo", [f"move:{title}:screen={screen}"])]
+
+
 def _compile_window(
     host: HostPlatform,
     authority: str,
@@ -232,6 +341,10 @@ def _compile_window(
 ) -> list[OSAction]:
     action = authority or "focus"
     name = params.get("name") or params.get("title", "")
+
+    if action == "move":
+        return _compile_window_move(host, params)
+
     if action != "focus":
         raise ValueError(f"unsupported desktop-window action: {uri}")
 

@@ -21,11 +21,48 @@ _APP_RE = re.compile(
 )
 _CAPTURE_RE = re.compile(
     r"\b(?:screenshot|capture|snap|zrzut(?:\s+ekranu)?|zr[oó]b\s+screenshot)\s+"
-    r"(?:the\s+)?(?:(?:window|screen|desktop|okno|ekran)\s+)?"
+    r"(?:the\s+)?(?:(?:window|screen|desktop|okno|okna|ekran)\s+)?"
     r"(?:titled|named|called|o\s+nazwie|z\s+tytu[łl]em)?\s*"
     r"(?P<title>[^.?!]+)?",
     re.IGNORECASE,
 )
+_TERMINAL_RE = re.compile(
+    rf"\b{_OPEN}\s+(?:a\s+)?terminal\b"
+    r"(?:\s+(?:in\s+folder|in|w\s+folderze)\s+(?P<path>[^\s'\"]+))?",
+    re.IGNORECASE,
+)
+_WINDOW_MOVE_RE = re.compile(
+    r"\b(?:move|przenie[sś])\s+(?:the\s+)?(?:window\s+|okno\s+)?"
+    r"(?P<title>[\w.\-+]+)\s+"
+    r"(?:to\s+(?:the\s+)?(?:second|2(?:nd)?|drugi(?:\s+monitor)?)\s+(?:monitor|screen|ekran)"
+    r"|na\s+(?:drugi(?:\s+monitor)?|monitor\s+(?P<screen>\d+))\s*(?:monitor|screen|ekran)?)",
+    re.IGNORECASE,
+)
+_SETTINGS_PANEL_RE = re.compile(
+    r"\b(?:open\s+)?(?P<panel_en>network|wifi|bluetooth|display|sound|privacy)\s+settings\b"
+    r"|\b(?:open\s+)?(?:system\s+)?settings\s+for\s+(?P<panel_for>network|wifi|bluetooth|display|sound|privacy)\b"
+    r"|\butawienia\s+(?P<panel_pl>sie[ćc]|sieci|wifi|bluetooth|wy[sś]wietlacz|d[zź]wi[eę]k|prywatno[sś][ćc])\b"
+    r"|\botw[oó]rz\s+ustawienia\s+(?P<panel_pl2>sie[ćc]|sieci|wifi|bluetooth|wy[sś]wietlacz|d[zź]wi[eę]k|prywatno[sś][ćc])\b",
+    re.IGNORECASE,
+)
+_PANEL_ALIASES: dict[str, str] = {
+    "network": "network",
+    "sieć": "network",
+    "siec": "network",
+    "sieci": "network",
+    "wifi": "wifi",
+    "wi-fi": "wifi",
+    "bluetooth": "bluetooth",
+    "display": "display",
+    "wyświetlacz": "display",
+    "wyswietlacz": "display",
+    "sound": "sound",
+    "dźwięk": "sound",
+    "dzwiek": "sound",
+    "privacy": "privacy",
+    "prywatność": "privacy",
+    "prywatnosc": "privacy",
+}
 _ACTIVE_WINDOW_RE = re.compile(
     r"\b(?:screenshot|capture|snap|zr[oó]b\s+screenshot)\s+"
     r"(?:aktywnego\s+okna|active\s+window)(?:\s+(?:przegl[aą]darki|browser))?",
@@ -42,7 +79,8 @@ _SETTINGS_RE = re.compile(
 )
 _IDE_PROJECT_RE = re.compile(
     rf"\b{_OPEN}\s+(?P<ide>cursor|vscode|code)\s+"
-    r"(?:with\s+|w\s+folderze\s+|with\s+project\s+|project\s+)?(?P<path>[^\s'\"]+)",
+    r"(?:with\s+|w\s+folderze\s+|z\s+projektem\s+|with\s+project\s+|project\s+)?"
+    r"(?P<path>[^\s'\"]+)",
     re.IGNORECASE,
 )
 _FILE_RE = re.compile(
@@ -62,7 +100,6 @@ def _normalize_aliases(text: str) -> str:
     aliases = (
         (re.compile(r"\bvs\s*code\b", re.IGNORECASE), "vscode"),
         (re.compile(r"\bvisual\s+studio\s+code\b", re.IGNORECASE), "vscode"),
-        (re.compile(r"\bedge\b", re.IGNORECASE), "microsoft-edge"),
     )
     normalized = text
     for pattern, replacement in aliases:
@@ -122,6 +159,61 @@ def _parse_file_open(raw: str, _lowered: str) -> UriIntent | None:
         params={"path": _strip_quotes(match.group("path"))},
         raw_text=raw,
         confidence=0.9,
+    )
+
+
+def _normalize_panel(raw: str) -> str:
+    key = raw.strip().lower()
+    return _PANEL_ALIASES.get(key, key)
+
+
+def _parse_settings_panel(raw: str, lowered: str) -> UriIntent | None:
+    match = _SETTINGS_PANEL_RE.search(lowered)
+    if not match:
+        return None
+    panel_raw = (
+        match.group("panel_en")
+        or match.group("panel_for")
+        or match.group("panel_pl")
+        or match.group("panel_pl2")
+        or ""
+    )
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="settings",
+        params={"panel": _normalize_panel(panel_raw)},
+        raw_text=raw,
+        confidence=0.9,
+    )
+
+
+def _parse_terminal(raw: str, _lowered: str) -> UriIntent | None:
+    match = _TERMINAL_RE.search(raw)
+    if not match:
+        return None
+    params: dict[str, str] = {}
+    if match.group("path"):
+        params["path"] = _strip_quotes(match.group("path"))
+    return UriIntent(
+        kind=IntentKind.OPEN,
+        target="terminal",
+        params=params,
+        raw_text=raw,
+        confidence=0.9,
+    )
+
+
+def _parse_window_move(raw: str, _lowered: str) -> UriIntent | None:
+    match = _WINDOW_MOVE_RE.search(raw)
+    if not match:
+        return None
+    screen = match.group("screen") or "1"
+    return UriIntent(
+        kind=IntentKind.MOVE,
+        target="window",
+        params={"title": match.group("title"), "screen": screen},
+        raw_text=raw,
+        confidence=0.85,
     )
 
 
@@ -192,6 +284,13 @@ def _parse_focus(raw: str, _lowered: str) -> UriIntent | None:
     )
 
 
+def _normalize_app_name(name: str) -> str:
+    lowered = name.lower()
+    if lowered == "edge":
+        return "microsoft-edge"
+    return lowered
+
+
 def _parse_app_open(raw: str, _lowered: str) -> UriIntent | None:
     match = _APP_RE.search(raw)
     if not match:
@@ -199,7 +298,7 @@ def _parse_app_open(raw: str, _lowered: str) -> UriIntent | None:
     return UriIntent(
         kind=IntentKind.OPEN,
         target="app",
-        params={"name": match.group("app").lower()},
+        params={"name": _normalize_app_name(match.group("app"))},
         raw_text=raw,
         confidence=0.75,
     )
@@ -231,7 +330,7 @@ def _parse_open_prefix(raw: str, lowered: str) -> UriIntent | None:
     return UriIntent(
         kind=IntentKind.OPEN,
         target="app",
-        params={"name": remainder.split()[0].lower()},
+        params={"name": _normalize_app_name(remainder.split()[0])},
         raw_text=raw,
         confidence=0.5,
     )
@@ -251,7 +350,10 @@ _PARSERS: tuple[Callable[[str, str], UriIntent | None], ...] = (
     _parse_http_url,
     _parse_ide_project,
     _parse_file_open,
+    _parse_terminal,
+    _parse_settings_panel,
     _parse_settings,
+    _parse_window_move,
     _parse_active_window,
     _parse_capture,
     _parse_focus,

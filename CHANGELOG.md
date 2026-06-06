@@ -78,6 +78,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-06-06
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/mcp-tools.md
+- Update docs/roadmap.md
+- Update docs/system_map_uri.v1.md
+- Update examples/integrators/mcp-stdio/README.md
+
+### Test
+- Update tests/test_intents_phase2.py
+- Update tests/test_systemmap.py
+
+### Other
+- Update VERSION
+- Update examples/integrators/mcp-stdio/mcp-config.cursor.json
+- Update examples/integrators/mcp-stdio/mcp-config.json
+- Update examples/resolve/new-intents/e2e.sh
+- Update examples/resolve/nl-to-uri/main.py
+- Update examples/run-e2e.sh
+- Update uv.lock
+
+## [0.4.0] - 2026-06-06
+
+### Added
+- `nlp2uri.systemmap` — URI layer over `env2llm.SystemMapIR` (`system_map_uri.v1`)
+- `build_uri_index`, `resolve_prompt_against_system_map`, `uri_for_*` builders
+- Optional `env2llm` loader: `load_system_map_from_doql`, `load_system_map_from_example`
+- Spec: `docs/system_map_uri.v1.md`
+- Extra: `pip install nlp2uri[envmap]`
+
+## [0.3.0] - 2026-06-06
+
+### Added
+- NL parsers: terminal (`app://terminal/open`), window move (`desktop-window://move`), settings panel (`app://settings/{panel}`)
+- `IntentKind.MOVE` + `build_move` / `_compile_window_move` (Linux/macOS/Windows)
+- Polish: `z projektem`, `przenieś okno … na drugi monitor`, `ustawienia sieci`, `screenshot okna …`
+- `tests/test_intents_phase2.py`, `examples/resolve/new-intents/e2e.sh`
+
+## [0.2.0] - 2026-06-06
+
+### Added
+- GitHub Actions CI: Linux e2e, integration x-scheme-handler, Win/macOS dry-run matrix
+- `docs/mcp-tools.md` — dokumentacja 5 narzędzi MCP
+- `examples/integrators/mcp-stdio/mcp-config.cursor.json` — szablon Cursor MCP
+- `docs/roadmap.md` — plan rozwoju faz 0–5
+- CI guard: REST server bez `RuntimeWarning` (`nlp2uri-serve`)
+
+### Changed
+- Refactor CC: `parse_text` → parser dispatch, `cli.main` → handlery, `_compile_screenshot` → per-OS
+- `examples/integrators/rest-api/e2e.sh` używa `nlp2uri-serve`
+- `integrators/__init__.py` lazy import (bez preload `rest_server`)
+
 ## [0.1.3] - 2026-06-06
 
 ### Docs

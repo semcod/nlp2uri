@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "nlp2uri": {
+      "command": "nlp2uri-mcp",
+      "env": {
+        "NLP2URI_CONFIG": "${workspaceFolder}/nlp2uri.yaml"
+      }
+    }
+  }
+}

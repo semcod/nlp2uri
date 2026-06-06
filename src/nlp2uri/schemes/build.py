@@ -21,6 +21,9 @@ def build_uri(intent: UriIntent, *, platform: HostPlatform | None = None) -> Uri
     if intent.kind == IntentKind.FOCUS:
         return desktop.build_focus(intent, platform=host)
 
+    if intent.kind == IntentKind.MOVE:
+        return desktop.build_move(intent, platform=host)
+
     if intent.kind == IntentKind.OPEN:
         if intent.target == "file":
             return file_scheme.build_file(intent)
@@ -28,6 +31,8 @@ def build_uri(intent: UriIntent, *, platform: HostPlatform | None = None) -> Uri
             return ide.build_ide(intent)
         if intent.target == "settings":
             return desktop.build_settings(platform=host, intent=intent)
+        if intent.target == "terminal":
+            return desktop.build_terminal(intent, platform=host)
         if intent.target == "app":
             return desktop.build_app_open(intent, platform=host)
 

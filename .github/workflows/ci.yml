@@ -1,0 +1,108 @@
+name: nlp2uri CI
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Pytest
+        env:
+          NLP2URI_CONFIG: ${{ github.workspace }}/nlp2uri.yaml
+        run: python -m pytest -q
+
+      - name: Integration (x-scheme-handler)
+        env:
+          NLP2URI_CONFIG: ${{ github.workspace }}/nlp2uri.yaml
+          NLP2URI_INTEGRATION: "1"
+        run: python -m pytest tests/integration -m integration -q
+
+      - name: Examples e2e
+        env:
+          NLP2URI_CONFIG: ${{ github.workspace }}/nlp2uri.yaml
+          NLP2URI_INTEGRATION: "1"
+        run: bash examples/run-e2e.sh
+
+      - name: REST e2e without RuntimeWarning
+        env:
+          NLP2URI_CONFIG: ${{ github.workspace }}/nlp2uri.yaml
+        run: |
+          set -euo pipefail
+          PORT=18768
+          stderr="$(mktemp)"
+          nlp2uri-serve --port "$PORT" 2>"$stderr" &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for _ in $(seq 1 30); do
+            curl -sf "http://127.0.0.1:${PORT}/health" >/dev/null && break
+            sleep 0.1
+          done
+          curl -sf -X POST "http://127.0.0.1:${PORT}/v1/plan" \
+            -H 'Content-Type: application/json' \
+            -d '{"prompt":"open firefox"}' | grep -q 'app://firefox/open'
+          if grep -q RuntimeWarning "$stderr"; then
+            echo "unexpected RuntimeWarning on stderr:"
+            cat "$stderr"
+            exit 1
+          fi
+
+  test-dry-run-matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Cross-platform dry-run compile
+        env:
+          NLP2URI_CONFIG: ${{ github.workspace }}/nlp2uri.yaml
+        run: |
+          python -c "
+          from nlp2uri import NLP2URIService
+          from nlp2uri.models import HostPlatform
+          import platform as py_platform
+          host = {
+              'Linux': HostPlatform.LINUX,
+              'Darwin': HostPlatform.MACOS,
+              'Windows': HostPlatform.WINDOWS,
+          }[py_platform.system()]
+          svc = NLP2URIService.for_platform(host)
+          plan = svc.from_prompt('open firefox')
+          assert plan.uri.startswith('app://')
+          result = svc.execute(plan.uri, dry_run=True)
+          assert result.ok, result.error
+          print(host.value, plan.uri, result.output)
+          "

@@ -13,6 +13,7 @@ python -m pytest tests/integration -m integration -q
 
 for script in \
     examples/resolve/nl-to-uri/e2e.sh \
+    examples/resolve/new-intents/e2e.sh \
     examples/execute/dry-run/e2e.sh \
     examples/mcp/tool-handoff/e2e.sh \
     examples/integrators/shell-export/e2e.sh \
