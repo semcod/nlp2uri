@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.command;
+
+import "common/v1/commands.proto";
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+message CommandRegisterCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.UriMapEntry entry = 2;
+  string runtime_id = 3;
+  string command_name = 4;
+}
+
+message CommandResolveCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string prompt = 2;
+  google.protobuf.Struct system_map_context = 3;
+  bool fallback_desktop = 4;
+}
+
+message CommandCompileCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  string backend_url = 3;
+  google.protobuf.Struct workflow_config = 4;
+}
+
+message CommandExecuteCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  google.protobuf.Struct workflow_config = 3;
+}
+
+message CommandHandoffWorkflowCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string runtime_id = 2;
+  string action = 3;
+  google.protobuf.Struct config = 4;
+}

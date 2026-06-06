@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.http;
+
+import "common/v1/events.proto";
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+message HttpRegistered {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.UriMapEntry entry = 2;
+}
+
+message HttpResolved {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  string prompt = 2;
+  nlp2uri.cqrs.v1.common.Uri uri = 3;
+  float confidence = 4;
+}
+
+message HttpCompiled {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  repeated nlp2uri.cqrs.v1.common.OSAction actions = 3;
+}
+
+message HttpExecuted {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  bool ok = 3;
+  string output = 4;
+}
+
+message HttpEventEnvelope {
+  oneof payload {
+    HttpRegistered registered = 1;
+    HttpResolved resolved = 2;
+    HttpCompiled compiled = 3;
+    HttpExecuted executed = 4;
+    nlp2uri.cqrs.v1.common.UriExecutionFailed failed = 5;
+  }
+}

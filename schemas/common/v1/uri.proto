@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+// Canonical URI value (RFC 3986).
+message Uri {
+  string raw = 1;
+  string scheme = 2;
+  string authority = 3;
+  string path = 4;
+  map<string, string> query = 5;
+}
+
+message UriMapEntry {
+  Uri uri = 1;
+  string kind = 2;
+  string ref_type = 3;
+  string name = 4;
+  google.protobuf.Struct ref = 5;
+  repeated string links = 6;
+}
+
+message UriMap {
+  string format = 1;
+  int32 version = 2;
+  string example_id = 3;
+  repeated UriMapEntry entries = 4;
+  map<string, StringList> by_name = 5;
+}
+
+message StringList {
+  repeated string values = 1;
+}
+
+message OSAction {
+  string os = 1;
+  string command = 2;
+  repeated string argv = 3;
+  map<string, string> env = 4;
+}
+
+message CommandMetadata {
+  string correlation_id = 1;
+  string causation_id = 2;
+  string actor = 3;
+  string platform = 4;
+  bool dry_run = 5;
+  google.protobuf.Timestamp issued_at = 6;
+}
+
+message EventMetadata {
+  string event_id = 1;
+  string aggregate_id = 2;
+  int64 sequence = 3;
+  google.protobuf.Timestamp occurred_at = 4;
+  string correlation_id = 5;
+}

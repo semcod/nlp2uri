@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.07s
-# nodes: 154 | edges: 212 | modules: 31
-# CC̄=3.6
+# generated in 0.15s
+# nodes: 217 | edges: 289 | modules: 50
+# CC̄=3.5
 
 HUBS[20]:
   src.nlp2uri.systemmap.index.build_uri_index
     CC=31  in:4  out:52  total:56
   src.nlp2uri.cli._build_parser
     CC=1  in:1  out:35  total:36
+  src.nlp2uri.host.resource.build_resource_actions
+    CC=14  in:2  out:29  total:31
+  src.nlp2uri.systemmap.getv_uri.build_getv_uri_index
+    CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map
     CC=26  in:2  out:23  total:25
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
+  src.nlp2uri.systemmap.encode.encode_segment
+    CC=1  in:22  out:1  total:23
+  src.nlp2uri.host.artifact.resolve_artifact_path
+    CC=12  in:1  out:22  total:23
+  src.nlp2uri.compile.compile_uri_to_actions
+    CC=13  in:5  out:18  total:23
   src.nlp2uri.compile._compile_app
     CC=16  in:1  out:21  total:22
   src.nlp2uri.config._load_from_path
     CC=6  in:3  out:17  total:20
+  src.nlp2uri.systemmap.getv_uri.compile_getv_uri
+    CC=14  in:2  out:18  total:20
+  examples.resolve.new-intents.e2e.print
+    CC=0  in:19  out:0  total:19
   src.nlp2uri.systemmap.compile._compile_runtime
     CC=12  in:1  out:18  total:19
+  src.nlp2uri.host.artifact.build_artifact_actions
+    CC=13  in:2  out:17  total:19
+  src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
+    CC=13  in:1  out:18  total:19
   src.nlp2uri.systemmap.context.load_ir_from_arguments
     CC=8  in:2  out:16  total:18
-  src.nlp2uri.compile.compile_uri_to_actions
-    CC=11  in:4  out:14  total:18
-  src.nlp2uri.systemmap.encode.encode_segment
-    CC=1  in:17  out:1  total:18
-  src.nlp2uri.schemes.build.build_uri
-    CC=13  in:2  out:15  total:17
   src.nlp2uri.systemmap.uri._get
     CC=4  in:12  out:5  total:17
   src.nlp2uri.systemmap.index._ir_field
     CC=2  in:14  out:3  total:17
-  src.nlp2uri.runtime.execute_uri
-    CC=9  in:1  out:15  total:16
-  src.nlp2uri.compile._first_available
-    CC=3  in:15  out:1  total:16
-  src.nlp2uri.compile._open_uri
-    CC=5  in:11  out:5  total:16
-  src.nlp2uri.config.config_search_paths
-    CC=5  in:1  out:15  total:16
   src.nlp2uri.systemmap.index._add_entry
-    CC=3  in:11  out:4  total:15
-  src.nlp2uri.compile._compile_window
-    CC=11  in:2  out:13  total:15
-  src.nlp2uri.systemmap.index._get_id_field
-    CC=4  in:9  out:5  total:14
-  examples.resolve.new-intents.e2e.print
-    CC=0  in:14  out:0  total:14
+    CC=3  in:13  out:4  total:17
 
 MODULES:
   examples.execute.dry-run.main  [1 funcs]
@@ -54,6 +54,26 @@ MODULES:
     print  CC=0  out:0
   examples.resolve.nl-to-uri.main  [1 funcs]
     main  CC=3  out:5
+  schemas.codegen.export_driver_stubs  [1 funcs]
+    main  CC=11  out:23
+  schemas.codegen.export_mcp_schemas  [1 funcs]
+    main  CC=4  out:13
+  schemas.codegen.fix_proto_imports  [4 funcs]
+    _pascal  CC=2  out:4
+    fix_api  CC=1  out:3
+    fix_driver  CC=1  out:3
+    main  CC=4  out:7
+  schemas.codegen.scaffold_scheme  [12 funcs]
+    _pascal  CC=2  out:4
+    _proto_package  CC=2  out:2
+    aggregate_proto  CC=2  out:4
+    api_proto  CC=1  out:3
+    commands_proto  CC=1  out:3
+    driver_proto  CC=1  out:5
+    events_proto  CC=1  out:3
+    main  CC=4  out:14
+    openapi_yaml  CC=1  out:2
+    queries_proto  CC=1  out:3
   src.nlp2uri.adapters.base  [1 funcs]
     __init__  CC=2  out:2
   src.nlp2uri.adapters.mcp  [2 funcs]
@@ -92,6 +112,46 @@ MODULES:
     config_search_paths  CC=5  out:15
     default_config  CC=1  out:3
     ensure_config  CC=4  out:9
+  src.nlp2uri.cqrs.dispatcher  [1 funcs]
+    __init__  CC=5  out:5
+  src.nlp2uri.cqrs.drivers.artifact_filesystem  [1 funcs]
+    compile  CC=7  out:7
+  src.nlp2uri.cqrs.drivers.command_curl  [1 funcs]
+    compile  CC=5  out:6
+  src.nlp2uri.cqrs.drivers.delegate  [1 funcs]
+    compile  CC=2  out:4
+  src.nlp2uri.cqrs.drivers.endpoint_curl  [2 funcs]
+    compile  CC=2  out:4
+    probe  CC=2  out:4
+  src.nlp2uri.cqrs.drivers.getv_cli  [1 funcs]
+    compile  CC=2  out:4
+  src.nlp2uri.cqrs.drivers.resource_probe  [1 funcs]
+    compile  CC=5  out:6
+  src.nlp2uri.cqrs.drivers.runtime_curl  [1 funcs]
+    compile  CC=2  out:4
+  src.nlp2uri.cqrs.drivers.service_ops  [8 funcs]
+    compile  CC=5  out:9
+    probe  CC=2  out:4
+    compile  CC=2  out:7
+    probe  CC=1  out:6
+    compile  CC=3  out:4
+    probe  CC=1  out:2
+    _compose_dir  CC=3  out:5
+    parse_service_name  CC=4  out:4
+  src.nlp2uri.cqrs.registry  [1 funcs]
+    default_registry  CC=1  out:2
+  src.nlp2uri.host.artifact  [3 funcs]
+    _decode  CC=2  out:1
+    build_artifact_actions  CC=13  out:17
+    resolve_artifact_path  CC=12  out:22
+  src.nlp2uri.host.endpoint  [3 funcs]
+    build_endpoint_actions  CC=1  out:2
+    build_endpoint_url  CC=8  out:10
+    is_endpoint_uri  CC=1  out:2
+  src.nlp2uri.host.resource  [3 funcs]
+    _decode  CC=2  out:1
+    _filesystem_probe_path  CC=5  out:12
+    build_resource_actions  CC=14  out:29
   src.nlp2uri.integrators.mcp_server  [10 funcs]
     _handle_initialize  CC=1  out:0
     _handle_tools_call  CC=6  out:7
@@ -147,7 +207,7 @@ MODULES:
     abstract_url  CC=9  out:5
     file_uri  CC=1  out:3
     normalize_path  CC=2  out:5
-  src.nlp2uri.service  [10 funcs]
+  src.nlp2uri.service  [13 funcs]
     _cfg  CC=2  out:1
     _host  CC=1  out:1
     compile  CC=1  out:2
@@ -155,16 +215,16 @@ MODULES:
     execute  CC=2  out:3
     for_platform  CC=2  out:4
     from_prompt  CC=2  out:3
+    list_getv_uris  CC=3  out:5
     list_system_uris  CC=3  out:5
-    resolve  CC=1  out:2
-    resolve_system_map  CC=5  out:5
+    read_getv_var  CC=1  out:1
   src.nlp2uri.systemmap.compile  [10 funcs]
     _backend_url  CC=1  out:2
     _compile_access  CC=2  out:5
-    _compile_artifact  CC=1  out:4
+    _compile_artifact  CC=2  out:1
     _compile_command  CC=4  out:8
     _compile_metadata  CC=2  out:4
-    _compile_resource  CC=1  out:4
+    _compile_resource  CC=2  out:1
     _compile_runtime  CC=12  out:18
     _decode_segment  CC=2  out:1
     compile_system_map_uri  CC=8  out:10
@@ -177,6 +237,23 @@ MODULES:
     encode_segment  CC=1  out:1
   src.nlp2uri.systemmap.fallback  [1 funcs]
     resolve_prompt_with_fallback  CC=6  out:5
+  src.nlp2uri.systemmap.getv_load  [7 funcs]
+    _parse_env_file  CC=8  out:11
+    discover_profiles  CC=8  out:8
+    getv_home  CC=1  out:4
+    getv_missing_message  CC=2  out:0
+    load_profile_dict  CC=4  out:4
+    mask_var_value  CC=2  out:2
+    profile_manager  CC=4  out:4
+  src.nlp2uri.systemmap.getv_uri  [8 funcs]
+    _decode_segment  CC=2  out:1
+    build_getv_uri_index  CC=6  out:24
+    compile_getv_uri  CC=14  out:18
+    get_getv_var_value  CC=9  out:10
+    is_getv_uri  CC=1  out:2
+    resolve_prompt_against_getv  CC=13  out:18
+    uri_for_getv_profile  CC=1  out:2
+    uri_for_getv_var  CC=1  out:3
   src.nlp2uri.systemmap.index  [6 funcs]
     _add_entry  CC=3  out:4
     _get_id  CC=1  out:1
@@ -212,6 +289,8 @@ EDGES:
   examples.execute.dry-run.main.main → src.nlp2uri.resolve.nlp2uri
   examples.execute.dry-run.main.main → src.nlp2uri.compile.compile_uri_to_actions
   examples.execute.dry-run.main.main → examples.resolve.new-intents.e2e.print
+  examples.resolve.nl-to-uri.main.main → src.nlp2uri.resolve.nlp2uri
+  examples.resolve.nl-to-uri.main.main → examples.resolve.new-intents.e2e.print
   src.nlp2uri.runtime.execute_uri → src.nlp2uri.config.get_effective_platform
   src.nlp2uri.runtime.execute_uri → src.nlp2uri.compile.compile_uri_to_actions
   src.nlp2uri.config.NLP2URIConfig.resolved_platform → src.nlp2uri.platform_detect.detect_platform
@@ -232,27 +311,25 @@ EDGES:
   src.nlp2uri.config.ensure_config → src.nlp2uri.config.save_config
   src.nlp2uri.config.ensure_config → src.nlp2uri.config._load_from_path
   src.nlp2uri.config.get_effective_platform → src.nlp2uri.config.load_config
-  src.nlp2uri.resolve.resolve_text → src.nlp2uri.parse_nl.parse_text
-  src.nlp2uri.resolve.resolve_text → src.nlp2uri.schemes.build.build_uri
-  src.nlp2uri.resolve.resolve_text → src.nlp2uri.config.get_effective_platform
-  src.nlp2uri.resolve.nlp2uri → src.nlp2uri.config.get_effective_platform
-  src.nlp2uri.resolve.nlp2uri → src.nlp2uri.parse_nl.parse_text
-  src.nlp2uri.resolve.nlp2uri → src.nlp2uri.schemes.build.build_uri
-  src.nlp2uri.resolve.nlp2uri → src.nlp2uri.compile.compile_uri_to_actions
-  src.nlp2uri.resolve.nlp2uri → src.nlp2uri.config.load_config
-  src.nlp2uri.integrators.rest_server.run_server → src.nlp2uri.config.ensure_config
-  src.nlp2uri.integrators.rest_server.run_server → src.nlp2uri.config.load_config
-  src.nlp2uri.integrators.rest_server.run_server → examples.resolve.new-intents.e2e.print
-  src.nlp2uri.integrators.rest_server.main → src.nlp2uri.integrators.rest_server.run_server
-  src.nlp2uri.integrators.mcp_server._log → examples.resolve.new-intents.e2e.print
-  src.nlp2uri.integrators.mcp_server.handle_message → src.nlp2uri.integrators.mcp_server._jsonrpc_error
-  src.nlp2uri.integrators.mcp_server.handle_message → src.nlp2uri.integrators.mcp_server._jsonrpc_response
-  src.nlp2uri.integrators.mcp_server.handle_message → src.nlp2uri.integrators.mcp_server._handle_initialize
-  src.nlp2uri.integrators.mcp_server.handle_message → src.nlp2uri.integrators.mcp_server._handle_tools_list
-  src.nlp2uri.integrators.mcp_server.handle_message → src.nlp2uri.integrators.mcp_server._handle_tools_call
-  src.nlp2uri.integrators.mcp_server.run_stdio → src.nlp2uri.config.ensure_config
-  src.nlp2uri.integrators.mcp_server.run_stdio → src.nlp2uri.config.load_config
-  src.nlp2uri.integrators.mcp_server.run_stdio → src.nlp2uri.integrators.mcp_server._log
-  src.nlp2uri.integrators.mcp_server.run_stdio → src.nlp2uri.integrators.mcp_server.handle_message
-  src.nlp2uri.integrators.mcp_server.run_stdio → src.nlp2uri.integrators.mcp_server._write_json
-  src.nlp2uri.integrators.mcp_server.main → src.nlp2uri.integrators.mcp_server.run_stdio
+  src.nlp2uri.cli._build_parser → src.nlp2uri.cli._add_common_args
+  src.nlp2uri.cli._emit → examples.resolve.new-intents.e2e.print
+  src.nlp2uri.cli._request_from_args → src.nlp2uri.cli._platform
+  src.nlp2uri.cli._with_platform → src.nlp2uri.config.load_config
+  src.nlp2uri.cli._run_config → src.nlp2uri.config.load_config
+  src.nlp2uri.cli._run_config → src.nlp2uri.config.find_config_path
+  src.nlp2uri.cli._run_config → src.nlp2uri.cli._emit
+  src.nlp2uri.cli._run_config → src.nlp2uri.config.save_config
+  src.nlp2uri.cli._run_config → examples.resolve.new-intents.e2e.print
+  src.nlp2uri.cli._run_config → src.nlp2uri.config.default_config
+  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._emit
+  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._request_from_args
+  src.nlp2uri.cli._run_shell → src.nlp2uri.cli._platform
+  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._emit
+  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._request_from_args
+  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._with_platform
+  src.nlp2uri.cli._run_adapter_command → src.nlp2uri.cli._platform
+  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._emit
+  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._request_from_args
+  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._with_platform
+  src.nlp2uri.cli._run_execute → src.nlp2uri.cli._platform
+  src.nlp2uri.cli.main → src.nlp2uri.config.ensure_config

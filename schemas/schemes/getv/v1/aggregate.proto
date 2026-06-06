@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.getv;
+
+import "common/v1/uri.proto";
+
+// Aggregate root: aggregate_id = uri.raw (getv://{category}/{profile}/{var})
+// IR upstream: getv_uri.v1
+message GetvAggregate {
+  nlp2uri.cqrs.v1.common.Uri uri = 1;
+  int64 version = 2;
+  string state = 3;
+}

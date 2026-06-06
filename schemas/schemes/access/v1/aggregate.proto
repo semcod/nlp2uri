@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.access;
+
+import "common/v1/uri.proto";
+
+// Aggregate root: aggregate_id = uri.raw (access://{agent}/{area}/{actions})
+// IR upstream: AccessGrantIR
+message AccessAggregate {
+  nlp2uri.cqrs.v1.common.Uri uri = 1;
+  int64 version = 2;
+  string state = 3;
+}

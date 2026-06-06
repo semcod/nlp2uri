@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.artifact;
+
+import "common/v1/queries.proto";
+
+// Scheme read model — aliases common queries; add filters in extensions if needed.
+message ListArtifactQuery {
+  nlp2uri.cqrs.v1.common.ListUrisQuery base = 1;
+}

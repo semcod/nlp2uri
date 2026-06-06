@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "common/v1/uri.proto";
+import "common/v1/commands.proto";
+
+// Platform driver contract — implemented per scheme × target (linux, getv_cli, curl, …).
+
+enum DriverTarget {
+  DRIVER_TARGET_UNSPECIFIED = 0;
+  DRIVER_TARGET_LINUX = 1;
+  DRIVER_TARGET_DARWIN = 2;
+  DRIVER_TARGET_WINDOWS = 3;
+  DRIVER_TARGET_CURL = 4;
+  DRIVER_TARGET_GETV_CLI = 5;
+  DRIVER_TARGET_DOCKER = 6;
+  DRIVER_TARGET_SYSTEMD = 7;
+  DRIVER_TARGET_MCP = 8;
+  DRIVER_TARGET_FILESYSTEM = 9;
+  DRIVER_TARGET_DBUS = 10;
+}
+
+message DriverCapabilitiesQuery {
+  DriverTarget target = 1;
+  string scheme = 2;
+}
+
+message DriverCapabilities {
+  DriverTarget target = 1;
+  string scheme = 2;
+  repeated string operations = 3;
+  bool supports_compile = 4;
+  bool supports_execute = 5;
+  bool supports_probe = 6;
+}
+
+message CompileUriResult {
+  bool ok = 1;
+  Uri uri = 2;
+  repeated OSAction actions = 3;
+  string error = 4;
+}
+
+message ExecuteUriResult {
+  bool ok = 1;
+  Uri uri = 2;
+  int32 exit_code = 3;
+  string output = 4;
+  string error = 5;
+}
+
+message ProbeUriQuery {
+  Uri uri = 1;
+  DriverTarget target = 2;
+}
+
+message ProbeUriResult {
+  bool reachable = 1;
+  string status = 2;
+  map<string, string> details = 3;
+}
+
+// Base driver service — extended per scheme in schemes/{scheme}/v1/driver.proto
+service UriDriverBase {
+  rpc Capabilities(DriverCapabilitiesQuery) returns (DriverCapabilities);
+  rpc Compile(CompileUriCommand) returns (CompileUriResult);
+  rpc Execute(ExecuteUriCommand) returns (ExecuteUriResult);
+  rpc Probe(ProbeUriQuery) returns (ProbeUriResult);
+}

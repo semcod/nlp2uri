@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.app;
+
+import "common/v1/commands.proto";
+import "common/v1/uri.proto";
+
+message AppOpenCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string app_id = 2;
+  string path = 3;
+  string locale = 4;
+}
+
+message AppFocusCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string app_id = 2;
+  string window_title = 3;
+}
+
+message AppCompileCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+}
+
+message AppExecuteCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+}

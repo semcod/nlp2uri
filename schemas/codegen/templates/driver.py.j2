@@ -1,0 +1,22 @@
+"""Jinja2 template reference for custom driver generation.
+
+Variables:
+  scheme, target, package, class_name, operations
+"""
+
+from __future__ import annotations
+
+# {{ class_name }} — {{ scheme }}:// driver for {{ target }}
+
+SCHEME = "{{ scheme }}"
+TARGET = "{{ target }}"
+
+
+def compile_uri(uri: str, *, config: dict | None = None) -> list[dict]:
+    """Map {{ scheme }}:// URI to OSAction dicts."""
+    raise NotImplementedError
+
+
+def execute_uri(uri: str, actions: list[dict], *, config: dict | None = None) -> dict:
+    """Execute compiled plan."""
+    raise NotImplementedError

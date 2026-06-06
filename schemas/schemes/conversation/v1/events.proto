@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.conversation;
+
+import "common/v1/events.proto";
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+message ConversationRegistered {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.UriMapEntry entry = 2;
+}
+
+message ConversationResolved {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  string prompt = 2;
+  nlp2uri.cqrs.v1.common.Uri uri = 3;
+  float confidence = 4;
+}
+
+message ConversationCompiled {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  repeated nlp2uri.cqrs.v1.common.OSAction actions = 3;
+}
+
+message ConversationExecuted {
+  nlp2uri.cqrs.v1.common.EventMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  bool ok = 3;
+  string output = 4;
+}
+
+message ConversationEventEnvelope {
+  oneof payload {
+    ConversationRegistered registered = 1;
+    ConversationResolved resolved = 2;
+    ConversationCompiled compiled = 3;
+    ConversationExecuted executed = 4;
+    nlp2uri.cqrs.v1.common.UriExecutionFailed failed = 5;
+  }
+}

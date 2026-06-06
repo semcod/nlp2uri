@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.runtime;
+
+import "common/v1/commands.proto";
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+// Scheme-specific commands (extend common write model).
+message RuntimeRegisterCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.UriMapEntry entry = 2;
+}
+
+message RuntimeResolveCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string prompt = 2;
+  google.protobuf.Struct context = 3;
+}
+
+message RuntimeCompileCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  google.protobuf.Struct config = 3;
+}
+
+message RuntimeExecuteCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  google.protobuf.Struct config = 3;
+}

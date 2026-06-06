@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+// --- Write model (commands) shared by all schemes ---
+
+message RegisterUriCommand {
+  CommandMetadata metadata = 1;
+  UriMapEntry entry = 2;
+}
+
+message ResolvePromptCommand {
+  CommandMetadata metadata = 1;
+  string prompt = 2;
+  string locale = 3;
+  google.protobuf.Struct context = 4;
+}
+
+message CompileUriCommand {
+  CommandMetadata metadata = 1;
+  Uri uri = 2;
+  google.protobuf.Struct config = 3;
+}
+
+message ExecuteUriCommand {
+  CommandMetadata metadata = 1;
+  Uri uri = 2;
+  repeated OSAction actions = 3;
+  google.protobuf.Struct config = 4;
+}
+
+message RebuildIndexCommand {
+  CommandMetadata metadata = 1;
+  string source = 2;
+  google.protobuf.Struct source_config = 3;
+}
+
+message CommandResult {
+  bool ok = 1;
+  string message = 2;
+  string error = 3;
+}

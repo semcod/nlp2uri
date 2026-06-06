@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.getv;
+
+import "common/v1/commands.proto";
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+message GetvRegisterCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.UriMapEntry entry = 2;
+  string category = 3;
+  string profile = 4;
+  string var_name = 5;
+  bool sensitive = 6;
+}
+
+message GetvResolveCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string prompt = 2;
+  string getv_home = 3;
+}
+
+message GetvCompileCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  // export | exec | get
+  string action = 3;
+  string exec_command = 4;
+}
+
+message GetvExecuteCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  nlp2uri.cqrs.v1.common.Uri uri = 2;
+  string action = 3;
+  repeated string exec_argv = 4;
+}
+
+message GetvExportVarCommand {
+  nlp2uri.cqrs.v1.common.CommandMetadata metadata = 1;
+  string category = 2;
+  string profile = 3;
+  string var_name = 4;
+  string format = 5;
+}

@@ -224,3 +224,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# uri_cqrs_es codegen (regenerate: cd schemas && make all)
+generated/*
+!generated/.gitkeep
+schemas/.buf/

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "common/v1/commands.proto";
+import "common/v1/queries.proto";
+import "common/v1/events.proto";
+
+// CQRS API surface — CommandService (write) + QueryService (read).
+// Per-scheme services in schemes/{scheme}/v1/api.proto extend or alias these.
+
+service UriCommandService {
+  rpc RegisterUri(RegisterUriCommand) returns (CommandResult);
+  rpc ResolvePrompt(ResolvePromptCommand) returns (CommandResult);
+  rpc CompileUri(CompileUriCommand) returns (CommandResult);
+  rpc ExecuteUri(ExecuteUriCommand) returns (CommandResult);
+  rpc RebuildIndex(RebuildIndexCommand) returns (CommandResult);
+}
+
+service UriQueryService {
+  rpc GetUri(GetUriQuery) returns (GetUriResult);
+  rpc ListUris(ListUrisQuery) returns (ListUrisResult);
+  rpc SearchByName(SearchByNameQuery) returns (SearchByNameResult);
+  rpc GetCompilePlan(GetCompilePlanQuery) returns (GetCompilePlanResult);
+  rpc GetEventStream(GetEventStreamQuery) returns (GetEventStreamResult);
+}
+
+// Event store append (ES write side).
+service EventStoreService {
+  rpc Append(EventEnvelope) returns (CommandResult);
+  rpc AppendBatch(stream EventEnvelope) returns (CommandResult);
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.desktop_window;
+
+import "common/v1/commands.proto";
+import "common/v1/queries.proto";
+
+service DesktopWindowCommandService {
+  rpc Register(nlp2uri.cqrs.v1.common.RegisterUriCommand) returns (nlp2uri.cqrs.v1.common.CommandResult);
+  rpc Resolve(nlp2uri.cqrs.v1.common.ResolvePromptCommand) returns (nlp2uri.cqrs.v1.common.CommandResult);
+  rpc Compile(nlp2uri.cqrs.v1.common.CompileUriCommand) returns (nlp2uri.cqrs.v1.common.CommandResult);
+  rpc Execute(nlp2uri.cqrs.v1.common.ExecuteUriCommand) returns (nlp2uri.cqrs.v1.common.CommandResult);
+  rpc RebuildIndex(nlp2uri.cqrs.v1.common.RebuildIndexCommand)
+      returns (nlp2uri.cqrs.v1.common.CommandResult);
+}
+
+service DesktopWindowQueryService {
+  rpc GetUri(nlp2uri.cqrs.v1.common.GetUriQuery) returns (nlp2uri.cqrs.v1.common.GetUriResult);
+  rpc ListUris(nlp2uri.cqrs.v1.common.ListUrisQuery) returns (nlp2uri.cqrs.v1.common.ListUrisResult);
+  rpc SearchByName(nlp2uri.cqrs.v1.common.SearchByNameQuery)
+      returns (nlp2uri.cqrs.v1.common.SearchByNameResult);
+  rpc GetCompilePlan(nlp2uri.cqrs.v1.common.GetCompilePlanQuery)
+      returns (nlp2uri.cqrs.v1.common.GetCompilePlanResult);
+  rpc GetEventStream(nlp2uri.cqrs.v1.common.GetEventStreamQuery)
+      returns (nlp2uri.cqrs.v1.common.GetEventStreamResult);
+}

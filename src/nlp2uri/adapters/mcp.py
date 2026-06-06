@@ -160,6 +160,37 @@ MCP_TOOLS: list[dict[str, Any]] = [
             "required": ["uri"],
         },
     },
+    {
+        "name": "nlp2uri_cqrs_compile",
+        "description": "CQRS compile: URI → driver → OSAction[] (uri_cqrs_es.v1). Appends UriCompiled event.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "uri": {"type": "string"},
+                "platform": {"type": "string", "enum": ["linux", "darwin", "windows"]},
+                "target": {"type": "string", "description": "Driver target (curl, getv_cli, filesystem, …)"},
+                "example_dir": {"type": "string", "description": "For artifact:// resolution"},
+                "config": {"type": "object"},
+            },
+            "required": ["uri"],
+        },
+    },
+    {
+        "name": "nlp2uri_cqrs_execute",
+        "description": "CQRS execute: compile + run (dry_run default true). Appends UriExecuted event.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "uri": {"type": "string"},
+                "platform": {"type": "string", "enum": ["linux", "darwin", "windows"]},
+                "target": {"type": "string"},
+                "dry_run": {"type": "boolean", "default": True},
+                "example_dir": {"type": "string"},
+                "config": {"type": "object"},
+            },
+            "required": ["uri"],
+        },
+    },
 ]
 
 
@@ -188,6 +219,8 @@ class McpAdapter(BaseAdapter):
             "nlp2uri_list_getv_uris": McpAdapter._tool_list_getv_uris,
             "nlp2uri_resolve_getv": McpAdapter._tool_resolve_getv,
             "nlp2uri_get_getv_var": McpAdapter._tool_get_getv_var,
+            "nlp2uri_cqrs_compile": McpAdapter._tool_cqrs_compile,
+            "nlp2uri_cqrs_execute": McpAdapter._tool_cqrs_execute,
         }
 
     @staticmethod
@@ -317,3 +350,33 @@ class McpAdapter(BaseAdapter):
             return AdapterResponse(ok=False, error=str(exc), status_code=400)
         payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
         return AdapterResponse(ok=bool(payload.get("found")), data=payload)
+
+    def _tool_cqrs_compile(self, req: AdapterRequest) -> AdapterResponse:
+        from nlp2uri.cqrs import CqrsDispatcher
+
+        platform = req.platform or HostPlatform.LINUX
+        config = dict(req.extra.get("config") or {})
+        if req.extra.get("example_dir"):
+            config["example_dir"] = req.extra["example_dir"]
+        d = CqrsDispatcher(platform=platform)
+        payload = d.compile_uri(req.uri, target=req.extra.get("target"), config=config or None)
+        payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
+        return AdapterResponse(ok=payload.get("ok", False), data=payload)
+
+    def _tool_cqrs_execute(self, req: AdapterRequest) -> AdapterResponse:
+        from nlp2uri.cqrs import CqrsDispatcher
+
+        platform = req.platform or HostPlatform.LINUX
+        config = dict(req.extra.get("config") or {})
+        if req.extra.get("example_dir"):
+            config["example_dir"] = req.extra["example_dir"]
+        dry_run = req.extra.get("dry_run", req.dry_run)
+        d = CqrsDispatcher(platform=platform)
+        payload = d.execute_uri(
+            req.uri,
+            target=req.extra.get("target"),
+            dry_run=bool(dry_run),
+            config=config or None,
+        )
+        payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
+        return AdapterResponse(ok=payload.get("ok", False), data=payload)

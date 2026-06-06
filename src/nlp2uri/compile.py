@@ -9,6 +9,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 from nlp2uri.models import HostPlatform, OSAction
 from nlp2uri.platform_detect import detect_platform
+from nlp2uri.host.endpoint import build_endpoint_actions, is_endpoint_uri
 from nlp2uri.systemmap.compile import compile_system_map_uri, is_system_map_uri
 from nlp2uri.systemmap.getv_uri import compile_getv_uri, is_getv_uri
 
@@ -42,6 +43,9 @@ def compile_uri_to_actions(
 
     if is_getv_uri(uri):
         return compile_getv_uri(uri, host)
+
+    if is_endpoint_uri(uri):
+        return build_endpoint_actions(uri, host)
 
     if is_system_map_uri(uri):
         extra = {k: v for k, v in params.items()}

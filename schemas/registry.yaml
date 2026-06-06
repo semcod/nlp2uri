@@ -1,0 +1,184 @@
+# uri_cqrs_es.v1 — scheme registry for codegen
+format: uri_cqrs_es_registry.v1
+version: 1
+
+layers:
+  desktop:
+    description: OS-neutral desktop intents compiled per platform
+  env:
+    description: Environment variables via getv profiles
+  systemmap:
+    description: env2llm / nlp2dsl SystemMapIR entities
+  host:
+    description: Host introspection (endpoints, devices, containers)
+
+schemes:
+  # --- desktop layer ---
+  app:
+    layer: desktop
+    uri_pattern: "app://{app}/{action}"
+    version: v1
+    drivers: [linux, darwin, windows]
+    ir_ref: null
+
+  desktop_screenshot:
+    layer: desktop
+    uri_pattern: "desktop-screenshot://{target}"
+    version: v1
+    drivers: [linux, darwin, windows]
+    package_alias: desktop_screenshot
+
+  desktop_window:
+    layer: desktop
+    uri_pattern: "desktop-window://{action}"
+    version: v1
+    drivers: [linux, darwin, windows]
+    package_alias: desktop_window
+
+  file:
+    layer: desktop
+    uri_pattern: "file://{path}"
+    version: v1
+    drivers: [linux, darwin, windows]
+
+  http:
+    layer: desktop
+    uri_pattern: "http(s)://{host}/{path}"
+    version: v1
+    drivers: [curl]
+
+  # --- env layer ---
+  getv:
+    layer: env
+    uri_pattern: "getv://{category}/{profile}/{var}"
+    version: v1
+    drivers: [getv_cli]
+    ir_ref: getv_uri.v1
+
+  # --- systemmap layer ---
+  command:
+    layer: systemmap
+    uri_pattern: "command://{runtime_id}/{name}"
+    version: v1
+    drivers: [curl, mcp]
+    ir_ref: CommandSchemaIR
+
+  runtime:
+    layer: systemmap
+    uri_pattern: "runtime://{kind}/{id}"
+    version: v1
+    drivers: [curl]
+    ir_ref: RuntimeSpecIR
+
+  resource:
+    layer: systemmap
+    uri_pattern: "resource://{connector}/{id}"
+    version: v1
+    drivers: [probe]
+    ir_ref: ResourceSpecIR
+
+  access:
+    layer: systemmap
+    uri_pattern: "access://{agent}/{area}/{actions}"
+    version: v1
+    drivers: [policy]
+    ir_ref: AccessGrantIR
+
+  artifact:
+    layer: systemmap
+    uri_pattern: "artifact://{example_id}/{path}"
+    version: v1
+    drivers: [filesystem]
+    ir_ref: ArtifactSpecIR
+
+  conversation:
+    layer: systemmap
+    uri_pattern: "conversation://{example_id}/policy"
+    version: v1
+    drivers: [policy]
+    ir_ref: ConversationPolicyIR
+
+  process:
+    layer: systemmap
+    uri_pattern: "process://{example_id}/policy"
+    version: v1
+    drivers: [policy]
+    ir_ref: ProcessPolicyIR
+
+  validation:
+    layer: systemmap
+    uri_pattern: "validation://{example_id}/{code}"
+    version: v1
+    drivers: [policy]
+    ir_ref: ProfileValidationIR
+
+  schedule:
+    layer: systemmap
+    uri_pattern: "schedule://{id}"
+    version: v1
+    drivers: [scheduler]
+    ir_ref: ScheduleSpecIR
+
+  service:
+    layer: systemmap
+    uri_pattern: "service://generated/{name}"
+    version: v1
+    drivers: [curl, systemd, docker]
+    ir_ref: GeneratedServiceIR
+
+  deploy:
+    layer: systemmap
+    uri_pattern: "deploy://{example_id}"
+    version: v1
+    drivers: [deploy]
+    ir_ref: DeploySpecIR
+
+  environment:
+    layer: systemmap
+    uri_pattern: "environment://{example_id}"
+    version: v1
+    drivers: [metadata]
+    ir_ref: environment
+
+  # --- host layer (future) ---
+  endpoint:
+    layer: host
+    uri_pattern: "endpoint://{proto}/{host}/{port}/{path}"
+    version: v1
+    drivers: [curl]
+    status: draft
+
+  device:
+    layer: host
+    uri_pattern: "device://{bus}/{id}"
+    version: v1
+    drivers: [linux, dbus]
+    status: draft
+
+  container:
+    layer: host
+    uri_pattern: "container://{runtime}/{name}"
+    version: v1
+    drivers: [docker]
+    status: draft
+
+  mount:
+    layer: host
+    uri_pattern: "mount://{device}/{path}"
+    version: v1
+    drivers: [filesystem]
+    status: draft
+
+codegen:
+  protobuf_version: proto3
+  buf_version: v2
+  outputs:
+    python:
+      path: generated/python
+      package_prefix: nlp2uri.cqrs
+    openapi:
+      path: generated/openapi
+    mcp:
+      path: generated/mcp
+    drivers:
+      path: generated/python/drivers

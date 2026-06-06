@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.service;
+
+import "common/v1/uri.proto";
+
+// Aggregate root: aggregate_id = uri.raw (service://generated/{name})
+// IR upstream: GeneratedServiceIR
+message ServiceAggregate {
+  nlp2uri.cqrs.v1.common.Uri uri = 1;
+  int64 version = 2;
+  string state = 3;
+}

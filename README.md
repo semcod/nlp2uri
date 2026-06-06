@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.5-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.40-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-2.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.6-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$1.56-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-3.1h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $1.3997 (7 commits)
-- 👤 **Human dev:** ~$266 (2.7h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $1.5562 (8 commits)
+- 👤 **Human dev:** ~$312 (3.1h @ $100/h, 30min dedup)
 
 Generated on 2026-06-06 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -193,6 +193,17 @@ W Dockerze:
 
 - unit: NLP → URI → `OSAction`
 - integracja: rejestracja `testapp://` przez `.desktop` + `xdg-open` (`NLP2URI_INTEGRATION=1`)
+
+## CQRS + ES + Protobuf (generowanie driverów i API)
+
+Każdy typ URI ma własne drzewo **commands / events / queries / driver / api**:
+
+```bash
+cd schemas && make all          # scaffold + MCP schemas + driver stubs
+cd schemas && make proto        # buf → Python gRPC + OpenAPI (wymaga buf CLI)
+```
+
+→ [schemas/README.md](schemas/README.md) · [schemas/uri_cqrs_es.v1.md](schemas/uri_cqrs_es.v1.md)
 
 ## Orchestracja ekosystemu (MCP, usługi, artefakty, getv)
 

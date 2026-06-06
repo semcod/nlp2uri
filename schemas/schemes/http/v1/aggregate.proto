@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.http;
+
+import "common/v1/uri.proto";
+
+// Aggregate root: aggregate_id = uri.raw (http(s)://{host}/{path})
+// IR upstream: n/a
+message HttpAggregate {
+  nlp2uri.cqrs.v1.common.Uri uri = 1;
+  int64 version = 2;
+  string state = 3;
+}

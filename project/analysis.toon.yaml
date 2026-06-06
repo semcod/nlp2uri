@@ -1,192 +1,386 @@
-# code2llm | 68f 6256L | python:45,shell:12,yaml:6,json:2,yml:1,toml:1 | 2026-06-06
-# generated in 0.01s
-# CC̅=3.6 | critical:4/238 | dups:0 | cycles:0
+# code2llm | 260f 13795L | proto:138,python:70,yaml:31,shell:15,json:2,yml:1,toml:1 | 2026-06-06
+# generated in 0.06s
+# CC̅=3.5 | critical:4/339 | dups:0 | cycles:0
 
 HEALTH[4]:
+  🟡 CC    build_uri_index CC=31 (limit:15)
+  🟡 CC    resolve_prompt_against_system_map CC=26 (limit:15)
   🟡 CC    _compile_app CC=16 (limit:15)
   🟡 CC    _compile_terminal CC=16 (limit:15)
-  🟡 CC    resolve_prompt_against_system_map CC=26 (limit:15)
-  🟡 CC    build_uri_index CC=31 (limit:15)
 
 REFACTOR[1]:
   1. split 4 high-CC methods  (CC>15)
 
-PIPELINES[116]:
+PIPELINES[166]:
   [1] Src [main]: main → print
       PURITY: 100% pure
   [2] Src [main]: main → nlp2uri → get_effective_platform → load_config → ...(2 more)
       PURITY: 100% pure
-  [3] Src [get_executor]: get_executor
+  [3] Src [main]: main → nlp2uri → get_effective_platform → load_config → ...(2 more)
       PURITY: 100% pure
-  [4] Src [resolved_platform]: resolved_platform → detect_platform
+  [4] Src [get_executor]: get_executor
       PURITY: 100% pure
-  [5] Src [apply_runtime_env]: apply_runtime_env
+  [5] Src [resolved_platform]: resolved_platform → detect_platform
       PURITY: 100% pure
-  [6] Src [to_dict]: to_dict → detect_platform
+  [6] Src [apply_runtime_env]: apply_runtime_env
       PURITY: 100% pure
-  [7] Src [to_yaml]: to_yaml → payload_keys
+  [7] Src [to_dict]: to_dict → detect_platform
       PURITY: 100% pure
-  [8] Src [text_uri_list]: text_uri_list
+  [8] Src [to_yaml]: to_yaml → payload_keys
       PURITY: 100% pure
-  [9] Src [tool_execute_desktop_uri]: tool_execute_desktop_uri
+  [9] Src [text_uri_list]: text_uri_list
       PURITY: 100% pure
-  [10] Src [__getattr__]: __getattr__
+  [10] Src [tool_execute_desktop_uri]: tool_execute_desktop_uri
       PURITY: 100% pure
-  [11] Src [_read_json]: _read_json
+  [11] Src [main]: main → ensure_config → find_config_path → config_search_paths
       PURITY: 100% pure
-  [12] Src [_send]: _send
+  [12] Src [_parse_absolute_uri]: _parse_absolute_uri
       PURITY: 100% pure
-  [13] Src [do_GET]: do_GET
+  [13] Src [_parse_http_url]: _parse_http_url
       PURITY: 100% pure
-  [14] Src [do_POST]: do_POST
+  [14] Src [_parse_ide_project]: _parse_ide_project → _strip_quotes
       PURITY: 100% pure
-  [15] Src [main]: main → run_server → ensure_config → find_config_path → ...(1 more)
+  [15] Src [_parse_file_open]: _parse_file_open → _strip_quotes
       PURITY: 100% pure
-  [16] Src [main]: main → run_stdio → ensure_config → find_config_path → ...(1 more)
+  [16] Src [_parse_settings_panel]: _parse_settings_panel → _normalize_panel
       PURITY: 100% pure
-  [17] Src [_result]: _result
+  [17] Src [_parse_terminal]: _parse_terminal → _strip_quotes
       PURITY: 100% pure
-  [18] Src [_dry]: _dry
+  [18] Src [_parse_window_move]: _parse_window_move
       PURITY: 100% pure
-  [19] Src [_run]: _run
+  [19] Src [_parse_settings]: _parse_settings
       PURITY: 100% pure
-  [20] Src [_first_available]: _first_available
+  [20] Src [_parse_active_window]: _parse_active_window
       PURITY: 100% pure
-  [21] Src [_open_with_browser]: _open_with_browser
+  [21] Src [_parse_capture]: _parse_capture → _strip_quotes
       PURITY: 100% pure
-  [22] Src [_parse_nlp2uri]: _parse_nlp2uri
+  [22] Src [_parse_focus]: _parse_focus
       PURITY: 100% pure
-  [23] Src [_desktop_id_for_app]: _desktop_id_for_app
+  [23] Src [_parse_app_open]: _parse_app_open → _normalize_app_name
       PURITY: 100% pure
-  [24] Src [slugify_app_name]: slugify_app_name
+  [24] Src [_parse_path]: _parse_path → _strip_quotes
       PURITY: 100% pure
-  [25] Src [execute]: execute
+  [25] Src [_parse_open_prefix]: _parse_open_prefix → _normalize_app_name
       PURITY: 100% pure
-  [26] Src [_open_generic]: _open_generic
+  [26] Src [with_params]: with_params
       PURITY: 100% pure
-  [27] Src [_open_settings]: _open_settings
+  [27] Src [to_slots]: to_slots
       PURITY: 100% pure
-  [28] Src [_open_app]: _open_app
+  [28] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [29] Src [_focus_app]: _focus_app
+  [29] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [30] Src [_capture]: _capture
+  [30] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [31] Src [get_executor]: get_executor → detect_platform
+  [31] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [32] Src [execute]: execute
+  [32] Src [__getattr__]: __getattr__
       PURITY: 100% pure
-  [33] Src [_open]: _open
+  [33] Src [_read_json]: _read_json
       PURITY: 100% pure
-  [34] Src [_open_app]: _open_app
+  [34] Src [_send]: _send
       PURITY: 100% pure
-  [35] Src [_focus_app]: _focus_app
+  [35] Src [do_GET]: do_GET
       PURITY: 100% pure
-  [36] Src [_capture]: _capture
+  [36] Src [do_POST]: do_POST
       PURITY: 100% pure
-  [37] Src [execute]: execute
+  [37] Src [main]: main → run_server → ensure_config → find_config_path → ...(1 more)
       PURITY: 100% pure
-  [38] Src [_start]: _start
+  [38] Src [main]: main → run_stdio → ensure_config → find_config_path → ...(1 more)
       PURITY: 100% pure
-  [39] Src [_open_app]: _open_app
+  [39] Src [_result]: _result
       PURITY: 100% pure
-  [40] Src [_focus_app]: _focus_app
+  [40] Src [_dry]: _dry
       PURITY: 100% pure
-  [41] Src [_capture]: _capture
+  [41] Src [_run]: _run
       PURITY: 100% pure
-  [42] Src [to_dict]: to_dict
+  [42] Src [_first_available]: _first_available
       PURITY: 100% pure
-  [43] Src [__init__]: __init__ → load_config → find_config_path → config_search_paths
+  [43] Src [_open_with_browser]: _open_with_browser
       PURITY: 100% pure
-  [44] Src [with_platform]: with_platform
+  [44] Src [_parse_nlp2uri]: _parse_nlp2uri
       PURITY: 100% pure
-  [45] Src [_service_for]: _service_for
+  [45] Src [_desktop_id_for_app]: _desktop_id_for_app
       PURITY: 100% pure
-  [46] Src [handle]: handle
+  [46] Src [slugify_app_name]: slugify_app_name
       PURITY: 100% pure
-  [47] Src [handle]: handle
+  [47] Src [execute]: execute
       PURITY: 100% pure
-  [48] Src [_export_script]: _export_script
+  [48] Src [_open_generic]: _open_generic
       PURITY: 100% pure
-  [49] Src [handle]: handle
+  [49] Src [_open_settings]: _open_settings
       PURITY: 100% pure
-  [50] Src [dispatch]: dispatch
+  [50] Src [_open_app]: _open_app
       PURITY: 100% pure
 
 LAYERS:
   src/                            CC̄=3.6    ←in:0  →out:0
-  │ !! compile                    423L  0C   23m  CC=16     ←4
+  │ !! compile                    431L  0C   23m  CC=16     ←5
+  │ mcp                        382L  1C   18m  CC=6      ←0
   │ parse_nl                   376L  0C   21m  CC=6      ←1
-  │ !! index                      267L  2C   11m  CC=31     ←3
-  │ mcp                        255L  1C   13m  CC=6      ←0
+  │ !! index                      267L  2C   11m  CC=31     ←4
   │ config                     230L  1C   17m  CC=8      ←7
+  │ getv_uri                   225L  1C    9m  CC=14     ←3
   │ cli                        199L  0C   11m  CC=5      ←0
   │ models                     180L  7C    7m  CC=12     ←0
+  │ compile                    179L  0C   11m  CC=12     ←5
   │ desktop                    166L  0C    6m  CC=6      ←0
-  │ compile                    163L  0C   11m  CC=12     ←1
+  │ service                    151L  1C   15m  CC=5      ←0
   │ linux                      145L  1C    6m  CC=11     ←0
   │ base                       130L  1C    9m  CC=7      ←0
   │ mcp_server                 128L  0C   10m  CC=8      ←0
+  │ service_ops                128L  3C    8m  CC=5      ←0
   │ !! resolve                    122L  1C    4m  CC=26     ←2
-  │ service                    113L  1C   12m  CC=5      ←0
+  │ dispatcher                 117L  1C    4m  CC=5      ←0
+  │ getv_load                   97L  0C    8m  CC=8      ←1
+  │ base                        97L  5C    4m  CC=8      ←0
   │ macos                       94L  1C    5m  CC=7      ←0
   │ windows                     94L  1C    5m  CC=7      ←0
+  │ artifact                    94L  0C    4m  CC=13     ←2
   │ uri                         93L  0C   13m  CC=5      ←1
   │ runtime                     92L  0C    2m  CC=9      ←1
   │ rest_server                 90L  1C    7m  CC=4      ←0
+  │ registry                    88L  1C    6m  CC=8      ←1
   │ rest                        87L  1C    4m  CC=14     ←0
   │ mcp                         81L  0C    5m  CC=2      ←1
+  │ resource                    69L  0C    4m  CC=14     ←2
+  │ __init__                    68L  0C    0m  CC=0.0    ←0
+  │ event_store                 67L  2C    5m  CC=3      ←0
   │ shell                       66L  1C    2m  CC=11     ←0
   │ build                       64L  0C    2m  CC=13     ←1
   │ base                        59L  3C    5m  CC=2      ←0
   │ fallback                    52L  0C    1m  CC=6      ←1
-  │ __init__                    51L  0C    0m  CC=0.0    ←0
+  │ http_store                  52L  1C    3m  CC=3      ←0
   │ util                        47L  0C    5m  CC=9      ←3
   │ context                     47L  0C    2m  CC=8      ←1
   │ load                        46L  0C    4m  CC=3      ←1
   │ resolve                     40L  0C    2m  CC=4      ←4
   │ cli                         39L  1C    1m  CC=10     ←0
+  │ command_curl                39L  1C    2m  CC=5      ←0
   │ ide                         35L  0C    1m  CC=4      ←0
+  │ resource_probe              35L  1C    2m  CC=5      ←0
+  │ endpoint                    34L  0C    3m  CC=8      ←2
+  │ runtime_curl                34L  1C    2m  CC=3      ←0
+  │ endpoint_curl               33L  1C    2m  CC=2      ←0
+  │ artifact_filesystem         32L  1C    1m  CC=7      ←0
+  │ delegate                    29L  1C    2m  CC=2      ←0
   │ __init__                    28L  0C    0m  CC=0.0    ←0
+  │ getv_cli                    27L  1C    1m  CC=2      ←0
+  │ __init__                    27L  0C    0m  CC=0.0    ←0
   │ file                        25L  0C    1m  CC=3      ←0
   │ registry                    24L  0C    1m  CC=3      ←0
   │ __init__                    22L  0C    1m  CC=3      ←0
   │ http                        22L  0C    1m  CC=4      ←0
-  │ platform_detect             18L  0C    1m  CC=5      ←4
+  │ platform_detect             18L  0C    1m  CC=5      ←5
   │ __init__                    17L  0C    0m  CC=0.0    ←0
-  │ encode                      15L  0C    2m  CC=1      ←1
+  │ encode                      15L  0C    2m  CC=1      ←2
+  │ __init__                    15L  0C    0m  CC=0.0    ←0
+  │ __init__                     8L  0C    0m  CC=0.0    ←0
   │ __init__                     6L  0C    0m  CC=0.0    ←0
   │ __init__                     5L  0C    0m  CC=0.0    ←0
+  │
+  schemas/                        CC̄=2.4    ←in:0  →out:0
+  │ scaffold_scheme            357L  0C   13m  CC=4      ←0
+  │ registry.yaml              184L  0C    0m  CC=0.0    ←0
+  │ export_driver_stubs         97L  0C    1m  CC=11     ←0
+  │ fix_proto_imports           83L  0C    4m  CC=4      ←0
+  │ driver.proto                70L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ openapi.yaml                68L  0C    0m  CC=0.0    ←0
+  │ events.proto                66L  0C    0m  CC=0.0    ←0
+  │ queries.proto               60L  0C    0m  CC=0.0    ←0
+  │ uri.proto                   60L  0C    0m  CC=0.0    ←0
+  │ export_mcp_schemas          53L  0C    2m  CC=4      ←0
+  │ generate.sh                 53L  0C    0m  CC=0.0    ←0
+  │ commands.proto              45L  0C    0m  CC=0.0    ←0
+  │ commands.proto              45L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ events.proto                42L  0C    0m  CC=0.0    ←0
+  │ commands.proto              41L  0C    0m  CC=0.0    ←0
+  │ api.proto                   32L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              31L  0C    0m  CC=0.0    ←0
+  │ commands.proto              29L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ api.proto                   26L  0C    0m  CC=0.0    ←0
+  │ Makefile                    24L  0C    0m  CC=0.0    ←0
+  │ buf.yaml                    15L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ driver.proto                14L  0C    0m  CC=0.0    ←0
+  │ buf.gen.yaml                13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ aggregate.proto             13L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
+  │ queries.proto               10L  0C    0m  CC=0.0    ←0
   │
   examples/                       CC̄=2.0    ←in:0  →out:0
   │ main                        46L  0C    1m  CC=3      ←0
   │ run-e2e.sh                  40L  0C    0m  CC=0.0    ←0
   │ main                        29L  0C    1m  CC=3      ←0
   │ main                        27L  0C    1m  CC=2      ←0
-  │ e2e.sh                      25L  0C    1m  CC=0.0    ←6
+  │ e2e.sh                      25L  0C    1m  CC=0.0    ←10
   │ e2e.sh                      23L  0C    0m  CC=0.0    ←0
   │ e2e.sh                      15L  0C    0m  CC=0.0    ←0
   │ e2e.sh                      12L  0C    0m  CC=0.0    ←0
-  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
-  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
-  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
   │ mcp-config.cursor.json      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
+  │ e2e.sh                      11L  0C    0m  CC=0.0    ←0
   │ mcp-config.json             10L  0C    0m  CC=0.0    ←0
   │
+  scripts/                        CC̄=0.0    ←in:0  →out:0
+  │ test-live-registry.sh       66L  0C    2m  CC=0.0    ←0
+  │ test-cqrs-smoke.sh          54L  0C    1m  CC=0.0    ←0
+  │ install-editable.sh         22L  0C    0m  CC=0.0    ←0
+  │ testapp-handler.sh           6L  0C    0m  CC=0.0    ←0
+  │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ !! planfile.yaml              890L  0C    0m  CC=0.0    ←0
+  │ !! planfile.yaml             1033L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  511L  0C    0m  CC=0.0    ←0
   │ prefact.yaml                94L  0C    0m  CC=0.0    ←0
-  │ pyproject.toml              71L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              72L  0C    0m  CC=0.0    ←0
   │ project.sh                  59L  0C    0m  CC=0.0    ←0
   │ Dockerfile                  29L  0C    0m  CC=0.0    ←0
   │ nlp2uri.yaml                 8L  0C    0m  CC=0.0    ←0
   │ docker-compose.yml           6L  0C    0m  CC=0.0    ←0
   │ tree.sh                      1L  0C    0m  CC=0.0    ←0
-  │
-  scripts/                        CC̄=0.0    ←in:0  →out:0
-  │ install-editable.sh         22L  0C    0m  CC=0.0    ←0
-  │ testapp-handler.sh           6L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
   │ generated-cli-tests.testql.toon.yaml    20L  0C    0m  CC=0.0    ←0
@@ -194,14 +388,15 @@ LAYERS:
   │
 
 COUPLING:
-                    examples.resolve       src.nlp2uri  examples.execute      examples.mcp
-  examples.resolve                ──                 1                ←4                ←4  hub
-       src.nlp2uri                 4                ──                ←2                ←2  hub
-  examples.execute                 4                 2                ──                  
-      examples.mcp                 4                 2                                  ──
+                    examples.resolve       src.nlp2uri  examples.execute      examples.mcp   schemas.codegen
+  examples.resolve                ──                 1                ←4                ←4                ←5  hub
+       src.nlp2uri                 4                ──                ←2                ←2                    hub
+  examples.execute                 4                 2                ──                                    
+      examples.mcp                 4                 2                                  ──                  
+   schemas.codegen                 5                                                                      ──
   CYCLES: none
+  HUB: examples.resolve/ (fan-in=17)
   HUB: src.nlp2uri/ (fan-in=5)
-  HUB: examples.resolve/ (fan-in=12)
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

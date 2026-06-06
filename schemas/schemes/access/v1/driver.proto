@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.access;
+
+import "common/v1/driver.proto";
+import "common/v1/commands.proto";
+
+service AccessDriver {
+  rpc Capabilities(nlp2uri.cqrs.v1.common.DriverCapabilitiesQuery)
+      returns (nlp2uri.cqrs.v1.common.DriverCapabilities);
+  rpc Compile(nlp2uri.cqrs.v1.common.CompileUriCommand) returns (nlp2uri.cqrs.v1.common.CompileUriResult);
+  rpc Execute(nlp2uri.cqrs.v1.common.ExecuteUriCommand) returns (nlp2uri.cqrs.v1.common.ExecuteUriResult);
+  rpc Probe(nlp2uri.cqrs.v1.common.ProbeUriQuery) returns (nlp2uri.cqrs.v1.common.ProbeUriResult);
+}

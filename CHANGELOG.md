@@ -93,6 +93,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.6] - 2026-06-06
+
+### Docs
+- Update README.md
+- Update docs/orchestration.md
+- Update project/README.md
+- Update project/context.md
+- Update schemas/README.md
+- Update schemas/schemes/access/v1/README.md
+- Update schemas/schemes/app/v1/README.md
+- Update schemas/schemes/artifact/v1/README.md
+- Update schemas/schemes/command/v1/README.md
+- Update schemas/schemes/container/v1/README.md
+- ... and 18 more files
+
+### Test
+- Update tests/test_artifact_driver.py
+- Update tests/test_cqrs_drivers.py
+- Update tests/test_http_event_store.py
+- Update tests/test_resource_driver.py
+- Update tests/test_schemas_registry.py
+
+### Other
+- Update .gitignore
+- Update generated/.gitkeep
+- Update generated/mcp/tools.json
+- Update generated/python/drivers/__init__.py
+- Update generated/python/drivers/access/__init__.py
+- Update generated/python/drivers/access/policy.py
+- Update generated/python/drivers/app/__init__.py
+- Update generated/python/drivers/app/darwin.py
+- Update generated/python/drivers/app/linux.py
+- Update generated/python/drivers/app/windows.py
+- ... and 241 more files
+
 ## [0.4.5] - 2026-06-06
 
 ### Docs

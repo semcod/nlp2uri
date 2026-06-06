@@ -409,6 +409,19 @@ MCP **nie musi** dostawać nowych nazw narzędzi — wystarczy rozszerzyć `nlp2
 
 ---
 
+## CQRS + ES + Protobuf (standard per scheme)
+
+Każdy `scheme://` ma własny kontrakt CQRS z Event Sourcing i protobuf — pod generowanie driverów (linux, getv_cli, curl, docker…) i API (gRPC + OpenAPI + MCP):
+
+→ [schemas/uri_cqrs_es.v1.md](../schemas/uri_cqrs_es.v1.md)  
+→ [schemas/README.md](../schemas/README.md)
+
+```bash
+cd schemas && ./codegen/generate.sh --scheme command
+# → generated/python/drivers/command/curl.py (stub)
+# → generated/mcp/tools.json
+```
+
 ## Powiązane dokumenty
 
 - [mcp-tools.md](./mcp-tools.md) — pełna lista narzędzi nlp2uri-mcp

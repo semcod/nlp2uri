@@ -1,0 +1,15 @@
+version: v2
+modules:
+  - path: .
+    name: buf.build/semcod/nlp2uri-cqrs
+deps:
+  - buf.build/googleapis/googleapis
+lint:
+  use:
+    - MINIMAL
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+    - PACKAGE_VERSION_SUFFIX
+breaking:
+  use:
+    - FILE

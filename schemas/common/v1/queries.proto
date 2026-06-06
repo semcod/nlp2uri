@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "common/v1/uri.proto";
+import "common/v1/events.proto";
+
+// --- Read model (queries) shared by all schemes ---
+
+message GetUriQuery {
+  string uri_raw = 1;
+}
+
+message ListUrisQuery {
+  string scheme = 1;
+  string kind = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+message SearchByNameQuery {
+  string name = 1;
+  string scheme = 2;
+}
+
+message GetCompilePlanQuery {
+  string uri_raw = 1;
+  string platform = 2;
+  bool live_compile = 3;
+}
+
+message GetEventStreamQuery {
+  string aggregate_id = 1;
+  int64 from_sequence = 2;
+  int32 limit = 3;
+}
+
+message GetUriResult {
+  bool found = 1;
+  UriMapEntry entry = 2;
+}
+
+message ListUrisResult {
+  repeated UriMapEntry entries = 1;
+  int32 total = 2;
+}
+
+message SearchByNameResult {
+  repeated UriMapEntry entries = 1;
+}
+
+message GetCompilePlanResult {
+  Uri uri = 1;
+  repeated OSAction actions = 2;
+  UriCompiled last_event = 3;
+}
+
+message GetEventStreamResult {
+  repeated EventEnvelope events = 1;
+}

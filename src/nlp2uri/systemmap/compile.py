@@ -62,9 +62,9 @@ def compile_system_map_uri(
     if scheme == "runtime":
         return _compile_runtime(host, parsed, uri_map=uri_map)
     if scheme == "resource":
-        return _compile_resource(host, parsed)
+        return _compile_resource(host, parsed, config=config)
     if scheme == "artifact":
-        return _compile_artifact(host, parsed)
+        return _compile_artifact(host, parsed, config=config)
     if scheme in {"conversation", "process", "validation", "schedule", "service", "deploy", "environment"}:
         return _compile_metadata(host, scheme, parsed)
     if scheme == "access":
@@ -138,16 +138,32 @@ def _compile_runtime(
     return [OSAction(host, "echo", [f"runtime-probe:{runtime_id}"])]
 
 
-def _compile_resource(host: HostPlatform, parsed) -> list[OSAction]:
-    connector = _decode_segment(parsed.netloc)
-    resource_id = _decode_segment(parsed.path.lstrip("/"))
-    return [OSAction(host, "echo", [f"resource:{connector}/{resource_id}"])]
+def _compile_resource(
+    host: HostPlatform,
+    parsed,
+    *,
+    config: dict[str, str] | None = None,
+) -> list[OSAction]:
+    from nlp2uri.host.resource import build_resource_actions
+
+    uri = f"resource://{parsed.netloc}{parsed.path}"
+    if parsed.query:
+        uri = f"{uri}?{parsed.query}"
+    return build_resource_actions(uri, host, config=config)
 
 
-def _compile_artifact(host: HostPlatform, parsed) -> list[OSAction]:
-    example_id = _decode_segment(parsed.netloc)
-    path = _decode_segment(parsed.path.lstrip("/"))
-    return [OSAction(host, "echo", [f"artifact:{example_id}/{path}"])]
+def _compile_artifact(
+    host: HostPlatform,
+    parsed,
+    *,
+    config: dict[str, str] | None = None,
+) -> list[OSAction]:
+    from nlp2uri.host.artifact import build_artifact_actions
+
+    uri = f"artifact://{parsed.netloc}{parsed.path}"
+    if parsed.query:
+        uri = f"{uri}?{parsed.query}"
+    return build_artifact_actions(uri, host, config=config)
 
 
 def _compile_access(host: HostPlatform, parsed) -> list[OSAction]:

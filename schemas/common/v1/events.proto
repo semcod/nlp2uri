@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.common;
+
+import "common/v1/uri.proto";
+import "google/protobuf/struct.proto";
+
+// --- Event sourcing (append-only stream per aggregate_id = uri.raw) ---
+
+message UriRegistered {
+  EventMetadata metadata = 1;
+  UriMapEntry entry = 2;
+}
+
+message UriResolved {
+  EventMetadata metadata = 1;
+  string prompt = 2;
+  Uri uri = 3;
+  float confidence = 4;
+  string match_reason = 5;
+  repeated Uri candidates = 6;
+}
+
+message UriCompiled {
+  EventMetadata metadata = 1;
+  Uri uri = 2;
+  repeated OSAction actions = 3;
+  string driver = 4;
+  google.protobuf.Struct plan = 5;
+}
+
+message UriExecuted {
+  EventMetadata metadata = 1;
+  Uri uri = 2;
+  bool ok = 3;
+  string output = 4;
+  int32 exit_code = 5;
+  string driver = 6;
+}
+
+message UriExecutionFailed {
+  EventMetadata metadata = 1;
+  Uri uri = 2;
+  string error = 3;
+  string driver = 4;
+}
+
+message IndexRebuilt {
+  EventMetadata metadata = 1;
+  string source = 2;
+  int32 entry_count = 3;
+  UriMap index = 4;
+}
+
+message EventEnvelope {
+  string scheme = 1;
+  EventMetadata metadata = 2;
+  oneof payload {
+    UriRegistered uri_registered = 10;
+    UriResolved uri_resolved = 11;
+    UriCompiled uri_compiled = 12;
+    UriExecuted uri_executed = 13;
+    UriExecutionFailed uri_execution_failed = 14;
+    IndexRebuilt index_rebuilt = 15;
+  }
+}

@@ -1,0 +1,706 @@
+[
+  {
+    "name": "nlp2uri_app_handle",
+    "description": "CQRS handle for app:// URIs (app://{app}/{action})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "app://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_desktop_screenshot_handle",
+    "description": "CQRS handle for desktop_screenshot:// URIs (desktop-screenshot://{target})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "desktop_screenshot://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_desktop_window_handle",
+    "description": "CQRS handle for desktop_window:// URIs (desktop-window://{action})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "desktop_window://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_file_handle",
+    "description": "CQRS handle for file:// URIs (file://{path})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "file://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_http_handle",
+    "description": "CQRS handle for http:// URIs (http(s)://{host}/{path})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "http://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_getv_handle",
+    "description": "CQRS handle for getv:// URIs (getv://{category}/{profile}/{var})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "getv://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_command_handle",
+    "description": "CQRS handle for command:// URIs (command://{runtime_id}/{name})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "command://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_runtime_handle",
+    "description": "CQRS handle for runtime:// URIs (runtime://{kind}/{id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "runtime://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_resource_handle",
+    "description": "CQRS handle for resource:// URIs (resource://{connector}/{id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "resource://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_access_handle",
+    "description": "CQRS handle for access:// URIs (access://{agent}/{area}/{actions})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "access://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_artifact_handle",
+    "description": "CQRS handle for artifact:// URIs (artifact://{example_id}/{path})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "artifact://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_conversation_handle",
+    "description": "CQRS handle for conversation:// URIs (conversation://{example_id}/policy)",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "conversation://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_process_handle",
+    "description": "CQRS handle for process:// URIs (process://{example_id}/policy)",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "process://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_validation_handle",
+    "description": "CQRS handle for validation:// URIs (validation://{example_id}/{code})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "validation://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_schedule_handle",
+    "description": "CQRS handle for schedule:// URIs (schedule://{id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "schedule://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_service_handle",
+    "description": "CQRS handle for service:// URIs (service://generated/{name})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "service://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_deploy_handle",
+    "description": "CQRS handle for deploy:// URIs (deploy://{example_id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "deploy://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_environment_handle",
+    "description": "CQRS handle for environment:// URIs (environment://{example_id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "environment://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_endpoint_handle",
+    "description": "CQRS handle for endpoint:// URIs (endpoint://{proto}/{host}/{port}/{path})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "endpoint://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_device_handle",
+    "description": "CQRS handle for device:// URIs (device://{bus}/{id})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "device://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_container_handle",
+    "description": "CQRS handle for container:// URIs (container://{runtime}/{name})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "container://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_mount_handle",
+    "description": "CQRS handle for mount:// URIs (mount://{device}/{path})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "mount://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  }
+]

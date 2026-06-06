@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: nlp2uri device CQRS API
+  version: "1.0.0"
+  description: |
+    REST projection of DeviceCommandService / DeviceQueryService.
+    Generated from protobuf via buf; hand-maintained paths for MCP bridge.
+servers:
+  - url: http://localhost:8766/v1/device
+paths:
+  /commands/register:
+    post:
+      operationId: deviceRegister
+      tags: [commands]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: CommandResult
+  /commands/compile:
+    post:
+      operationId: deviceCompile
+      tags: [commands]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uri:
+                  type: string
+                platform:
+                  type: string
+                dry_run:
+                  type: boolean
+      responses:
+        "200":
+          description: CompileUriResult
+  /queries/list:
+    get:
+      operationId: deviceListUris
+      tags: [queries]
+      parameters:
+        - name: kind
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ListUrisResult
+  /queries/{uri}:
+    get:
+      operationId: deviceGetUri
+      tags: [queries]
+      parameters:
+        - name: uri
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: GetUriResult
