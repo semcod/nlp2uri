@@ -176,6 +176,49 @@ MCP_TOOLS: list[dict[str, Any]] = [
         },
     },
     {
+        "name": "nlp2uri_compile_control",
+        "description": "Compile ide-chat:// or koru-control:// URI to koru.control.v1 plan.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "uri": {"type": "string"},
+                "text": {
+                    "type": "string",
+                    "description": "Prompt body for drive operations (not embedded in URI).",
+                },
+            },
+            "required": ["uri"],
+        },
+    },
+    {
+        "name": "nlp2uri_execute_control",
+        "description": "Compile and execute Koru IDE control URI via koruide socket or CLI fallback.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "uri": {"type": "string"},
+                "text": {"type": "string"},
+                "dry_run": {"type": "boolean", "default": True},
+            },
+            "required": ["uri"],
+        },
+    },
+    {
+        "name": "nlp2uri_list_koru_ide_uris",
+        "description": "Build ide:// / ide-chat:// index from Koru autopilot status JSON.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "object",
+                    "description": "Payload from `koru autopilot status --format json`.",
+                },
+                "socket_path": {"type": "string"},
+            },
+            "required": ["status"],
+        },
+    },
+    {
         "name": "nlp2uri_cqrs_execute",
         "description": "CQRS execute: compile + run (dry_run default true). Appends UriExecuted event.",
         "inputSchema": {
@@ -219,6 +262,9 @@ class McpAdapter(BaseAdapter):
             "nlp2uri_list_getv_uris": McpAdapter._tool_list_getv_uris,
             "nlp2uri_resolve_getv": McpAdapter._tool_resolve_getv,
             "nlp2uri_get_getv_var": McpAdapter._tool_get_getv_var,
+            "nlp2uri_compile_control": McpAdapter._tool_compile_control,
+            "nlp2uri_execute_control": McpAdapter._tool_execute_control,
+            "nlp2uri_list_koru_ide_uris": McpAdapter._tool_list_koru_ide_uris,
             "nlp2uri_cqrs_compile": McpAdapter._tool_cqrs_compile,
             "nlp2uri_cqrs_execute": McpAdapter._tool_cqrs_execute,
         }
@@ -350,6 +396,40 @@ class McpAdapter(BaseAdapter):
             return AdapterResponse(ok=False, error=str(exc), status_code=400)
         payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
         return AdapterResponse(ok=bool(payload.get("found")), data=payload)
+
+    def _tool_compile_control(self, req: AdapterRequest) -> AdapterResponse:
+        from nlp2uri.control_compile import compile_uri_to_control_plan
+
+        plan = compile_uri_to_control_plan(req.uri, text=req.extra.get("text"))
+        if plan is None:
+            return AdapterResponse(ok=False, error=f"not a control URI: {req.uri}", status_code=400)
+        data = {"uri": req.uri, "control_plan": plan.to_dict()}
+        data["mcp_content"] = self.mcp_content(data, uri=req.uri)
+        return AdapterResponse(ok=True, data=data)
+
+    def _tool_execute_control(self, req: AdapterRequest) -> AdapterResponse:
+        from nlp2uri.control_execute import compile_and_execute_control_uri
+
+        payload = compile_and_execute_control_uri(
+            req.uri,
+            text=req.extra.get("text"),
+            dry_run=bool(req.extra.get("dry_run", True)),
+        )
+        ok = bool(payload.get("ok"))
+        payload["mcp_content"] = self.mcp_content(payload, uri=req.uri)
+        return AdapterResponse(ok=ok, data=payload, status_code=0 if ok else 1)
+
+    def _tool_list_koru_ide_uris(self, req: AdapterRequest) -> AdapterResponse:
+        status = req.extra.get("status")
+        if not isinstance(status, dict):
+            return AdapterResponse(ok=False, error="status object is required", status_code=400)
+        svc = self._service_for(req)
+        payload = svc.list_koru_ide_uris(
+            status,
+            socket_path=str(req.extra.get("socket_path") or ""),
+        )
+        payload["mcp_content"] = self.mcp_content(payload)
+        return AdapterResponse(ok=True, data=payload)
 
     def _tool_cqrs_compile(self, req: AdapterRequest) -> AdapterResponse:
         from nlp2uri.cqrs import CqrsDispatcher

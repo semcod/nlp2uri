@@ -6,6 +6,7 @@ Natural language to URI resolution and cross-platform local URI execution
 
 - [Metadata](#metadata)
 - [Architecture](#architecture)
+- [Koru IDE Control Integration](#koru-ide-control-integration)
 - [Interfaces](#interfaces)
 - [Configuration](#configuration)
 - [Dependencies](#dependencies)
@@ -20,7 +21,7 @@ Natural language to URI resolution and cross-platform local URI execution
 ## Metadata
 
 - **name**: `nlp2uri`
-- **version**: `0.4.8`
+- **version**: `0.4.9`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -33,6 +34,185 @@ Natural language to URI resolution and cross-platform local URI execution
 SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (verification)
 ```
 
+## Koru IDE Control Integration
+
+**Status:** analysis baseline, 2026-06-07.
+
+**Canonical docs (sibling repo `koru`):**
+
+- Architecture: [`docs/ide-control-architecture.md`](../koru/docs/ide-control-architecture.md)
+- Refactor plan (phases 0–7): [`docs/plans/nlp2uri-koruide-integration-refactor-plan.md`](../koru/docs/plans/nlp2uri-koruide-integration-refactor-plan.md)
+- Desktop MCP bridge (today): [`docs/desktop-uri-orchestration.md`](../koru/docs/desktop-uri-orchestration.md)
+
+`nlp2uri` is already used by Koru as a desktop URI and SystemMap bridge, but it is
+not yet the primary semantic control layer for IDE automation. Current Koru IDE
+control is owned by `koruide`: CLI or MCP calls a daemon over a local socket, the
+daemon routes to a live IDE plugin by IDE id and workspace, and the plugin performs
+chat focus, paste, submit, acknowledgement, and message-history observation.
+
+### Current integration surface
+
+| Layer | Current owner | Current behavior |
+|-------|---------------|------------------|
+| Desktop NL → URI | `nlp2uri` | Resolves prompts to `app://`, `desktop-window://`, `desktop-screenshot://`, `file://`, `getv://`, and SystemMap URI forms. |
+| Koru desktop MCP bridge | Koru | Exposes `koru_desktop_uri_plan`, `koru_desktop_uri_handle`, and SystemMap URI tools by calling `NLP2URIService`. |
+| IDE drive | Koru `koruide` | Uses daemon, plugin router, plugin command catalog, fallback OS injection, and acknowledgements. |
+| Optional focus fallback | Koru + `nlp2uri` | Builds `desktop-window://focus?name=...`, executes it with `nlp2uri`, then types through the GUI injector. |
+| Audit/telemetry | Koru | Emits `koru.control.v1` command records for plugin socket, shell, and desktop GUI surfaces. |
+
+This means `nlp2uri` can focus an IDE window or open a project, but it cannot yet
+address "send this prompt to Cursor chat in workspace X", "require the plugin
+route", "submit after paste", "validate acknowledgement", or "choose a command
+from the live IDE command catalog".
+
+### Target responsibility split
+
+`nlp2uri` should become the address and planning layer for Koru control, while
+Koru remains the execution authority for live IDE automation.
+
+```text
+natural language
+  → IntentIR / UriIntent
+  → ide-chat:// / ide-command:// / koru-control:// URI
+  → control plan / koru.control.v1
+  → Koru daemon or MCP `koru_ide_drive`
+  → IDE plugin / fallback executor
+  → ack + verification result
+```
+
+Do not move plugin probing, keyboard fallback, workspace routing, or command
+success heuristics into `nlp2uri`. Those are runtime concerns already handled by
+Koru. `nlp2uri` should name the target, compile the requested control operation,
+and preserve the request in a replayable URI/control-command form.
+
+### Required URI schemes
+
+The current registry lacks Koru/IDE control schemes. Add these schemes before
+attempting deeper NL parsing:
+
+| Scheme | Purpose | Example |
+|--------|---------|---------|
+| `ide://` | IDE/project/window addressing without chat semantics. | `ide://cursor/open?workspace=/home/tom/github/semcod/koru` |
+| `ide-chat://` | Address an IDE chat/composer surface. | `ide-chat://cursor/send?workspace=/home/tom/github/semcod/koru&submit=true` |
+| `ide-command://` | Address a known IDE command or command capability. | `ide-command://cursor/execute?capability=submit&command=workbench.action.chat.submit` |
+| `koru-control://` | Compile to Koru's live control plane. | `koru-control://ide/drive?ide=cursor&require_plugin=true` |
+| `koru-ticket://` | Optional planfile/ticket addressing if Koru tickets should join the URI index. | `koru-ticket://koru/TICKET-123` |
+
+`ide-chat://` should be the main user-facing URI for natural language prompts such
+as "send this to Cursor", while `koru-control://` should be the lower-level
+transport URI used by compilers and replay logs.
+
+### Compiler and driver work
+
+Add a Koru-aware compile target that produces a structured control action instead
+of only an `OSAction`.
+
+Minimum fields:
+
+```yaml
+kind: control
+scheme: ide-chat
+surface: ide_chat
+transport: koruide_socket | koru_mcp | plugin_socket | desktop_fallback
+operation: drive | focus | paste | submit | command
+ide: cursor | vscode | windsurf | jetbrains | zed | auto
+workspace: /absolute/project/path
+text: prompt payload, never embedded in the URI path
+submit: true
+require_plugin: false
+strategy_hint: plugin | keyboard | os_injector | auto
+verification:
+  expect_ack: true
+  expect_message_sent: true
+  timeout_ms: 120000
+```
+
+The first implementation can compile `ide-chat://...` and `koru-control://ide/drive`
+to a dry-run record plus an MCP/client invocation descriptor. Execution should call
+Koru through one of these stable boundaries:
+
+- Python: `koruide.client.KoruIDEClient.drive(...)`
+- MCP: `koru_ide_drive`
+- CLI fallback: `koru autopilot drive ...`
+
+### Intent and parser expansion
+
+Current `IntentKind` only models desktop operations such as open, capture, focus,
+move, and navigate. Add IDE/control intents:
+
+| Intent | Required slots |
+|--------|----------------|
+| `IDE_OPEN` | `ide`, `workspace`, optional `file`, `line` |
+| `IDE_CHAT_SEND` | `ide`, `workspace`, `text`, `submit`, `require_plugin` |
+| `IDE_COMMAND` | `ide`, `workspace`, `command`, optional `capability` |
+| `IDE_STATUS` | `ide`, optional `workspace` |
+| `KORU_CONTROL` | `surface`, `operation`, `authority`, `verification` |
+
+Parser examples to support in Polish and English:
+
+- "wyślij prompt do Cursor w tym projekcie"
+- "wklej do Windsurf, ale nie wysyłaj"
+- "użyj tylko pluginu Cursor, bez fallbacku klawiatury"
+- "sprawdź status pluginu IDE"
+- "uruchom komendę submit w aktywnym IDE"
+- "send this prompt to Cursor chat and wait for ack"
+
+### SystemMap and URI index expansion
+
+SystemMap indexing should expose Koru IDE state when Koru provides it:
+
+| Entity kind | URI |
+|-------------|-----|
+| `ide` | `ide://cursor` |
+| `ide_workspace` | `ide://cursor/workspace/{encoded-path}` |
+| `ide_plugin` | `koru-control://plugin/{plugin-id}` |
+| `ide_chat` | `ide-chat://cursor/send?workspace=...` |
+| `ide_command` | `ide-command://cursor/execute?command=...` |
+| `control_surface` | `koru-control://ide/drive` |
+
+The URI index should ingest Koru daemon status, active plugins, workspace folders,
+command catalogs, and recent command telemetry. Koru should remain the source of
+truth for freshness and safety.
+
+### Verification and replay contract
+
+For Koru control, success is not just process exit code. A valid plan needs:
+
+- plugin route selected or explicit fallback reason;
+- `chat.send` accepted by daemon;
+- plugin `ack` or structured error;
+- optional `message.sent` event;
+- optional `message.received` observation;
+- replayable `koru.control.v1` command record;
+- clear distinction between dry-run, planned, sent, acknowledged, and verified.
+
+This requires extending the current `OSAction`-centric result model with a control
+result model, or wrapping control actions in the existing CQRS driver result shape.
+
+### Implementation order
+
+1. Add schemas and registry entries for `ide`, `ide_chat`, `ide_command`, and
+   `koru_control`.
+2. Add URI builders and parser tests for `IDE_OPEN`, `IDE_CHAT_SEND`,
+   `IDE_COMMAND`, and `IDE_STATUS`.
+3. Add a Koru driver that compiles control URIs to dry-run control descriptors.
+4. Add optional execution through `koru_ide_drive` or `KoruIDEClient.drive`.
+5. Add SystemMap index ingestion for Koru daemon status and command catalogs.
+6. Add MCP tools or extend existing MCP compile/execute tools so they return
+   control plans, acknowledgements, and verification metadata.
+7. Add TestQL scenarios for NL → URI → dry-run plan → mocked Koru ack.
+
+### Test contracts to add
+
+- `parse_text("wyślij prompt do Cursor")` returns `IDE_CHAT_SEND`.
+- `build_uri(IDE_CHAT_SEND)` returns `ide-chat://cursor/send?...`.
+- `compile_uri_to_actions("ide-chat://cursor/send?...")` returns a control plan
+  with `transport=koruide_socket` or `transport=koru_mcp`.
+- Dry-run execution never sends text to the IDE.
+- `require_plugin=true` fails if no plugin route is available.
+- Workspace selection is preserved and passed to Koru.
+- Ack timeout is reported as verification failure, not generic execution failure.
+
 ### DOQL Application Declaration (`app.doql.less`)
 
 ```less markpact:doql path=app.doql.less
@@ -40,7 +220,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: nlp2uri;
-  version: 0.4.8;
+  version: 0.4.9;
 }
 
 dependencies {
@@ -124,7 +304,7 @@ ASSERT[2]{field, operator, expected}:
 ```yaml
 project:
   name: nlp2uri
-  version: 0.4.8
+  version: 0.4.9
   env: local
 ```
 
@@ -927,7 +1107,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('nlp2uri', '0.4.8', 'python').
+project_metadata('nlp2uri', '0.4.9', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 30, 'less').
@@ -1659,13 +1839,13 @@ sumd_deploy_compose_file('docker-compose.yml').
 | `write_environment_map` *(in src.nlp2uri.systemmap.export)* | 9 | 1 | 29 | **30** |
 | `build_getv_uri_index` *(in src.nlp2uri.systemmap.getv_uri)* | 6 | 3 | 24 | **27** |
 | `_match_command_entry` *(in src.nlp2uri.systemmap.resolve)* | 16 ⚠ | 1 | 24 | **25** |
-| `main` *(in schemas.codegen.export_driver_stubs)* | 11 ⚠ | 0 | 23 | **23** |
 | `encode_segment` *(in src.nlp2uri.systemmap.encode)* | 1 | 22 | 1 | **23** |
 | `resolve_artifact_path` *(in src.nlp2uri.host.artifact)* | 12 ⚠ | 1 | 22 | **23** |
+| `main` *(in schemas.codegen.export_driver_stubs)* | 11 ⚠ | 0 | 23 | **23** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.24s
+# generated in 0.25s
 # nodes: 284 | edges: 404 | modules: 56
 # CC̄=3.3
 
@@ -1680,34 +1860,34 @@ HUBS[20]:
     CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve._match_command_entry
     CC=16  in:1  out:24  total:25
-  schemas.codegen.export_driver_stubs.main
-    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.encode.encode_segment
     CC=1  in:22  out:1  total:23
   src.nlp2uri.host.artifact.resolve_artifact_path
     CC=12  in:1  out:22  total:23
-  src.nlp2uri.compile.compile_uri_to_actions
-    CC=13  in:5  out:17  total:22
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.index.build_uri_index
     CC=6  in:5  out:17  total:22
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:15  out:5  total:20
+  src.nlp2uri.compile.compile_uri_to_actions
+    CC=13  in:5  out:17  total:22
+  examples.resolve.new-intents.e2e.print
+    CC=0  in:20  out:0  total:20
   src.nlp2uri.systemmap.index._add_entry
     CC=3  in:16  out:4  total:20
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:15  out:5  total:20
   src.nlp2uri.systemmap.getv_uri.compile_getv_uri
     CC=14  in:2  out:18  total:20
   src.nlp2uri.config._load_from_path
     CC=6  in:3  out:17  total:20
-  examples.resolve.new-intents.e2e.print
-    CC=0  in:20  out:0  total:20
+  src.nlp2uri.systemmap.index._ir_field
+    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.compile._compile_runtime
     CC=12  in:1  out:18  total:19
   src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
     CC=13  in:1  out:18  total:19
   src.nlp2uri.host.artifact.build_artifact_actions
     CC=13  in:2  out:17  total:19
-  src.nlp2uri.systemmap.index._ir_field
-    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.context.load_ir_from_arguments
     CC=8  in:2  out:16  total:18
 

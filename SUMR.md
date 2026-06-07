@@ -15,7 +15,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `nlp2uri`
-- **version**: `0.4.8`
+- **version**: `0.4.9`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -35,7 +35,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: nlp2uri;
-  version: 0.4.8;
+  version: 0.4.9;
 }
 
 dependencies {
@@ -93,13 +93,13 @@ pfix>=0.1.60
 | `write_environment_map` *(in src.nlp2uri.systemmap.export)* | 9 | 1 | 29 | **30** |
 | `build_getv_uri_index` *(in src.nlp2uri.systemmap.getv_uri)* | 6 | 3 | 24 | **27** |
 | `_match_command_entry` *(in src.nlp2uri.systemmap.resolve)* | 16 ⚠ | 1 | 24 | **25** |
-| `main` *(in schemas.codegen.export_driver_stubs)* | 11 ⚠ | 0 | 23 | **23** |
 | `encode_segment` *(in src.nlp2uri.systemmap.encode)* | 1 | 22 | 1 | **23** |
 | `resolve_artifact_path` *(in src.nlp2uri.host.artifact)* | 12 ⚠ | 1 | 22 | **23** |
+| `main` *(in schemas.codegen.export_driver_stubs)* | 11 ⚠ | 0 | 23 | **23** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.24s
+# generated in 0.25s
 # nodes: 284 | edges: 404 | modules: 56
 # CC̄=3.3
 
@@ -114,34 +114,34 @@ HUBS[20]:
     CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve._match_command_entry
     CC=16  in:1  out:24  total:25
-  schemas.codegen.export_driver_stubs.main
-    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.encode.encode_segment
     CC=1  in:22  out:1  total:23
   src.nlp2uri.host.artifact.resolve_artifact_path
     CC=12  in:1  out:22  total:23
-  src.nlp2uri.compile.compile_uri_to_actions
-    CC=13  in:5  out:17  total:22
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.index.build_uri_index
     CC=6  in:5  out:17  total:22
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:15  out:5  total:20
+  src.nlp2uri.compile.compile_uri_to_actions
+    CC=13  in:5  out:17  total:22
+  examples.resolve.new-intents.e2e.print
+    CC=0  in:20  out:0  total:20
   src.nlp2uri.systemmap.index._add_entry
     CC=3  in:16  out:4  total:20
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:15  out:5  total:20
   src.nlp2uri.systemmap.getv_uri.compile_getv_uri
     CC=14  in:2  out:18  total:20
   src.nlp2uri.config._load_from_path
     CC=6  in:3  out:17  total:20
-  examples.resolve.new-intents.e2e.print
-    CC=0  in:20  out:0  total:20
+  src.nlp2uri.systemmap.index._ir_field
+    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.compile._compile_runtime
     CC=12  in:1  out:18  total:19
   src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
     CC=13  in:1  out:18  total:19
   src.nlp2uri.host.artifact.build_artifact_actions
     CC=13  in:2  out:17  total:19
-  src.nlp2uri.systemmap.index._ir_field
-    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.context.load_ir_from_arguments
     CC=8  in:2  out:16  total:18
 
@@ -492,7 +492,7 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.24s
+# generated in 0.25s
 # nodes: 284 | edges: 404 | modules: 56
 # CC̄=3.3
 
@@ -507,34 +507,34 @@ HUBS[20]:
     CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve._match_command_entry
     CC=16  in:1  out:24  total:25
-  schemas.codegen.export_driver_stubs.main
-    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.encode.encode_segment
     CC=1  in:22  out:1  total:23
   src.nlp2uri.host.artifact.resolve_artifact_path
     CC=12  in:1  out:22  total:23
-  src.nlp2uri.compile.compile_uri_to_actions
-    CC=13  in:5  out:17  total:22
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
   src.nlp2uri.systemmap.index.build_uri_index
     CC=6  in:5  out:17  total:22
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:15  out:5  total:20
+  src.nlp2uri.compile.compile_uri_to_actions
+    CC=13  in:5  out:17  total:22
+  examples.resolve.new-intents.e2e.print
+    CC=0  in:20  out:0  total:20
   src.nlp2uri.systemmap.index._add_entry
     CC=3  in:16  out:4  total:20
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:15  out:5  total:20
   src.nlp2uri.systemmap.getv_uri.compile_getv_uri
     CC=14  in:2  out:18  total:20
   src.nlp2uri.config._load_from_path
     CC=6  in:3  out:17  total:20
-  examples.resolve.new-intents.e2e.print
-    CC=0  in:20  out:0  total:20
+  src.nlp2uri.systemmap.index._ir_field
+    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.compile._compile_runtime
     CC=12  in:1  out:18  total:19
   src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
     CC=13  in:1  out:18  total:19
   src.nlp2uri.host.artifact.build_artifact_actions
     CC=13  in:2  out:17  total:19
-  src.nlp2uri.systemmap.index._ir_field
-    CC=2  in:16  out:3  total:19
   src.nlp2uri.systemmap.context.load_ir_from_arguments
     CC=8  in:2  out:16  total:18
 
@@ -867,7 +867,7 @@ EDGES:
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
 # code2llm | 265f 14882L | proto:138,python:75,yaml:31,shell:15,json:2,yml:1,toml:1 | 2026-06-07
-# generated in 0.08s
+# generated in 0.07s
 # CC̅=3.3 | critical:1/404 | dups:0 | cycles:0
 
 HEALTH[1]:
@@ -1265,8 +1265,8 @@ COUPLING:
       examples.mcp                 4                 2                                  ──                  
    schemas.codegen                 5                                                                      ──
   CYCLES: none
-  HUB: examples.resolve/ (fan-in=18)
   HUB: src.nlp2uri/ (fan-in=5)
+  HUB: examples.resolve/ (fan-in=18)
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -1284,7 +1284,7 @@ SUMMARY:
   dup_groups:    12
   dup_fragments: 26
   saved_lines:   127
-  scan_ms:       4487
+  scan_ms:       2306
 
 HOTSPOTS[7] (files with most duplication):
   src/nlp2uri/systemmap/index.py  dup=70L  groups=3  frags=7  (1.0%)
@@ -1415,7 +1415,7 @@ METRICS-TARGET:
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
 # code2llm/evolution | 397 func | 64f | 2026-06-07
-# generated in 0.00s
+# generated in 0.01s
 
 NEXT[4] (ranked by impact):
   [1] !! SPLIT           src/nlp2uri/compile.py

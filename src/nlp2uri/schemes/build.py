@@ -24,6 +24,21 @@ def build_uri(intent: UriIntent, *, platform: HostPlatform | None = None) -> Uri
     if intent.kind == IntentKind.MOVE:
         return desktop.build_move(intent, platform=host)
 
+    if intent.kind == IntentKind.IDE_CHAT_SEND:
+        return ide.build_ide_chat_send(intent)
+
+    if intent.kind == IntentKind.IDE_STATUS:
+        return ide.build_ide_status(intent)
+
+    if intent.kind == IntentKind.IDE_COMMAND:
+        return ide.build_ide_command(intent)
+
+    if intent.kind == IntentKind.KORU_CONTROL:
+        return ide.build_koru_control_drive(intent)
+
+    if intent.kind == IntentKind.IDE_OPEN:
+        return ide.build_ide(intent.with_params(path=intent.params.get("path") or intent.target))
+
     if intent.kind == IntentKind.OPEN:
         if intent.target == "file":
             return file_scheme.build_file(intent)

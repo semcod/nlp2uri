@@ -19,10 +19,11 @@ def execute_uri(
     *,
     platform: HostPlatform | None = None,
     dry_run: bool = False,
+    extra_params: dict[str, str] | None = None,
 ) -> ActionResult:
     host = get_effective_platform(platform)
     try:
-        actions = tuple(compile_uri_to_actions(uri, host))
+        actions = tuple(compile_uri_to_actions(uri, host, extra_params=extra_params))
     except ValueError as exc:
         return ActionResult(
             ok=False,

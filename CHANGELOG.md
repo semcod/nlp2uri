@@ -119,6 +119,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.10] - 2026-06-07
+
+### Docs
+- Update .aider.chat.history.md
+- Update .koru/sllm/prompts/prompt-20260607-131225-bcc26a006a2.md
+- Update .koru/sllm/prompts/prompt-20260607-131357-be1920ee67a.md
+- Update .koru/sllm/prompts/prompt-20260607-131400-be23e31e174.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update project/README.md
+- Update project/context.md
+- ... and 4 more files
+
+### Test
+- Update testql-scenarios/koru-ide-control-roundtrip.testql.toon.yaml
+- Update tests/test_cli.py
+- Update tests/test_ide_control.py
+- Update tests/test_koru_control_execute.py
+- Update tests/test_koru_ide_control.py
+- Update tests/test_koru_ide_systemmap.py
+- Update tests/test_systemmap.py
+
+### Other
+- Update .code2llm_cache/__init___1780827619827182084_772.pkl
+- Update .code2llm_cache/pyproject_1780827620439188998_2641.pkl
+- Update .koru/event-store.jsonl
+- Update .koru/events/observability.jsonl
+- Update app.doql.less
+- Update generated/mcp/tools.json
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/calls.toon.yaml
+- ... and 45 more files
+
 ## [0.4.9] - 2026-06-07
 
 ### Docs

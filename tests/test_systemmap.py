@@ -228,7 +228,7 @@ def test_write_environment_map_includes_desktop_uris(tmp_path, monkeypatch) -> N
     monkeypatch.setattr("env2llm.generate.generate_system_map", fake_generate)
     monkeypatch.setattr(
         "env2llm.policy.desktop.collect_desktop_probe",
-        lambda: probe,
+        lambda *args, **kwargs: probe,
     )
 
     path = write_environment_map(tmp_path, probe_desktop=True)

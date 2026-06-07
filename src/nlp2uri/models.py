@@ -20,6 +20,11 @@ class IntentKind(str, Enum):
     FOCUS = "focus"
     MOVE = "move"
     NAVIGATE = "navigate"
+    IDE_OPEN = "ide_open"
+    IDE_CHAT_SEND = "ide_chat_send"
+    IDE_COMMAND = "ide_command"
+    IDE_STATUS = "ide_status"
+    KORU_CONTROL = "koru_control"
 
 
 INTENT_NAMES: dict[IntentKind, str] = {
@@ -28,7 +33,14 @@ INTENT_NAMES: dict[IntentKind, str] = {
     IntentKind.FOCUS: "focus_window",
     IntentKind.MOVE: "move_window",
     IntentKind.NAVIGATE: "navigate",
+    IntentKind.IDE_OPEN: "ide_open",
+    IntentKind.IDE_CHAT_SEND: "ide_chat_send",
+    IntentKind.IDE_COMMAND: "ide_command",
+    IntentKind.IDE_STATUS: "ide_status",
+    IntentKind.KORU_CONTROL: "koru_control",
 }
+
+CONTROL_COMMAND_VERSION = "koru.control.v1"
 
 
 @dataclass(frozen=True)
@@ -79,6 +91,10 @@ class UriIntent:
                 window["screen"] = self.params["screen"]
             if window:
                 slots["window"] = window
+        if self.kind in {IntentKind.IDE_CHAT_SEND, IntentKind.IDE_STATUS}:
+            slots["app"] = self.params.get("ide") or self.target
+            if self.params.get("workspace"):
+                slots["resource"] = self.params["workspace"]
         if self.target == "ide" or self.params.get("ide"):
             slots["app"] = self.params.get("ide") or self.target
         elif self.params.get("name"):
@@ -119,6 +135,78 @@ class UriSpec:
 
 
 @dataclass(frozen=True)
+class ControlVerification:
+    expect_ack: bool = True
+    expect_message_sent: bool = False
+    timeout_ms: int = 120_000
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "expect_ack": self.expect_ack,
+            "expect_message_sent": self.expect_message_sent,
+            "timeout_ms": self.timeout_ms,
+        }
+
+
+@dataclass(frozen=True)
+class ControlAction:
+    """Structured Koru control command (koru.control.v1)."""
+
+    surface: str
+    transport: str
+    operation: str
+    ide: str = "auto"
+    workspace: str = ""
+    submit: bool = True
+    require_plugin: bool = False
+    strategy_hint: str = ""
+    text_ref: str = ""
+    verification: ControlVerification = field(default_factory=ControlVerification)
+    replay_cli: tuple[str, ...] = ()
+    replay_mcp: str = ""
+    metadata: dict[str, Any] = field(default_factory=dict)
+    kind: str = "control"
+    command_version: str = CONTROL_COMMAND_VERSION
+
+    def to_dict(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "kind": self.kind,
+            "command_version": self.command_version,
+            "surface": self.surface,
+            "transport": self.transport,
+            "operation": self.operation,
+            "ide": self.ide,
+            "workspace": self.workspace,
+            "submit": self.submit,
+            "require_plugin": self.require_plugin,
+            "verification": self.verification.to_dict(),
+            "replay": {
+                "cli": list(self.replay_cli),
+                "mcp": self.replay_mcp,
+            },
+        }
+        if self.strategy_hint:
+            payload["strategy_hint"] = self.strategy_hint
+        if self.text_ref:
+            payload["text_ref"] = self.text_ref
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        return payload
+
+
+@dataclass(frozen=True)
+class ControlPlan:
+    uri: str
+    actions: tuple[ControlAction, ...] = ()
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "uri": self.uri,
+            "actions": [action.to_dict() for action in self.actions],
+        }
+
+
+@dataclass(frozen=True)
 class OSAction:
     """Concrete host command derived from an abstract URI."""
 
@@ -147,15 +235,19 @@ class NLP2URIResult:
     slots: dict[str, Any]
     spec: UriSpec
     actions: tuple[OSAction, ...] = ()
+    control_plan: ControlPlan | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        payload: dict[str, Any] = {
             "uri": self.uri,
             "intent": self.intent,
             "slots": dict(self.slots),
             "spec": self.spec.to_dict(),
             "actions": [a.to_dict() for a in self.actions],
         }
+        if self.control_plan is not None:
+            payload["control_plan"] = self.control_plan.to_dict()
+        return payload
 
 
 @dataclass

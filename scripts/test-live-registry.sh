@@ -22,17 +22,23 @@ from nlp2uri.models import HostPlatform
 registry = os.environ["PROCESS_REGISTRY_URL"].rstrip("/")
 d = CqrsDispatcher(platform=HostPlatform.LINUX)
 
-def check(url: str, label: str) -> None:
+def check(url: str, label: str) -> bool:
     try:
         with urllib.request.urlopen(url, timeout=3) as resp:
             assert resp.status == 200, label
         print(f"[OK] {label} {url}")
+        return True
     except Exception as exc:
         print(f"[SKIP] {label} {url} — {exc}")
+        return False
 
-check(f"{registry}/health", "process-registry")
+registry_ready = check(f"{registry}/health", "process-registry")
 check(os.getenv("TRIGGER_GATEWAY_URL", "http://localhost:8084") + "/health", "trigger-gateway")
 check(os.getenv("PIPELINE_PORT_URL", "http://localhost:9099") + "/health", "pipeline-router")
+
+if not registry_ready:
+    print("Live registry integration skipped: process-registry is not running")
+    raise SystemExit(0)
 
 uri = "endpoint://tcp/127.0.0.1/8083/health"
 result = d.execute_uri(uri, dry_run=False)

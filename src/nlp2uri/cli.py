@@ -34,13 +34,22 @@ def _emit(payload: dict, *, as_json: bool) -> None:
             print(f"{key}: {value}")
 
 
+def _payload_text(args) -> str:
+    prompt_file = getattr(args, "prompt_file", None)
+    if prompt_file:
+        return Path(prompt_file).read_text(encoding="utf-8").strip()
+    return (getattr(args, "prompt_body", None) or "").strip()
+
+
 def _request_from_args(args, *, operation: str) -> AdapterRequest:
+    payload_text = _payload_text(args)
     return AdapterRequest(
         operation=operation,
         prompt=getattr(args, "text", "") or "",
         uri=getattr(args, "uri", "") or "",
         platform=_platform(getattr(args, "platform", None)),
         dry_run=bool(getattr(args, "dry_run", False)),
+        extra={"text": payload_text} if payload_text else {},
     )
 
 
@@ -88,7 +97,13 @@ def _run_shell(args) -> int:
 def _run_adapter_command(args, *, operation: str) -> int:
     cli = CliAdapter()
     if operation == "compile":
-        req = AdapterRequest(operation="compile", uri=args.uri, platform=_platform(args.platform))
+        payload_text = _payload_text(args)
+        req = AdapterRequest(
+            operation="compile",
+            uri=args.uri,
+            platform=_platform(args.platform),
+            extra={"text": payload_text} if payload_text else {},
+        )
     else:
         req = _request_from_args(args, operation=operation)
     response = cli.handle(req)
@@ -123,12 +138,14 @@ def _run_envmap(args) -> int:
 
 def _run_execute(args) -> int:
     cli = CliAdapter()
+    payload_text = _payload_text(args)
     if getattr(args, "uri_only", False) or "://" in args.text:
         req = AdapterRequest(
             operation="execute",
             uri=args.text,
             platform=_platform(args.platform),
             dry_run=bool(args.dry_run),
+            extra={"text": payload_text} if payload_text else {},
         )
     else:
         req = _request_from_args(args, operation="execute")

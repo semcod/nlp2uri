@@ -1,49 +1,49 @@
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.24s
-# nodes: 284 | edges: 404 | modules: 56
-# CC̄=3.3
+# generated in 0.16s
+# nodes: 320 | edges: 444 | modules: 59
+# CC̄=3.5
 
 HUBS[20]:
+  src.nlp2uri.control_compile.compile_uri_to_control_plan
+    CC=25  in:3  out:51  total:54
+  src.nlp2uri.systemmap.koru_ide.build_koru_ide_uri_index
+    CC=22  in:2  out:50  total:52
   src.nlp2uri.cli_parser.build_parser
-    CC=1  in:1  out:45  total:46
+    CC=1  in:1  out:51  total:52
   src.nlp2uri.host.resource.build_resource_actions
     CC=14  in:2  out:29  total:31
   src.nlp2uri.systemmap.export.write_environment_map
     CC=9  in:1  out:29  total:30
+  src.nlp2uri.systemmap.index._add_entry
+    CC=3  in:24  out:4  total:28
   src.nlp2uri.systemmap.getv_uri.build_getv_uri_index
     CC=6  in:3  out:24  total:27
+  src.nlp2uri.compile.compile_uri_to_actions
+    CC=18  in:5  out:20  total:25
   src.nlp2uri.systemmap.resolve._match_command_entry
     CC=16  in:1  out:24  total:25
-  schemas.codegen.export_driver_stubs.main
-    CC=11  in:0  out:23  total:23
+  src.nlp2uri.schemes.util.abstract_url
+    CC=9  in:20  out:5  total:25
+  src.nlp2uri.schemes.build.build_uri
+    CC=19  in:2  out:22  total:24
   src.nlp2uri.systemmap.encode.encode_segment
     CC=1  in:22  out:1  total:23
+  schemas.codegen.export_driver_stubs.main
+    CC=11  in:0  out:23  total:23
   src.nlp2uri.host.artifact.resolve_artifact_path
     CC=12  in:1  out:22  total:23
-  src.nlp2uri.compile.compile_uri_to_actions
-    CC=13  in:5  out:17  total:22
   src.nlp2uri.systemmap.index.build_uri_index
     CC=6  in:5  out:17  total:22
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:15  out:5  total:20
-  src.nlp2uri.systemmap.index._add_entry
-    CC=3  in:16  out:4  total:20
-  src.nlp2uri.systemmap.getv_uri.compile_getv_uri
-    CC=14  in:2  out:18  total:20
   src.nlp2uri.config._load_from_path
     CC=6  in:3  out:17  total:20
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:15  out:5  total:20
   examples.resolve.new-intents.e2e.print
     CC=0  in:20  out:0  total:20
-  src.nlp2uri.systemmap.compile._compile_runtime
-    CC=12  in:1  out:18  total:19
-  src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
-    CC=13  in:1  out:18  total:19
-  src.nlp2uri.host.artifact.build_artifact_actions
-    CC=13  in:2  out:17  total:19
+  src.nlp2uri.systemmap.getv_uri.compile_getv_uri
+    CC=14  in:2  out:18  total:20
   src.nlp2uri.systemmap.index._ir_field
     CC=2  in:16  out:3  total:19
-  src.nlp2uri.systemmap.context.load_ir_from_arguments
-    CC=8  in:2  out:16  total:18
 
 MODULES:
   examples.execute.dry-run.main  [1 funcs]
@@ -76,24 +76,27 @@ MODULES:
     queries_proto  CC=1  out:3
   src.nlp2uri.adapters.base  [1 funcs]
     __init__  CC=2  out:2
-  src.nlp2uri.adapters.mcp  [2 funcs]
+  src.nlp2uri.adapters.mcp  [4 funcs]
+    _tool_compile_control  CC=2  out:6
+    _tool_execute_control  CC=2  out:8
     _tool_list_system_uris  CC=2  out:7
     _tool_resolve_system_map  CC=3  out:10
-  src.nlp2uri.cli  [11 funcs]
+  src.nlp2uri.cli  [12 funcs]
     _dispatch_command  CC=6  out:7
     _emit  CC=3  out:4
+    _payload_text  CC=3  out:6
     _platform  CC=2  out:1
-    _request_from_args  CC=3  out:7
-    _run_adapter_command  CC=4  out:8
+    _request_from_args  CC=4  out:8
+    _run_adapter_command  CC=5  out:9
     _run_config  CC=3  out:10
     _run_envmap  CC=4  out:9
-    _run_execute  CC=5  out:10
+    _run_execute  CC=6  out:11
     _run_shell  CC=5  out:10
-    _with_platform  CC=2  out:2
-  src.nlp2uri.cli_parser  [2 funcs]
+  src.nlp2uri.cli_parser  [3 funcs]
     add_common_args  CC=3  out:2
-    build_parser  CC=1  out:45
-  src.nlp2uri.compile  [50 funcs]
+    add_text_args  CC=1  out:3
+    build_parser  CC=1  out:51
+  src.nlp2uri.compile  [54 funcs]
     _capture_outfile  CC=1  out:3
     _compile_app  CC=4  out:5
     _compile_app_file_open  CC=2  out:6
@@ -101,9 +104,9 @@ MODULES:
     _compile_app_open  CC=3  out:3
     _compile_app_open_with_path  CC=2  out:6
     _compile_app_settings  CC=5  out:3
+    _compile_ide_chat  CC=5  out:5
+    _compile_koru_control  CC=7  out:10
     _compile_launch_app  CC=4  out:4
-    _compile_legacy_nlp2uri  CC=5  out:9
-    _compile_screen_capture  CC=4  out:4
   src.nlp2uri.config  [15 funcs]
     resolved_platform  CC=4  out:8
     to_dict  CC=2  out:2
@@ -115,8 +118,24 @@ MODULES:
     config_search_paths  CC=5  out:15
     default_config  CC=1  out:3
     ensure_config  CC=4  out:9
-  src.nlp2uri.cqrs.dispatcher  [1 funcs]
+  src.nlp2uri.control_compile  [4 funcs]
+    _query_params  CC=3  out:3
+    _truthy  CC=3  out:2
+    compile_uri_to_control_plan  CC=25  out:51
+    is_control_uri  CC=2  out:2
+  src.nlp2uri.control_execute  [9 funcs]
+    _build_client  CC=3  out:2
+    _execute_cli  CC=9  out:9
+    _execute_drive  CC=10  out:12
+    _execute_status  CC=5  out:7
+    _verification_status  CC=11  out:4
+    compile_and_execute_control_uri  CC=5  out:6
+    execute_control_action  CC=9  out:8
+    execute_control_plan  CC=2  out:2
+    koruide_available  CC=1  out:0
+  src.nlp2uri.cqrs.dispatcher  [2 funcs]
     __init__  CC=5  out:5
+    execute_uri  CC=4  out:10
   src.nlp2uri.cqrs.drivers.artifact_filesystem  [1 funcs]
     compile  CC=7  out:7
   src.nlp2uri.cqrs.drivers.command_curl  [1 funcs]
@@ -188,17 +207,17 @@ MODULES:
   src.nlp2uri.mcp  [2 funcs]
     mcp_handoff_payload  CC=2  out:4
     tool_resolve_desktop_action  CC=2  out:2
-  src.nlp2uri.parse_nl  [15 funcs]
+  src.nlp2uri.parse_nl  [21 funcs]
+    _bool_param  CC=2  out:0
     _capture_target  CC=4  out:2
     _normalize_aliases  CC=2  out:3
     _normalize_app_name  CC=2  out:1
+    _normalize_ide_name  CC=2  out:3
     _normalize_panel  CC=1  out:3
     _parse_app_open  CC=2  out:4
     _parse_capture  CC=6  out:8
     _parse_fallback  CC=1  out:1
     _parse_file_open  CC=2  out:4
-    _parse_ide_project  CC=2  out:6
-    _parse_open_prefix  CC=5  out:7
   src.nlp2uri.platform_detect  [1 funcs]
     detect_platform  CC=5  out:1
   src.nlp2uri.platforms.base  [1 funcs]
@@ -206,13 +225,13 @@ MODULES:
   src.nlp2uri.platforms.registry  [1 funcs]
     get_executor  CC=3  out:4
   src.nlp2uri.resolve  [2 funcs]
-    nlp2uri  CC=4  out:8
+    nlp2uri  CC=13  out:13
     resolve_text  CC=2  out:3
   src.nlp2uri.runtime  [1 funcs]
     execute_uri  CC=9  out:15
   src.nlp2uri.schemes.build  [2 funcs]
     _build_navigate  CC=4  out:5
-    build_uri  CC=13  out:15
+    build_uri  CC=19  out:22
   src.nlp2uri.schemes.desktop  [6 funcs]
     build_app_open  CC=3  out:5
     build_capture  CC=5  out:5
@@ -222,23 +241,27 @@ MODULES:
     build_terminal  CC=2  out:5
   src.nlp2uri.schemes.file  [1 funcs]
     build_file  CC=3  out:6
-  src.nlp2uri.schemes.ide  [1 funcs]
+  src.nlp2uri.schemes.ide  [5 funcs]
     build_ide  CC=4  out:10
+    build_ide_chat_send  CC=3  out:9
+    build_ide_command  CC=3  out:8
+    build_ide_status  CC=2  out:4
+    build_koru_control_drive  CC=3  out:9
   src.nlp2uri.schemes.util  [3 funcs]
     abstract_url  CC=9  out:5
     file_uri  CC=1  out:3
     normalize_path  CC=2  out:5
-  src.nlp2uri.service  [13 funcs]
+  src.nlp2uri.service  [15 funcs]
     _cfg  CC=2  out:1
     _host  CC=1  out:1
-    compile  CC=1  out:2
+    compile  CC=3  out:3
     default  CC=1  out:2
     execute  CC=2  out:3
     for_platform  CC=2  out:4
     from_prompt  CC=2  out:3
+    handle_prompt  CC=13  out:14
     list_getv_uris  CC=3  out:5
-    list_system_uris  CC=3  out:5
-    read_getv_var  CC=1  out:1
+    list_koru_ide_uris  CC=1  out:3
   src.nlp2uri.systemmap.compile  [10 funcs]
     _backend_url  CC=1  out:2
     _compile_access  CC=2  out:5
@@ -291,6 +314,9 @@ MODULES:
     _index_desktop  CC=7  out:10
     _index_environment  CC=2  out:5
     _index_generated_services  CC=3  out:4
+  src.nlp2uri.systemmap.koru_ide  [2 funcs]
+    build_koru_ide_uri_index  CC=22  out:50
+    merge_koru_ide_index  CC=3  out:5
   src.nlp2uri.systemmap.load  [4 funcs]
     env2llm_available  CC=1  out:0
     env2llm_missing_message  CC=2  out:0
@@ -356,8 +382,6 @@ EDGES:
   examples.execute.dry-run.main.main → examples.resolve.new-intents.e2e.print
   examples.resolve.nl-to-uri.main.main → src.nlp2uri.resolve.nlp2uri
   examples.resolve.nl-to-uri.main.main → examples.resolve.new-intents.e2e.print
-  src.nlp2uri.runtime.execute_uri → src.nlp2uri.config.get_effective_platform
-  src.nlp2uri.runtime.execute_uri → src.nlp2uri.compile.compile_uri_to_actions
   src.nlp2uri.config.NLP2URIConfig.resolved_platform → src.nlp2uri.platform_detect.detect_platform
   src.nlp2uri.config.NLP2URIConfig.to_dict → src.nlp2uri.platform_detect.detect_platform
   src.nlp2uri.config.NLP2URIConfig.to_yaml → src.nlp2uri.config.payload_keys
@@ -368,3 +392,5 @@ EDGES:
   src.nlp2uri.config._load_from_path → src.nlp2uri.config._parse_simple_yaml
   src.nlp2uri.config._load_from_path → src.nlp2uri.config.payload_keys
   src.nlp2uri.config.load_config → src.nlp2uri.config.find_config_path
+  src.nlp2uri.config.load_config → src.nlp2uri.config._load_from_path
+  src.nlp2uri.config.load_config → src.nlp2uri.config.default_config

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package nlp2uri.cqrs.v1.ide_command;
+
+import "common/v1/driver.proto";
+import "common/v1/commands.proto";
+
+// Generated driver targets: koru, koruide_socket
+service IdeCommandDriver {
+  rpc Capabilities(nlp2uri.cqrs.v1.common.DriverCapabilitiesQuery)
+      returns (nlp2uri.cqrs.v1.common.DriverCapabilities);
+  rpc Compile(nlp2uri.cqrs.v1.common.CompileUriCommand) returns (nlp2uri.cqrs.v1.common.CompileUriResult);
+  rpc Execute(nlp2uri.cqrs.v1.common.ExecuteUriCommand) returns (nlp2uri.cqrs.v1.common.ExecuteUriResult);
+  rpc Probe(nlp2uri.cqrs.v1.common.ProbeUriQuery) returns (nlp2uri.cqrs.v1.common.ProbeUriResult);
+}

@@ -1821,7 +1821,7 @@ wheels = [
 
 [[package]]
 name = "nlp2uri"
-version = "0.4.9"
+version = "0.4.10"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -1871,7 +1871,7 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "pyyaml", marker = "extra == 'codegen'", specifier = ">=6.0" },
 ]
-provides-extras = ["dev", "linux", "windows", "full", "envmap", "codegen"]
+provides-extras = ["dev", "linux", "windows", "full", "envmap", "koru", "codegen"]
 
 [[package]]
 name = "numpy"

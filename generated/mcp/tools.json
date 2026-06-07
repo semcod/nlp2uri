@@ -160,6 +160,134 @@
     }
   },
   {
+    "name": "nlp2uri_ide_handle",
+    "description": "CQRS handle for ide:// URIs (ide://{ide}/{action})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "ide://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_ide_chat_handle",
+    "description": "CQRS handle for ide_chat:// URIs (ide-chat://{ide}/{action})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "ide_chat://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_ide_command_handle",
+    "description": "CQRS handle for ide_command:// URIs (ide-command://{ide}/{action})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "ide_command://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
+    "name": "nlp2uri_koru_control_handle",
+    "description": "CQRS handle for koru_control:// URIs (koru-control://{surface}/{operation})",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "description": "koru_control://\u2026"
+        },
+        "prompt": {
+          "type": "string",
+          "description": "NL resolve alternative"
+        },
+        "platform": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "darwin",
+            "windows"
+          ]
+        },
+        "dry_run": {
+          "type": "boolean",
+          "default": true
+        },
+        "config": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  {
     "name": "nlp2uri_getv_handle",
     "description": "CQRS handle for getv:// URIs (getv://{category}/{profile}/{var})",
     "inputSchema": {

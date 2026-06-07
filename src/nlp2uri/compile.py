@@ -25,11 +25,15 @@ _NATIVE_SETTINGS_SCHEMES = frozenset({"ms-settings", "x-apple.systempreferences"
 def compile_uri_to_actions(
     uri: str,
     os: HostPlatform | None = None,
+    *,
+    extra_params: dict[str, str] | None = None,
 ) -> list[OSAction]:
     host = os or detect_platform()
     parsed = urlparse(uri)
     scheme = parsed.scheme.lower()
     params = _query_params(parsed)
+    if extra_params:
+        params = {**params, **{k: v for k, v in extra_params.items() if v}}
 
     if scheme in _OPEN_URI_SCHEMES or scheme in _NATIVE_SETTINGS_SCHEMES:
         return [_open_uri(host, uri)]
@@ -42,6 +46,12 @@ def compile_uri_to_actions(
 
     if scheme == "desktop-window":
         return _compile_window(host, parsed.netloc, params, uri)
+
+    if scheme == "ide-chat":
+        return _compile_ide_chat(host, parsed.netloc, parsed.path, params, uri)
+
+    if scheme == "koru-control":
+        return _compile_koru_control(host, parsed.netloc, parsed.path, params, uri)
 
     if scheme == "nlp2uri":
         return _compile_legacy_nlp2uri(host, uri)
@@ -521,6 +531,70 @@ def _compile_window(
     return _compile_window_focus(host, name)
 
 
+def _param_truthy(params: dict[str, str], key: str, *, default: bool = False) -> bool:
+    raw = params.get(key)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _koru_drive_action(
+    host: HostPlatform,
+    *,
+    ide: str,
+    params: dict[str, str],
+) -> OSAction:
+    text = params.get("text", "").strip()
+    if not text:
+        raise ValueError("ide-chat send requires text parameter")
+
+    args = ["autopilot", "drive", "--ide", ide or "auto"]
+    if not _param_truthy(params, "submit", default=True):
+        args.append("--no-submit")
+    if _param_truthy(params, "require_plugin", default=False):
+        args.append("--require-plugin")
+    if params.get("workspace"):
+        args.extend(["--project", params["workspace"]])
+    args.extend(["--prompt", text])
+    return OSAction(host, "koru", args)
+
+
+def _compile_ide_chat(
+    host: HostPlatform,
+    authority: str,
+    path: str,
+    params: dict[str, str],
+    uri: str,
+) -> list[OSAction]:
+    ide = (authority or params.get("ide") or "auto").lower()
+    action = path.strip("/") or "send"
+    if action != "send":
+        raise ValueError(f"unsupported ide-chat action: {uri}")
+    return [_koru_drive_action(host, ide=ide, params=params)]
+
+
+def _compile_koru_control(
+    host: HostPlatform,
+    authority: str,
+    path: str,
+    params: dict[str, str],
+    uri: str,
+) -> list[OSAction]:
+    surface = authority.lower()
+    action = path.strip("/") or "status"
+    if surface != "ide":
+        raise ValueError(f"unsupported koru-control surface: {uri}")
+    ide = (params.get("ide") or "auto").lower()
+    if action == "drive":
+        return [_koru_drive_action(host, ide=ide, params=params)]
+    if action == "status":
+        args = ["autopilot", "status", "--ide", ide]
+        if params.get("workspace"):
+            args.extend(["--project", params["workspace"]])
+        return [OSAction(host, "koru", args)]
+    raise ValueError(f"unsupported koru-control action: {uri}")
+
+
 def _legacy_nlp2uri_settings(host: HostPlatform, _params: dict[str, str], _uri: str) -> list[OSAction]:
     return _compile_settings(host)
 
@@ -573,5 +647,4 @@ def _compile_legacy_nlp2uri(host: HostPlatform, uri: str) -> list[OSAction]:
         return _legacy_nlp2uri_capture(host, path, params, uri)
 
     raise ValueError(f"unsupported legacy nlp2uri path: {path}")
-
 

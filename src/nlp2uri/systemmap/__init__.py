@@ -4,6 +4,7 @@ from nlp2uri.systemmap.compile import compile_system_map_uri, is_system_map_uri
 from nlp2uri.systemmap.context import load_ir_from_arguments
 from nlp2uri.systemmap.fallback import resolve_prompt_with_fallback
 from nlp2uri.systemmap.index import UriMap, UriMapEntry, build_uri_index
+from nlp2uri.systemmap.koru_ide import build_koru_ide_uri_index, merge_koru_ide_index
 from nlp2uri.systemmap.getv_load import getv_available, getv_missing_message
 from nlp2uri.systemmap.getv_uri import (
     build_getv_uri_index,
@@ -43,7 +44,9 @@ __all__ = [
     "UriMapEntry",
     "apply_desktop_uri_mapping",
     "build_getv_uri_index",
+    "build_koru_ide_uri_index",
     "build_uri_index",
+    "merge_koru_ide_index",
     "compile_getv_uri",
     "compile_system_map_uri",
     "env2llm_available",

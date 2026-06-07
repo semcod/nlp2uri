@@ -9,9 +9,11 @@ from urllib.parse import urlparse
 from nlp2uri.models import IntentKind, UriIntent
 
 _OPEN = r"(?:open|otw[oó]rz|uruchom|launch|start|run)"
+_IDE_NAME = r"(?:cursor|vscode|code|windsurf|jetbrains|pycharm|zed|ide)"
 _ABSOLUTE_URI_RE = re.compile(
     r"^(?:https?|file|mailto|tel|sms|cursor|vscode|vscode-insiders|"
-    r"ms-settings|x-apple\.systempreferences|nlp2uri|app|desktop-screenshot|desktop-window)://\S+",
+    r"ms-settings|x-apple\.systempreferences|nlp2uri|app|desktop-screenshot|desktop-window|"
+    r"ide-chat|ide-command|koru-control)://\S+",
     re.IGNORECASE,
 )
 _PATH_RE = re.compile(r"(?:^|[\s'\"])(/?(?:[\w.\-~]+/)+[\w.\-~]+)")
@@ -83,6 +85,36 @@ _IDE_PROJECT_RE = re.compile(
     r"(?P<path>[^\s'\"]+)",
     re.IGNORECASE,
 )
+_IDE_CHAT_SEND_RE = re.compile(
+    rf"\b(?:send|wy[śs]lij|wyślij)\s+(?P<text>.+?)\s+"
+    rf"(?:to|do)\s+(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
+_IDE_CHAT_PASTE_RE = re.compile(
+    rf"\b(?:paste|wklej)\s+(?:(?P<text>.+?)\s+)?"
+    rf"(?:to|do)\s+(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
+_IDE_STATUS_RE = re.compile(
+    rf"\b(?:status|sprawd[zź](?:\s+status)?|check\s+status)\b"
+    rf".*?(?:pluginu\s+|plugin\s+)?(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
+_IDE_COMMAND_RE = re.compile(
+    rf"\b(?:run|execute|uruchom)\s+(?:ide\s+)?(?:command\s+)?(?P<command>[\w.]+)\s+"
+    rf"(?:in|w|on|na)\s+(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
+_IDE_COMMAND_CAPABILITY_RE = re.compile(
+    rf"\b(?:run|execute|uruchom|wykonaj)\s+(?P<capability>submit|paste|focus|open|wysy[łl]aj|wklej|fokus)\s+"
+    rf"(?:in|w|on|na)\s+(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
+_IDE_COMMAND_PL_RE = re.compile(
+    rf"\b(?:uruchom|wykonaj)\s+komend[ęe]\s+(?P<command>[\w.]+)\s+"
+    rf"(?:w|na)\s+(?P<ide>{_IDE_NAME})\b",
+    re.IGNORECASE,
+)
 _FILE_RE = re.compile(
     rf"\b{_OPEN}\s+(?:the\s+)?(?:file|folder|directory|plik|folder|katalog)\s+"
     r"(?P<path>[^\s'\"]+)",
@@ -94,6 +126,51 @@ _KEYWORD_TARGETS = frozenset({"screen", "desktop", "window", "okno", "ekran"})
 
 def _strip_quotes(value: str) -> str:
     return value.strip().strip("\"'")
+
+
+def _normalize_ide_name(value: str | None) -> str:
+    raw = (value or "auto").strip().lower()
+    aliases = {
+        "code": "vscode",
+        "ide": "auto",
+        "pycharm": "jetbrains",
+    }
+    return aliases.get(raw, raw)
+
+
+def _bool_param(value: bool) -> str:
+    return "true" if value else "false"
+
+
+def _mentions_no_submit(lowered: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:do\s+not\s+submit|don't\s+submit|without\s+submit|no-submit|"
+            r"nie\s+wysy[łl]aj|bez\s+wysy[łl]ania)\b",
+            lowered,
+            re.IGNORECASE,
+        )
+    )
+
+
+def _mentions_require_plugin(lowered: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:require\s+plugin|plugin\s+only|only\s+plugin|"
+            r"tylko\s+plugin|tylko\s+pluginu|bez\s+fallbacku)\b",
+            lowered,
+            re.IGNORECASE,
+        )
+    )
+
+
+def _workspace_hint(raw: str) -> str:
+    path_match = _PATH_RE.search(raw)
+    if path_match:
+        return _strip_quotes(path_match.group(1))
+    if re.search(r"\b(?:this\s+project|current\s+project|tym\s+projekcie|bieżącym\s+projekcie)\b", raw, re.IGNORECASE):
+        return "."
+    return ""
 
 
 def _normalize_aliases(text: str) -> str:
@@ -146,6 +223,90 @@ def _parse_ide_project(raw: str, _lowered: str) -> UriIntent | None:
         },
         raw_text=raw,
         confidence=0.95,
+    )
+
+
+def _parse_ide_chat_send(raw: str, lowered: str) -> UriIntent | None:
+    match = _IDE_CHAT_SEND_RE.search(raw) or _IDE_CHAT_PASTE_RE.search(raw)
+    if not match:
+        return None
+    text = _strip_quotes((match.group("text") or "").strip(" ,:"))
+    ide = _normalize_ide_name(match.group("ide"))
+    params = {
+        "ide": ide,
+        "submit": _bool_param(not _mentions_no_submit(lowered)),
+        "require_plugin": _bool_param(_mentions_require_plugin(lowered)),
+    }
+    workspace = _workspace_hint(raw)
+    if workspace:
+        params["workspace"] = workspace
+    if text:
+        params["text"] = text
+    return UriIntent(
+        kind=IntentKind.IDE_CHAT_SEND,
+        target="ide_chat",
+        params=params,
+        raw_text=raw,
+        confidence=0.88,
+    )
+
+
+def _parse_ide_status(raw: str, _lowered: str) -> UriIntent | None:
+    match = _IDE_STATUS_RE.search(raw)
+    if not match:
+        return None
+    return UriIntent(
+        kind=IntentKind.IDE_STATUS,
+        target="ide",
+        params={"ide": _normalize_ide_name(match.group("ide"))},
+        raw_text=raw,
+        confidence=0.82,
+    )
+
+
+def _normalize_command_capability(value: str) -> str:
+    aliases = {
+        "wysyłaj": "submit",
+        "wysylaj": "submit",
+        "wklej": "paste",
+        "fokus": "focus",
+    }
+    return aliases.get(value.lower(), value.lower())
+
+
+def _parse_ide_command(raw: str, lowered: str) -> UriIntent | None:
+    match = (
+        _IDE_COMMAND_RE.search(raw)
+        or _IDE_COMMAND_PL_RE.search(raw)
+        or _IDE_COMMAND_CAPABILITY_RE.search(raw)
+    )
+    if not match:
+        return None
+    ide = _normalize_ide_name(match.group("ide"))
+    params: dict[str, str] = {
+        "ide": ide,
+        "require_plugin": _bool_param(_mentions_require_plugin(lowered)),
+    }
+    workspace = _workspace_hint(raw)
+    if workspace:
+        params["workspace"] = workspace
+    command = match.groupdict().get("command")
+    capability = match.groupdict().get("capability")
+    if command:
+        params["command"] = command
+        target = command
+    elif capability:
+        normalized = _normalize_command_capability(capability)
+        params["capability"] = normalized
+        target = normalized
+    else:
+        return None
+    return UriIntent(
+        kind=IntentKind.IDE_COMMAND,
+        target=target,
+        params=params,
+        raw_text=raw,
+        confidence=0.84,
     )
 
 
@@ -348,6 +509,9 @@ def _parse_fallback(raw: str, _lowered: str) -> UriIntent:
 _PARSERS: tuple[Callable[[str, str], UriIntent | None], ...] = (
     _parse_absolute_uri,
     _parse_http_url,
+    _parse_ide_chat_send,
+    _parse_ide_status,
+    _parse_ide_command,
     _parse_ide_project,
     _parse_file_open,
     _parse_terminal,

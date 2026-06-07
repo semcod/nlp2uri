@@ -1,0 +1,13 @@
+# SCENARIO: Koru IDE control NL → URI → koru.control.v1 dry-run
+# TYPE: cli
+# Requires: nlp2uri installed, no live koruide daemon
+
+CONFIG[2]{key, value}:
+  cli_command, python -m nlp2uri
+  timeout_ms, 15000
+
+SHELL[4]{command, exit_code}:
+  python -m nlp2uri plan "wyślij probe do cursor" --json | grep -q ide-chat://cursor/send, 0
+  python -m nlp2uri plan "wyślij probe do cursor" --json | grep -q koru.control.v1, 0
+  python -m nlp2uri plan "sprawdź status pluginu Cursor" --json | grep -q koru-control://ide/status, 0
+  python -m nlp2uri execute "wyślij probe do cursor" --dry-run --json | grep -q planned, 0

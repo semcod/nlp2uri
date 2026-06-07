@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.01s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -7,7 +7,6 @@ flowchart TD
     subgraph Core
         schemas__codegen__fix_proto_imports__main["main"]
         schemas__codegen__scaffold_scheme__main["main"]
-        src__nlp2uri__runtime__get_executor["get_executor"]
         src__nlp2uri__config__NLP2URIConfig__resolved_platform["resolved_platform"]
         src__nlp2uri__config__NLP2URIConfig__apply_runtime_env["apply_runtime_env"]
         src__nlp2uri__config__NLP2URIConfig__to_dict["to_dict"]
@@ -16,11 +15,12 @@ flowchart TD
         src__nlp2uri__mcp__text_uri_list["text_uri_list"]
         src__nlp2uri__mcp__ui_resource["ui_resource"]
         src__nlp2uri__mcp__tool_execute_desktop_uri["tool_execute_desktop_uri"]
-        src__nlp2uri__cli___platform["_platform"]
-        src__nlp2uri__cli___emit["_emit"]
-        src__nlp2uri__cli___request_from_args["_request_from_args"]
-        src__nlp2uri__cli___with_platform["_with_platform"]
-        ...["+180 more"]
+        src__nlp2uri__desktop_apps__desktop_id_for_app["desktop_id_for_app"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__log_message["log_message"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler___read_json["_read_json"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler___send["_send"]
+        src__nlp2uri__integrators__rest_server__NLP2URIRequestHandler__do_GET["do_GET"]
+        ...["+206 more"]
     end
 
     subgraph Exporters
@@ -29,4 +29,4 @@ flowchart TD
         src__nlp2uri__adapters__shell__ShellAdapter___export_script["_export_script"]
     end
 
-    class schemas__codegen__fix_proto_imports__main,schemas__codegen__export_mcp_schemas__main,schemas__codegen__export_driver_stubs__main,schemas__codegen__scaffold_scheme__main,src__nlp2uri__runtime__get_executor,src__nlp2uri__config__NLP2URIConfig__resolved_platform,src__nlp2uri__config__NLP2URIConfig__apply_runtime_env,src__nlp2uri__config__NLP2URIConfig__to_dict,src__nlp2uri__config__NLP2URIConfig__to_yaml,src__nlp2uri__config__reset_config_cache entry
+    class schemas__codegen__fix_proto_imports__main,schemas__codegen__export_mcp_schemas__main,schemas__codegen__export_driver_stubs__main,schemas__codegen__scaffold_scheme__main,src__nlp2uri__config__NLP2URIConfig__resolved_platform,src__nlp2uri__config__NLP2URIConfig__apply_runtime_env,src__nlp2uri__config__NLP2URIConfig__to_dict,src__nlp2uri__config__NLP2URIConfig__to_yaml,src__nlp2uri__config__reset_config_cache,src__nlp2uri__mcp__text_uri_list entry

@@ -5,6 +5,8 @@ version: 1
 layers:
   desktop:
     description: OS-neutral desktop intents compiled per platform
+  control:
+    description: Koru IDE control — compile to koru.control.v1, execute via koruide
   env:
     description: Environment variables via getv profiles
   systemmap:
@@ -46,6 +48,38 @@ schemes:
     uri_pattern: "http(s)://{host}/{path}"
     version: v1
     drivers: [curl]
+
+  # --- control layer (Koru IDE) ---
+  ide:
+    layer: control
+    uri_pattern: "ide://{ide}/{action}"
+    version: v1
+    drivers: [koru, koruide_socket]
+    ir_ref: null
+
+  ide_chat:
+    layer: control
+    uri_pattern: "ide-chat://{ide}/{action}"
+    version: v1
+    drivers: [koru, koru_ide_drive, koruide_socket]
+    package_alias: ide_chat
+    ir_ref: null
+
+  ide_command:
+    layer: control
+    uri_pattern: "ide-command://{ide}/{action}"
+    version: v1
+    drivers: [koru, koruide_socket]
+    package_alias: ide_command
+    ir_ref: null
+
+  koru_control:
+    layer: control
+    uri_pattern: "koru-control://{surface}/{operation}"
+    version: v1
+    drivers: [koru, koru_ide_drive, koruide_socket]
+    package_alias: koru_control
+    ir_ref: null
 
   # --- env layer ---
   getv:

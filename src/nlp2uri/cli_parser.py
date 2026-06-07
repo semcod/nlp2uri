@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 
+from nlp2uri import __version__
 from nlp2uri.models import HostPlatform
 
 
@@ -20,35 +21,58 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def add_text_args(parser: argparse.ArgumentParser) -> None:
+    """Optional prompt body for control URIs (kept outside the NL/URI string)."""
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        "--text",
+        dest="prompt_body",
+        metavar="TEXT",
+        help="prompt body for ide-chat / koru-control drive (not embedded in NL/URI)",
+    )
+    group.add_argument(
+        "--text-file",
+        dest="prompt_file",
+        metavar="PATH",
+        help="read prompt body from a file",
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="nlp2uri",
         description="NL → URI compiler with CLI, shell, REST, and MCP adapters",
     )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     add_common_args(parser)
 
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_plan = sub.add_parser("plan", help="full NL → URI + OSActions plan")
     add_common_args(p_plan)
+    add_text_args(p_plan)
     p_plan.add_argument("text")
 
     p_resolve = sub.add_parser("resolve", help="resolve natural language to a URI")
     add_common_args(p_resolve)
+    add_text_args(p_resolve)
     p_resolve.add_argument("text")
 
     p_compile = sub.add_parser("compile", help="compile URI to OS actions")
     add_common_args(p_compile)
+    add_text_args(p_compile)
     p_compile.add_argument("uri")
 
     p_exec = sub.add_parser("execute", help="resolve and execute (or execute a raw URI)")
     add_common_args(p_exec)
+    add_text_args(p_exec)
     p_exec.add_argument("text")
     p_exec.add_argument("--dry-run", action="store_true")
     p_exec.add_argument("--uri-only", action="store_true")
 
     p_open = sub.add_parser("open", help="shorthand for execute")
     add_common_args(p_open)
+    add_text_args(p_open)
     p_open.add_argument("text")
     p_open.add_argument("--dry-run", action="store_true")
 
