@@ -13,6 +13,7 @@ from nlp2uri.systemmap.getv_uri import (
     uri_for_getv_profile,
     uri_for_getv_var,
 )
+from nlp2uri.systemmap.export import apply_desktop_uri_mapping, write_environment_map
 from nlp2uri.systemmap.load import (
     env2llm_available,
     env2llm_missing_message,
@@ -25,6 +26,9 @@ from nlp2uri.systemmap.uri import (
     uri_for_artifact,
     uri_for_command,
     uri_for_conversation,
+    uri_for_desktop_session,
+    uri_for_desktop_window_focus,
+    uri_for_desktop_window_screenshot,
     uri_for_environment,
     uri_for_generated_service,
     uri_for_process,
@@ -37,6 +41,7 @@ __all__ = [
     "ResolvedSystemUri",
     "UriMap",
     "UriMapEntry",
+    "apply_desktop_uri_mapping",
     "build_getv_uri_index",
     "build_uri_index",
     "compile_getv_uri",
@@ -57,6 +62,9 @@ __all__ = [
     "uri_for_artifact",
     "uri_for_command",
     "uri_for_conversation",
+    "uri_for_desktop_session",
+    "uri_for_desktop_window_focus",
+    "uri_for_desktop_window_screenshot",
     "uri_for_environment",
     "uri_for_generated_service",
     "uri_for_getv_profile",
@@ -65,4 +73,5 @@ __all__ = [
     "uri_for_resource",
     "uri_for_runtime",
     "uri_for_validation",
+    "write_environment_map",
 ]

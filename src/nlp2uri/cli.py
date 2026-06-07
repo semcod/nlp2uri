@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import argparse
 import json
 import sys
 from pathlib import Path
@@ -10,6 +9,7 @@ from pathlib import Path
 from nlp2uri.adapters.base import AdapterRequest
 from nlp2uri.adapters.cli import CliAdapter
 from nlp2uri.adapters.shell import ShellAdapter
+from nlp2uri.cli_parser import build_parser
 from nlp2uri.config import (
     default_config,
     ensure_config,
@@ -18,74 +18,6 @@ from nlp2uri.config import (
     save_config,
 )
 from nlp2uri.models import HostPlatform
-
-
-def _add_common_args(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument(
-        "--platform",
-        choices=[p.value for p in HostPlatform if p != HostPlatform.UNKNOWN],
-        help="override platform (default: auto-detect via nlp2uri.yaml / host OS)",
-    )
-    parser.add_argument(
-        "--json",
-        action="store_true",
-        help="emit machine-readable JSON",
-    )
-
-
-def _build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        prog="nlp2uri",
-        description="NL → URI compiler with CLI, shell, REST, and MCP adapters",
-    )
-    _add_common_args(parser)
-
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    p_plan = sub.add_parser("plan", help="full NL → URI + OSActions plan")
-    _add_common_args(p_plan)
-    p_plan.add_argument("text")
-
-    p_resolve = sub.add_parser("resolve", help="resolve natural language to a URI")
-    _add_common_args(p_resolve)
-    p_resolve.add_argument("text")
-
-    p_compile = sub.add_parser("compile", help="compile URI to OS actions")
-    _add_common_args(p_compile)
-    p_compile.add_argument("uri")
-
-    p_exec = sub.add_parser("execute", help="resolve and execute (or execute a raw URI)")
-    _add_common_args(p_exec)
-    p_exec.add_argument("text")
-    p_exec.add_argument("--dry-run", action="store_true")
-    p_exec.add_argument("--uri-only", action="store_true")
-
-    p_open = sub.add_parser("open", help="shorthand for execute")
-    _add_common_args(p_open)
-    p_open.add_argument("text")
-    p_open.add_argument("--dry-run", action="store_true")
-
-    p_shell = sub.add_parser("shell", help="bash-friendly exports")
-    shell_sub = p_shell.add_subparsers(dest="shell_command", required=True)
-    p_export = shell_sub.add_parser("export", help="eval exports for a prompt")
-    _add_common_args(p_export)
-    p_export.add_argument("text")
-    p_eval = shell_sub.add_parser("eval-uri", help="eval exports for a raw URI")
-    _add_common_args(p_eval)
-    p_eval.add_argument("uri")
-
-    p_config = sub.add_parser("config", help="show or write nlp2uri.yaml defaults")
-    config_sub = p_config.add_subparsers(dest="config_command", required=True)
-    p_cfg_show = config_sub.add_parser("show", help="print effective config")
-    _add_common_args(p_cfg_show)
-    p_cfg_init = config_sub.add_parser("init", help="write nlp2uri.yaml with detected defaults")
-    p_cfg_init.add_argument(
-        "--path",
-        default="nlp2uri.yaml",
-        help="config file path (default: ./nlp2uri.yaml)",
-    )
-
-    return parser
 
 
 def _platform(raw: str | None) -> HostPlatform | None:
@@ -102,7 +34,7 @@ def _emit(payload: dict, *, as_json: bool) -> None:
             print(f"{key}: {value}")
 
 
-def _request_from_args(args: argparse.Namespace, *, operation: str) -> AdapterRequest:
+def _request_from_args(args, *, operation: str) -> AdapterRequest:
     return AdapterRequest(
         operation=operation,
         prompt=getattr(args, "text", "") or "",
@@ -118,7 +50,7 @@ def _with_platform(payload: dict, *, as_json: bool) -> dict:
     return payload
 
 
-def _run_config(args: argparse.Namespace) -> int:
+def _run_config(args) -> int:
     if args.config_command == "init":
         path = save_config(default_config(), Path(args.path))
         print(f"wrote {path}")
@@ -134,7 +66,7 @@ def _run_config(args: argparse.Namespace) -> int:
     return 0
 
 
-def _run_shell(args: argparse.Namespace) -> int:
+def _run_shell(args) -> int:
     shell = ShellAdapter()
     if args.shell_command == "export":
         response = shell.handle(_request_from_args(args, operation="export"))
@@ -153,7 +85,7 @@ def _run_shell(args: argparse.Namespace) -> int:
     return 0 if response.ok else response.status_code or 1
 
 
-def _run_adapter_command(args: argparse.Namespace, *, operation: str) -> int:
+def _run_adapter_command(args, *, operation: str) -> int:
     cli = CliAdapter()
     if operation == "compile":
         req = AdapterRequest(operation="compile", uri=args.uri, platform=_platform(args.platform))
@@ -164,7 +96,32 @@ def _run_adapter_command(args: argparse.Namespace, *, operation: str) -> int:
     return 0 if response.ok else response.status_code or 1
 
 
-def _run_execute(args: argparse.Namespace) -> int:
+def _run_envmap(args) -> int:
+    from nlp2uri.systemmap.export import write_environment_map
+    from nlp2uri.systemmap.index import build_uri_index
+    from nlp2uri.systemmap.load import load_system_map_from_doql
+
+    path = write_environment_map(
+        args.project,
+        project_id=args.project_id or None,
+        output_format=args.format,
+        merge_existing=not args.no_merge,
+        probe_desktop=False if args.no_probe_desktop else None,
+    )
+    index = build_uri_index(load_system_map_from_doql(path))
+    desktop_windows = index.find_by_kind("desktop_window")
+    payload = {
+        "path": str(path),
+        "desktop_window_uris": len(desktop_windows),
+        "uri_entries": len(index.entries),
+    }
+    _emit(payload, as_json=args.json)
+    if not args.json:
+        print(f"wrote {path}")
+    return 0
+
+
+def _run_execute(args) -> int:
     cli = CliAdapter()
     if getattr(args, "uri_only", False) or "://" in args.text:
         req = AdapterRequest(
@@ -180,19 +137,30 @@ def _run_execute(args: argparse.Namespace) -> int:
     return 0 if response.ok else response.status_code or 1
 
 
-def main(argv: list[str] | None = None) -> int:
-    args = _build_parser().parse_args(argv)
+_ADAPTER_COMMANDS = frozenset({"plan", "resolve", "compile"})
+_EXECUTE_COMMANDS = frozenset({"execute", "open"})
 
-    if args.command == "config":
+
+def _dispatch_command(args) -> int:
+    command = args.command
+    if command == "config":
         return _run_config(args)
+    if command == "envmap":
+        return _run_envmap(args)
 
     ensure_config()
 
-    if args.command == "shell":
+    if command == "shell":
         return _run_shell(args)
-    if args.command in {"plan", "resolve", "compile"}:
-        return _run_adapter_command(args, operation=args.command)
-    return _run_execute(args)
+    if command in _ADAPTER_COMMANDS:
+        return _run_adapter_command(args, operation=command)
+    if command in _EXECUTE_COMMANDS:
+        return _run_execute(args)
+    raise SystemExit(f"unknown command: {command}")
+
+
+def main(argv: list[str] | None = None) -> int:
+    return _dispatch_command(build_parser().parse_args(argv))
 
 
 if __name__ == "__main__":

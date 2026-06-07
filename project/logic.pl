@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('nlp2uri', '0.4.6', 'python').
+project_metadata('nlp2uri', '0.4.7', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 30, 'less').

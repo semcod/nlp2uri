@@ -20,7 +20,7 @@ Natural language to URI resolution and cross-platform local URI execution
 ## Metadata
 
 - **name**: `nlp2uri`
-- **version**: `0.4.6`
+- **version**: `0.4.7`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -40,7 +40,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: nlp2uri;
-  version: 0.4.6;
+  version: 0.4.7;
 }
 
 dependencies {
@@ -124,7 +124,7 @@ ASSERT[2]{field, operator, expected}:
 ```yaml
 project:
   name: nlp2uri
-  version: 0.4.6
+  version: 0.4.7
   env: local
 ```
 
@@ -857,7 +857,7 @@ D:
 
 ```prolog markpact:analysis path=project/logic.pl
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('nlp2uri', '0.4.6', 'python').
+project_metadata('nlp2uri', '0.4.7', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 30, 'less').
@@ -1525,13 +1525,13 @@ sumd_deploy_compose_file('docker-compose.yml').
 | `build_resource_actions` *(in src.nlp2uri.host.resource)* | 14 ⚠ | 2 | 29 | **31** |
 | `build_getv_uri_index` *(in src.nlp2uri.systemmap.getv_uri)* | 6 | 3 | 24 | **27** |
 | `resolve_prompt_against_system_map` *(in src.nlp2uri.systemmap.resolve)* | 26 ⚠ | 2 | 23 | **25** |
-| `resolve_artifact_path` *(in src.nlp2uri.host.artifact)* | 12 ⚠ | 1 | 22 | **23** |
 | `encode_segment` *(in src.nlp2uri.systemmap.encode)* | 1 | 22 | 1 | **23** |
 | `main` *(in schemas.codegen.export_driver_stubs)* | 11 ⚠ | 0 | 23 | **23** |
+| `resolve_artifact_path` *(in src.nlp2uri.host.artifact)* | 12 ⚠ | 1 | 22 | **23** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/nlp2uri
-# generated in 0.26s
+# generated in 0.12s
 # nodes: 225 | edges: 295 | modules: 52
 # CC̄=3.5
 
@@ -1546,20 +1546,20 @@ HUBS[20]:
     CC=6  in:3  out:24  total:27
   src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map
     CC=26  in:2  out:23  total:25
-  src.nlp2uri.host.artifact.resolve_artifact_path
-    CC=12  in:1  out:22  total:23
   src.nlp2uri.systemmap.encode.encode_segment
     CC=1  in:22  out:1  total:23
   schemas.codegen.export_driver_stubs.main
     CC=11  in:0  out:23  total:23
+  src.nlp2uri.host.artifact.resolve_artifact_path
+    CC=12  in:1  out:22  total:23
   src.nlp2uri.compile.compile_uri_to_actions
     CC=13  in:5  out:18  total:23
   src.nlp2uri.compile._compile_app
     CC=16  in:1  out:21  total:22
-  src.nlp2uri.config._load_from_path
-    CC=6  in:3  out:17  total:20
   src.nlp2uri.systemmap.getv_uri.compile_getv_uri
     CC=14  in:2  out:18  total:20
+  src.nlp2uri.config._load_from_path
+    CC=6  in:3  out:17  total:20
   examples.resolve.new-intents.e2e.print
     CC=0  in:19  out:0  total:19
   src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv
@@ -1572,10 +1572,10 @@ HUBS[20]:
     CC=8  in:2  out:16  total:18
   src.nlp2uri.systemmap.index._ir_field
     CC=2  in:14  out:3  total:17
-  src.nlp2uri.systemmap.uri._get
-    CC=4  in:12  out:5  total:17
   src.nlp2uri.schemes.build.build_uri
     CC=13  in:2  out:15  total:17
+  src.nlp2uri.systemmap.uri._get
+    CC=4  in:12  out:5  total:17
 
 MODULES:
   examples.execute.dry-run.main  [1 funcs]

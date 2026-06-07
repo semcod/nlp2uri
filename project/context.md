@@ -1,22 +1,27 @@
 # System Architecture Analysis
-<!-- generated in 0.01s -->
+<!-- generated in 0.02s -->
 
 ## Overview
 
 - **Project**: /home/tom/github/semcod/nlp2uri
 - **Primary Language**: proto
-- **Languages**: proto: 138, python: 72, yaml: 31, shell: 15, json: 2
+- **Languages**: proto: 138, python: 75, yaml: 31, shell: 15, json: 2
 - **Analysis Mode**: static
-- **Total Functions**: 346
+- **Total Functions**: 404
 - **Total Classes**: 46
-- **Modules**: 262
-- **Entry Points**: 186
+- **Modules**: 265
+- **Entry Points**: 189
 
 ## Architecture by Module
 
 ### src.nlp2uri.compile
-- **Functions**: 23
+- **Functions**: 50
 - **File**: `compile.py`
+
+### src.nlp2uri.systemmap.index
+- **Functions**: 23
+- **Classes**: 2
+- **File**: `index.py`
 
 ### src.nlp2uri.parse_nl
 - **Functions**: 21
@@ -32,6 +37,10 @@
 - **Classes**: 1
 - **File**: `config.py`
 
+### src.nlp2uri.systemmap.uri
+- **Functions**: 16
+- **File**: `uri.py`
+
 ### src.nlp2uri.service
 - **Functions**: 15
 - **Classes**: 1
@@ -41,22 +50,13 @@
 - **Functions**: 13
 - **File**: `scaffold_scheme.py`
 
-### src.nlp2uri.systemmap.uri
-- **Functions**: 13
-- **File**: `uri.py`
+### src.nlp2uri.systemmap.compile
+- **Functions**: 11
+- **File**: `compile.py`
 
 ### src.nlp2uri.cli
 - **Functions**: 11
 - **File**: `cli.py`
-
-### src.nlp2uri.systemmap.index
-- **Functions**: 11
-- **Classes**: 2
-- **File**: `index.py`
-
-### src.nlp2uri.systemmap.compile
-- **Functions**: 11
-- **File**: `compile.py`
 
 ### src.nlp2uri.integrators.mcp_server
 - **Functions**: 10
@@ -71,6 +71,11 @@
 - **Functions**: 9
 - **Classes**: 1
 - **File**: `getv_uri.py`
+
+### src.nlp2uri.systemmap.resolve
+- **Functions**: 9
+- **Classes**: 1
+- **File**: `resolve.py`
 
 ### src.nlp2uri.cqrs.drivers.service_ops
 - **Functions**: 8
@@ -99,10 +104,6 @@
 - **Functions**: 6
 - **Classes**: 1
 - **File**: `linux.py`
-
-### src.nlp2uri.schemes.desktop
-- **Functions**: 6
-- **File**: `desktop.py`
 
 ## Key Entry Points
 
@@ -362,9 +363,6 @@ Key functions that process and transform data:
 ### src.nlp2uri.config._parse_simple_yaml
 - **Output to**: text.splitlines, line.strip, stripped.split, src.nlp2uri.config._parse_scalar, stripped.startswith
 
-### src.nlp2uri.cli._build_parser
-- **Output to**: argparse.ArgumentParser, src.nlp2uri.cli._add_common_args, parser.add_subparsers, sub.add_parser, src.nlp2uri.cli._add_common_args
-
 ### src.nlp2uri.parse_nl._parse_absolute_uri
 - **Output to**: urlparse, UriIntent, _ABSOLUTE_URI_RE.match
 
@@ -425,30 +423,35 @@ Key functions that process and transform data:
 ### src.nlp2uri.schemes.util.percent_encode_segment
 - **Output to**: quote
 
+### src.nlp2uri.cqrs.plugins._parse_entry_point_name
+> Entry point name format: {scheme}-{target}, e.g. container-docker.
+- **Output to**: name.split, scheme.replace
+
 ### src.nlp2uri.cqrs.drivers.service_ops.parse_service_name
 - **Output to**: urlparse, unquote, unquote, parsed.path.lstrip
 
-### src.nlp2uri.systemmap.uri.uri_for_process
-> ``process://{example_id}/policy``.
-- **Output to**: src.nlp2uri.systemmap.encode.encode_segment
+### src.nlp2uri.cqrs.drivers.container_docker.parse_container_uri
+> container://docker/name/action?tail=100 → runtime, name, action, params.
+- **Output to**: urlparse, unquote, unquote, unquote, parsed.path.split
 
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
 
-- `src.nlp2uri.systemmap.index.build_uri_index` - 52 calls
+- `src.nlp2uri.cli_parser.build_parser` - 45 calls
 - `src.nlp2uri.host.resource.build_resource_actions` - 29 calls
 - `src.nlp2uri.adapters.rest.RestAdapter.dispatch` - 29 calls
+- `src.nlp2uri.systemmap.export.write_environment_map` - 29 calls
 - `src.nlp2uri.systemmap.getv_uri.build_getv_uri_index` - 24 calls
 - `schemas.codegen.export_driver_stubs.main` - 23 calls
-- `src.nlp2uri.systemmap.resolve.resolve_prompt_against_system_map` - 23 calls
 - `src.nlp2uri.host.artifact.resolve_artifact_path` - 22 calls
 - `src.nlp2uri.adapters.cli.CliAdapter.handle` - 21 calls
 - `src.nlp2uri.adapters.shell.ShellAdapter.handle` - 19 calls
-- `src.nlp2uri.compile.compile_uri_to_actions` - 18 calls
 - `src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv` - 18 calls
 - `src.nlp2uri.systemmap.getv_uri.compile_getv_uri` - 18 calls
 - `src.nlp2uri.host.artifact.build_artifact_actions` - 17 calls
+- `src.nlp2uri.compile.compile_uri_to_actions` - 17 calls
+- `src.nlp2uri.systemmap.index.build_uri_index` - 17 calls
 - `src.nlp2uri.systemmap.context.load_ir_from_arguments` - 16 calls
 - `src.nlp2uri.runtime.execute_uri` - 15 calls
 - `src.nlp2uri.config.config_search_paths` - 15 calls
@@ -464,18 +467,17 @@ Functions exposed as public API (no underscore prefix):
 - `src.nlp2uri.platforms.windows.WindowsExecutor.execute` - 12 calls
 - `src.nlp2uri.config.NLP2URIConfig.to_yaml` - 11 calls
 - `src.nlp2uri.cqrs.base.UriDriver.execute` - 11 calls
+- `src.nlp2uri.systemmap.export.apply_desktop_uri_mapping` - 11 calls
 - `src.nlp2uri.host.endpoint.build_endpoint_url` - 10 calls
 - `src.nlp2uri.adapters.rest.RestAdapter.body_to_request` - 10 calls
 - `src.nlp2uri.schemes.ide.build_ide` - 10 calls
+- `src.nlp2uri.cqrs.plugins.load_driver_plugins` - 10 calls
 - `src.nlp2uri.cqrs.dispatcher.CqrsDispatcher.execute_uri` - 10 calls
 - `src.nlp2uri.systemmap.compile.compile_system_map_uri` - 10 calls
 - `src.nlp2uri.systemmap.getv_uri.get_getv_var_value` - 10 calls
-- `src.nlp2uri.cqrs.plugins.load_driver_plugins` - 10 calls
 - `src.nlp2uri.config.ensure_config` - 9 calls
 - `src.nlp2uri.cqrs.drivers.service_ops.ServiceCurlDriver.compile` - 9 calls
 - `src.nlp2uri.cqrs.drivers.container_docker.ContainerDockerDriver.compile` - 9 calls
-- `examples.mcp.tool-handoff.main.main` - 8 calls
-- `src.nlp2uri.config.NLP2URIConfig.resolved_platform` - 8 calls
 
 ## System Interactions
 

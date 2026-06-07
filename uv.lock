@@ -716,15 +716,15 @@ wheels = [
 
 [[package]]
 name = "env2llm"
-version = "0.1.3"
+version = "0.1.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0f/28/2d76d5875d6278327882e6a29ac4af59ec247157a963e98945c6719ebd67/env2llm-0.1.3.tar.gz", hash = "sha256:035daaefcf86b15da2c062d83d95fc3124aa1c1c821cb5bceb33a21e400a925b", size = 45112, upload-time = "2026-06-06T16:58:57.403Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/1e/49753c3082dfdc26bc35a20ddd739e0c7037cc3b53129764140537f20b7c/env2llm-0.1.11.tar.gz", hash = "sha256:06362c3ed218a2bf9eb3c637e846891282c28be801911fd9967742c362e2f954", size = 74745, upload-time = "2026-06-06T22:53:01.663Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3a/f5/7b79d07c23d9c687fbcbeacd9a5f8175fc070cad429cc56a524671d3713e/env2llm-0.1.3-py3-none-any.whl", hash = "sha256:69b62c96684e530871625bdf9b5f1c950c065a343ffcbc8cc7dec3c45869b593", size = 52809, upload-time = "2026-06-06T16:58:55.786Z" },
+    { url = "https://files.pythonhosted.org/packages/cf/07/0d721a7254b20d83222400e088a68ea8b58e8b50186617d85f98ad9b73a6/env2llm-0.1.11-py3-none-any.whl", hash = "sha256:830ca9edea9ee87e09cdb0713c7162d0f0ed1fb1e9069be707fb2b2d2af00938", size = 84884, upload-time = "2026-06-06T22:52:59.864Z" },
 ]
 
 [[package]]
@@ -1821,7 +1821,7 @@ wheels = [
 
 [[package]]
 name = "nlp2uri"
-version = "0.4.7"
+version = "0.4.8"
 source = { editable = "." }
 dependencies = [
     { name = "pyyaml" },
@@ -1858,7 +1858,7 @@ windows = [
 requires-dist = [
     { name = "costs", marker = "extra == 'dev'", specifier = ">=0.1.20" },
     { name = "dbus-python", marker = "sys_platform == 'linux' and extra == 'linux'", specifier = ">=1.3.2" },
-    { name = "env2llm", marker = "extra == 'envmap'", specifier = ">=0.1.3" },
+    { name = "env2llm", marker = "extra == 'envmap'", specifier = ">=0.1.4" },
     { name = "getv", marker = "extra == 'envmap'", specifier = ">=0.2.0" },
     { name = "goal", marker = "extra == 'dev'", specifier = ">=2.1.0" },
     { name = "grpcio-tools", marker = "extra == 'codegen'", specifier = ">=1.60" },

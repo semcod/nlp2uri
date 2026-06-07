@@ -91,3 +91,33 @@ def uri_for_generated_service(svc: Any) -> str:
 def uri_for_environment(example_id: str) -> str:
     """``environment://{example_id}`` — whole environment block."""
     return f"environment://{encode_segment(example_id)}"
+
+
+def uri_for_desktop_session() -> str:
+    """``desktop://session`` — live GUI session."""
+    return "desktop://session"
+
+
+def uri_for_desktop_window_focus(window: Any) -> str:
+    """``desktop-window://focus?title=…`` — focus a window by title."""
+    from nlp2uri.schemes.util import abstract_url
+
+    params: dict[str, str] = {}
+    title = _get(window, "title")
+    if title:
+        params["title"] = title
+    window_id = _get(window, "id")
+    if window_id:
+        params["wm_id"] = window_id
+    return abstract_url("desktop-window", "focus", params=params)
+
+
+def uri_for_desktop_window_screenshot(window: Any) -> str:
+    """``desktop-screenshot://window?title=…`` — capture a window by title."""
+    from nlp2uri.schemes.util import abstract_url
+
+    params: dict[str, str] = {"mode": "title"}
+    title = _get(window, "title")
+    if title:
+        params["title"] = title
+    return abstract_url("desktop-screenshot", "window", params=params)

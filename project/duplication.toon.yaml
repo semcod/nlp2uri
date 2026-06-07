@@ -6,7 +6,7 @@ SUMMARY:
   dup_groups:    7
   dup_fragments: 14
   saved_lines:   62
-  scan_ms:       4215
+  scan_ms:       5364
 
 HOTSPOTS[7] (files with most duplication):
   src/nlp2uri/schemes/desktop.py  dup=36L  groups=1  frags=2  (0.5%)

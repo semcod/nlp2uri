@@ -1,5 +1,5 @@
 flowchart TD
-%% generated in 0.02s
+%% generated in 0.03s
 
     %% Entry points (blue)
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
@@ -16,11 +16,11 @@ flowchart TD
         src__nlp2uri__mcp__text_uri_list["text_uri_list"]
         src__nlp2uri__mcp__ui_resource["ui_resource"]
         src__nlp2uri__mcp__tool_execute_desktop_uri["tool_execute_desktop_uri"]
-        src__nlp2uri__cli___add_common_args["_add_common_args"]
-        src__nlp2uri__cli___build_parser["_build_parser"]
-        src__nlp2uri__cli___platform["_platform"]
-        src__nlp2uri__cli___emit["_emit"]
-        ...["+176 more"]
+        src__nlp2uri__parse_nl___parse_absolute_uri["_parse_absolute_uri"]
+        src__nlp2uri__parse_nl___parse_http_url["_parse_http_url"]
+        src__nlp2uri__parse_nl___parse_ide_project["_parse_ide_project"]
+        src__nlp2uri__parse_nl___parse_file_open["_parse_file_open"]
+        ...["+180 more"]
     end
 
     subgraph Exporters
