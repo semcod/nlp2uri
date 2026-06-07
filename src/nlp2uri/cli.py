@@ -164,6 +164,11 @@ def _dispatch_command(args) -> int:
         return _run_config(args)
     if command == "envmap":
         return _run_envmap(args)
+    if command == "control":
+        from nlp2uri.control_cli import dispatch_control_action
+
+        ensure_config()
+        return dispatch_control_action(args)
 
     ensure_config()
 

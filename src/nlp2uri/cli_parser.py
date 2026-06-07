@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from nlp2uri import __version__
+from nlp2uri.control_cli import add_control_parser
 from nlp2uri.models import HostPlatform
 
 
@@ -132,5 +133,7 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="do not merge existing registry observations",
     )
+
+    add_control_parser(sub)
 
     return parser

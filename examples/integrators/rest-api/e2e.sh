@@ -19,5 +19,5 @@ done
 body="$(curl -sf -X POST "http://127.0.0.1:${PORT}/v1/plan" \
   -H 'Content-Type: application/json' \
   -d '{"prompt":"open firefox"}')"
-echo "$body" | grep -q 'app://firefox/open'
+grep -q 'app://firefox/open' <<<"$body"
 echo "examples/integrators/rest-api: OK"

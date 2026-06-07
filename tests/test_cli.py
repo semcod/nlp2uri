@@ -57,6 +57,29 @@ def test_cli_plan_ide_chat_with_text_flag(capsys):
     assert payload["control_plan"]["actions"][0]["text_ref"] == "refaktoruj moduł X"
 
 
+def test_cli_control_plan_with_text_flag(capsys):
+    rc = main(
+        [
+            "control",
+            "plan",
+            "wyślij probe do cursor",
+            "--text",
+            "treść",
+            "--json",
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["ok"] is True
+    assert payload["control_plan"]["actions"][0]["text_ref"] == "treść"
+
+
+def test_cli_control_plan_dry_run_help(capsys):
+    with pytest.raises(SystemExit) as exc:
+        main(["control", "--help"])
+    assert exc.value.code == 0
+
+
 def test_cli_compile_ide_chat_with_text_flag(capsys):
     rc = main(
         [

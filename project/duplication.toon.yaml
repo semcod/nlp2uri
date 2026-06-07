@@ -6,7 +6,7 @@ SUMMARY:
   dup_groups:    15
   dup_fragments: 33
   saved_lines:   154
-  scan_ms:       2407
+  scan_ms:       2627
 
 HOTSPOTS[7] (files with most duplication):
   src/nlp2uri/systemmap/index.py  dup=70L  groups=3  frags=7  (0.8%)

@@ -73,6 +73,8 @@ def _verification_status(action: ControlAction, reply: dict[str, Any]) -> str:
         return "failed"
     if action.verification.expect_message_sent:
         if reply.get("intent_status") == "unverified":
+            if reply.get("delivered"):
+                return "paste_delivered_submit_unverified"
             return "verification_failed"
         return "verified" if ok else "ack_failed"
     if action.verification.expect_ack:

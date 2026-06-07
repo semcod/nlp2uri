@@ -119,6 +119,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.11] - 2026-06-07
+
+### Docs
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+
+### Test
+- Update tests/test_cli.py
+
+### Other
+- Update app.doql.less
+- Update examples/execute/dry-run/e2e.sh
+- Update examples/integrators/mcp-stdio/e2e.sh
+- Update examples/integrators/rest-api/e2e.sh
+- Update examples/integrators/shell-export/e2e.sh
+- Update examples/mcp/tool-handoff/e2e.sh
+- Update examples/resolve/new-intents/e2e.sh
+- Update examples/resolve/nl-to-uri/e2e.sh
+- Update project/duplication.toon.yaml
+- Update project/logic.pl
+- ... and 1 more files
+
 ## [0.4.10] - 2026-06-07
 
 ### Docs

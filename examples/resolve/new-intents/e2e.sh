@@ -19,7 +19,7 @@ for text, prefix in samples:
     print(spec.uri)
 " 2>&1)"
 
-echo "$out" | grep -q 'app://terminal/open'
-echo "$out" | grep -q 'desktop-window://move'
-echo "$out" | grep -q 'title=Edge'
+grep -q 'app://terminal/open' <<<"$out"
+grep -q 'desktop-window://move' <<<"$out"
+grep -q 'title=Edge' <<<"$out"
 echo "examples/resolve/new-intents: OK"
