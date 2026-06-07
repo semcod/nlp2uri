@@ -171,3 +171,101 @@ def test_env2llm_roundtrip_index(tmp_path) -> None:
     loaded = load_system_map_from_doql(path)
     index = build_uri_index(loaded)
     assert index.find_command("send_invoice") is not None
+
+
+@pytest.mark.skipif(not env2llm_available(), reason="env2llm not installed")
+def test_apply_desktop_uri_mapping_and_index() -> None:
+    from env2llm.ir import DesktopProbeIR, DesktopWindowIR, SystemMapIR
+
+    from nlp2uri.systemmap.export import apply_desktop_uri_mapping
+
+    ir = SystemMapIR(example_id="demo")
+    ir.desktop = DesktopProbeIR(
+        platform="linux",
+        session="GNOME",
+        windows=[
+            DesktopWindowIR(
+                id="0x01200004",
+                title="Mozilla Firefox",
+                active=True,
+            )
+        ],
+        status="available",
+    )
+    apply_desktop_uri_mapping(ir)
+
+    assert ir.data["desktop.windows[0].focus_uri"].startswith("desktop-window://focus")
+    assert ir.data["desktop.windows[0].screenshot_uri"].startswith("desktop-screenshot://window")
+    assert "title=Mozilla" in ir.data["desktop.windows[0].focus_uri"]
+    assert ir.data["desktop.active_window.focus_uri"] == ir.data["desktop.windows[0].focus_uri"]
+
+    index = build_uri_index(ir)
+    windows = index.find_by_kind("desktop_window")
+    assert len(windows) == 1
+    assert windows[0].uri.startswith("desktop-window://focus")
+    captures = index.find_by_kind("desktop_window_capture")
+    assert len(captures) == 1
+
+
+@pytest.mark.skipif(not env2llm_available(), reason="env2llm not installed")
+def test_write_environment_map_includes_desktop_uris(tmp_path, monkeypatch) -> None:
+    from env2llm.ir import DesktopProbeIR, DesktopWindowIR, SystemMapIR
+
+    from nlp2uri.systemmap.export import write_environment_map
+
+    probe = DesktopProbeIR(
+        platform="linux",
+        session="GNOME",
+        tools_used=["wmctrl"],
+        windows=[DesktopWindowIR(id="0x1", title="Terminal", active=True)],
+        probed_at="2026-06-06T12:00:00+00:00",
+        status="available",
+    )
+
+    def fake_generate(_root, *, example_id=None, environment=None, client=None):
+        return SystemMapIR(example_id=example_id or "proj")
+
+    monkeypatch.setattr("env2llm.generate.generate_system_map", fake_generate)
+    monkeypatch.setattr(
+        "env2llm.policy.desktop.collect_desktop_probe",
+        lambda: probe,
+    )
+
+    path = write_environment_map(tmp_path, probe_desktop=True)
+    content = path.read_text(encoding="utf-8")
+
+    assert path.is_file()
+    assert "desktop.windows[0].focus_uri" in content
+    assert "desktop-window://focus" in content
+    assert "desktop-screenshot://window" in content
+
+
+def test_resolve_koru_mcp_command_aliases() -> None:
+    ir = {
+        "format": "nlp2dsl.system_map.v1",
+        "version": 1,
+        "example_id": "koru",
+        "runtimes": [
+            {"id": "mcp:koru", "kind": "external", "status": "available"},
+        ],
+        "commands": [
+            {
+                "name": "koru_list_tickets",
+                "description": "List open koru tickets for a given project (planfile queue).",
+                "runtime": "mcp:koru",
+            },
+            {
+                "name": "koru_run_quality_gates",
+                "description": "Run koru quality gates (regix, redup, vallm, sumr, etc.) for a project.",
+                "runtime": "mcp:koru",
+            },
+        ],
+    }
+    tickets = resolve_prompt_against_system_map("list tickets", ir)
+    assert tickets
+    assert tickets[0].entry_name == "koru_list_tickets"
+    assert tickets[0].uri.startswith("command://")
+
+    gates = resolve_prompt_against_system_map("run quality gates", ir)
+    assert gates
+    assert gates[0].entry_name == "koru_run_quality_gates"
