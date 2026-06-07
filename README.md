@@ -3,11 +3,11 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.11-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
-![AI Cost](https://img.shields.io/badge/AI%20Cost-$4.29-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.2h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.4.12-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$4.43-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-5.7h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
-- 🤖 **LLM usage:** $4.2933 (14 commits)
-- 👤 **Human dev:** ~$521 (5.2h @ $100/h, 30min dedup)
+- 🤖 **LLM usage:** $4.4330 (15 commits)
+- 👤 **Human dev:** ~$571 (5.7h @ $100/h, 30min dedup)
 
 Generated on 2026-06-07 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
 
@@ -93,6 +93,38 @@ nlp2uri plan "otwórz vscode w folderze ~/github/semcod/nlp2uri" --json
 nlp2uri resolve "zrób screenshot aktywnego okna przeglądarki" --json
 nlp2uri execute "open firefox" --dry-run
 ```
+
+## Sterowanie IDE (Koru / koruide)
+
+Warstwa planowania `koru.control.v1` — NL → URI → drive przez socket koruide (nie wykonuje samodzielnie klawiatury; wymaga działającego daemona Koru + pluginu VSIX w IDE).
+
+```bash
+export KORU_AUTOPILOT_INSTANCE=cursor-main   # socket instancji Cursor
+
+# Plan (NL → control plan + URI)
+nlp2uri control plan "wyślij probe do cursor" --text "treść wiadomości" --json
+
+# Wykonanie (plan + drive); workspace z live status gdy daemon działa
+nlp2uri control execute "probe test" --text "hello" --json
+
+# Tylko wklejenie (submit=false — stabilniejsze na Cursor Glass UI)
+nlp2uri control execute "..." --text "..." --no-submit --json
+
+# Indeks URI z autopilot status
+nlp2uri control list-uris --json
+```
+
+Odpowiedniki w Koru: `koru ide control plan|execute|list-uris` oraz narzędzia MCP `koru_ide_*` (wymagają `koru mcp-serve`, nie są komendami shell).
+
+| Flaga | Znaczenie |
+|-------|-----------|
+| `--text` / `--text-file` | Treść wiadomości (osobno od promptu NL) |
+| `--ide` / `--instance` | Lane IDE (`cursor-main` → `cursor`) |
+| `--project` | Katalog do dopasowania `workspace` z plugin status |
+| `--no-submit` | Paste bez Enter / submit |
+| `--dry-run` | Tylko plan, bez drive |
+
+Dla `cursor` + `submit=true` plan domyślnie ustawia `strategy_hint=submit_alt_glass_first` (kolejność submit w probe ladder).
 
 ## Python API (service facade)
 

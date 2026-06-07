@@ -61,6 +61,21 @@ def test_control_plan_ide_chat_send():
     assert "koru" in action.replay_cli
     assert action.verification.expect_ack is True
     assert action.verification.expect_message_sent is True
+    assert action.strategy_hint == "submit_alt_glass_first"
+
+
+def test_control_plan_cursor_submit_default_strategy_hint():
+    uri = "ide-chat://cursor/send?submit=true"
+    plan = compile_uri_to_control_plan(uri, text="hello")
+    assert plan is not None
+    assert plan.actions[0].strategy_hint == "submit_alt_glass_first"
+
+
+def test_control_plan_no_strategy_hint_when_no_submit():
+    uri = "ide-chat://cursor/send?submit=false"
+    plan = compile_uri_to_control_plan(uri, text="hello")
+    assert plan is not None
+    assert plan.actions[0].strategy_hint == ""
 
 
 def test_control_plan_koru_control_status():

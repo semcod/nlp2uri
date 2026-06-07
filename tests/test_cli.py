@@ -74,6 +74,33 @@ def test_cli_control_plan_with_text_flag(capsys):
     assert payload["control_plan"]["actions"][0]["text_ref"] == "treść"
 
 
+def test_cli_control_plan_enriches_workspace_and_strategy_hint(capsys, monkeypatch):
+    from nlp2uri import control_cli
+
+    monkeypatch.setattr(
+        control_cli,
+        "_resolve_workspace",
+        lambda _args, _ide: "/tmp/koru-workspace",
+    )
+    rc = main(
+        [
+            "control",
+            "plan",
+            "wyślij probe do cursor",
+            "--text",
+            "treść",
+            "--json",
+        ]
+    )
+    assert rc == 0
+    payload = json.loads(capsys.readouterr().out)
+    action = payload["control_plan"]["actions"][0]
+    assert action["workspace"] == "/tmp/koru-workspace"
+    assert action["strategy_hint"] == "submit_alt_glass_first"
+    assert "workspace=%2Ftmp%2Fkoru-workspace" in payload["uri"]
+    assert "strategy_hint=submit_alt_glass_first" in payload["uri"]
+
+
 def test_cli_control_plan_dry_run_help(capsys):
     with pytest.raises(SystemExit) as exc:
         main(["control", "--help"])

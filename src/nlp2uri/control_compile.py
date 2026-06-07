@@ -26,6 +26,14 @@ def _truthy(value: str | None, *, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _default_strategy_hint(ide: str, submit: bool, hint: str) -> str:
+    if hint:
+        return hint
+    if submit and ide.strip().lower() == "cursor":
+        return "submit_alt_glass_first"
+    return ""
+
+
 def _replay_cli_drive(
     *,
     ide: str,
@@ -102,7 +110,11 @@ def compile_uri_to_control_plan(
         workspace = params.get("workspace", "")
         submit = _truthy(params.get("submit"), default=True)
         require_plugin = _truthy(params.get("require_plugin"), default=False)
-        strategy_hint = params.get("strategy_hint", "")
+        strategy_hint = _default_strategy_hint(
+            authority,
+            submit,
+            params.get("strategy_hint", ""),
+        )
         return ControlPlan(
             uri=uri,
             actions=(
@@ -176,7 +188,11 @@ def compile_uri_to_control_plan(
         if operation == "drive":
             submit = _truthy(params.get("submit"), default=True)
             require_plugin = _truthy(params.get("require_plugin"), default=False)
-            strategy_hint = params.get("strategy_hint", "")
+            strategy_hint = _default_strategy_hint(
+                ide,
+                submit,
+                params.get("strategy_hint", ""),
+            )
             return ControlPlan(
                 uri=uri,
                 actions=(
