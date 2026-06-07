@@ -1,5 +1,5 @@
 # code2llm | 265f 14882L | proto:138,python:75,yaml:31,shell:15,json:2,yml:1,toml:1 | 2026-06-07
-# generated in 0.16s
+# generated in 0.08s
 # CC̅=3.3 | critical:1/404 | dups:0 | cycles:0
 
 HEALTH[1]:
@@ -37,77 +37,77 @@ PIPELINES[172]:
       PURITY: 100% pure
   [14] Src [tool_execute_desktop_uri]: tool_execute_desktop_uri
       PURITY: 100% pure
-  [15] Src [_parse_absolute_uri]: _parse_absolute_uri
+  [15] Src [main]: main → _dispatch_command → ensure_config → find_config_path → ...(1 more)
       PURITY: 100% pure
-  [16] Src [_parse_http_url]: _parse_http_url
+  [16] Src [_parse_absolute_uri]: _parse_absolute_uri
       PURITY: 100% pure
-  [17] Src [_parse_ide_project]: _parse_ide_project → _strip_quotes
+  [17] Src [_parse_http_url]: _parse_http_url
       PURITY: 100% pure
-  [18] Src [_parse_file_open]: _parse_file_open → _strip_quotes
+  [18] Src [_parse_ide_project]: _parse_ide_project → _strip_quotes
       PURITY: 100% pure
-  [19] Src [_parse_settings_panel]: _parse_settings_panel → _normalize_panel
+  [19] Src [_parse_file_open]: _parse_file_open → _strip_quotes
       PURITY: 100% pure
-  [20] Src [_parse_terminal]: _parse_terminal → _strip_quotes
+  [20] Src [_parse_settings_panel]: _parse_settings_panel → _normalize_panel
       PURITY: 100% pure
-  [21] Src [_parse_window_move]: _parse_window_move
+  [21] Src [_parse_terminal]: _parse_terminal → _strip_quotes
       PURITY: 100% pure
-  [22] Src [_parse_settings]: _parse_settings
+  [22] Src [_parse_window_move]: _parse_window_move
       PURITY: 100% pure
-  [23] Src [_parse_active_window]: _parse_active_window
+  [23] Src [_parse_settings]: _parse_settings
       PURITY: 100% pure
-  [24] Src [_parse_capture]: _parse_capture → _strip_quotes
+  [24] Src [_parse_active_window]: _parse_active_window
       PURITY: 100% pure
-  [25] Src [_parse_focus]: _parse_focus
+  [25] Src [_parse_capture]: _parse_capture → _strip_quotes
       PURITY: 100% pure
-  [26] Src [_parse_app_open]: _parse_app_open → _normalize_app_name
+  [26] Src [_parse_focus]: _parse_focus
       PURITY: 100% pure
-  [27] Src [_parse_path]: _parse_path → _strip_quotes
+  [27] Src [_parse_app_open]: _parse_app_open → _normalize_app_name
       PURITY: 100% pure
-  [28] Src [_parse_open_prefix]: _parse_open_prefix → _normalize_app_name
+  [28] Src [_parse_path]: _parse_path → _strip_quotes
       PURITY: 100% pure
-  [29] Src [with_params]: with_params
+  [29] Src [_parse_open_prefix]: _parse_open_prefix → _normalize_app_name
       PURITY: 100% pure
-  [30] Src [to_slots]: to_slots
+  [30] Src [desktop_id_for_app]: desktop_id_for_app → desktop_id_candidate_names
       PURITY: 100% pure
-  [31] Src [to_dict]: to_dict
+  [31] Src [_legacy_nlp2uri_settings]: _legacy_nlp2uri_settings → _compile_settings → _linux_settings_actions → _first_available
       PURITY: 100% pure
-  [32] Src [to_dict]: to_dict
+  [32] Src [_legacy_nlp2uri_app_open]: _legacy_nlp2uri_app_open → _compile_launch_app → _linux_launch_app_actions → _first_available
       PURITY: 100% pure
-  [33] Src [to_dict]: to_dict
+  [33] Src [_legacy_nlp2uri_app_focus]: _legacy_nlp2uri_app_focus → _compile_window → _compile_window_focus → _linux_window_focus_actions → ...(1 more)
       PURITY: 100% pure
-  [34] Src [to_dict]: to_dict
+  [34] Src [with_params]: with_params
       PURITY: 100% pure
-  [35] Src [default]: default → ensure_config → find_config_path → config_search_paths
+  [35] Src [to_slots]: to_slots
       PURITY: 100% pure
-  [36] Src [for_platform]: for_platform → load_config → find_config_path → config_search_paths
+  [36] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [37] Src [_cfg]: _cfg → load_config → find_config_path → config_search_paths
+  [37] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [38] Src [_host]: _host → get_effective_platform → load_config → find_config_path → ...(1 more)
+  [38] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [39] Src [from_prompt]: from_prompt → nlp2uri → get_effective_platform → load_config → ...(2 more)
+  [39] Src [to_dict]: to_dict
       PURITY: 100% pure
-  [40] Src [resolve]: resolve → resolve_text → parse_text → _normalize_aliases
+  [40] Src [default]: default → ensure_config → find_config_path → config_search_paths
       PURITY: 100% pure
-  [41] Src [compile]: compile → compile_uri_to_actions → _query_params
+  [41] Src [for_platform]: for_platform → load_config → find_config_path → config_search_paths
       PURITY: 100% pure
-  [42] Src [execute]: execute → execute_uri → get_effective_platform → load_config → ...(2 more)
+  [42] Src [_cfg]: _cfg → load_config → find_config_path → config_search_paths
       PURITY: 100% pure
-  [43] Src [handle_prompt]: handle_prompt
+  [43] Src [_host]: _host → get_effective_platform → load_config → find_config_path → ...(1 more)
       PURITY: 100% pure
-  [44] Src [handle_uri]: handle_uri
+  [44] Src [from_prompt]: from_prompt → nlp2uri → get_effective_platform → load_config → ...(2 more)
       PURITY: 100% pure
-  [45] Src [list_system_uris]: list_system_uris → build_uri_index → _index_runtimes → _ir_field
+  [45] Src [resolve]: resolve → resolve_text → parse_text → _normalize_aliases
       PURITY: 100% pure
-  [46] Src [resolve_system_map]: resolve_system_map → resolve_prompt_against_system_map → _normalize_token
+  [46] Src [compile]: compile → compile_uri_to_actions → _query_params
       PURITY: 100% pure
-  [47] Src [list_getv_uris]: list_getv_uris → build_getv_uri_index → getv_home
+  [47] Src [execute]: execute → execute_uri → get_effective_platform → load_config → ...(2 more)
       PURITY: 100% pure
-  [48] Src [resolve_getv]: resolve_getv → resolve_prompt_against_getv → build_getv_uri_index → getv_home
+  [48] Src [handle_prompt]: handle_prompt
       PURITY: 100% pure
-  [49] Src [read_getv_var]: read_getv_var → get_getv_var_value → _decode_segment
+  [49] Src [handle_uri]: handle_uri
       PURITY: 100% pure
-  [50] Src [__getattr__]: __getattr__
+  [50] Src [list_system_uris]: list_system_uris → build_uri_index → _index_runtimes → _ir_field
       PURITY: 100% pure
 
 LAYERS:
@@ -397,8 +397,8 @@ COUPLING:
       examples.mcp                 4                 2                                  ──                  
    schemas.codegen                 5                                                                      ──
   CYCLES: none
-  HUB: src.nlp2uri/ (fan-in=5)
   HUB: examples.resolve/ (fan-in=18)
+  HUB: src.nlp2uri/ (fan-in=5)
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

@@ -1,5 +1,5 @@
 # System Architecture Analysis
-<!-- generated in 0.02s -->
+<!-- generated in 0.01s -->
 
 ## Overview
 
@@ -50,13 +50,13 @@
 - **Functions**: 13
 - **File**: `scaffold_scheme.py`
 
-### src.nlp2uri.systemmap.compile
-- **Functions**: 11
-- **File**: `compile.py`
-
 ### src.nlp2uri.cli
 - **Functions**: 11
 - **File**: `cli.py`
+
+### src.nlp2uri.systemmap.compile
+- **Functions**: 11
+- **File**: `compile.py`
 
 ### src.nlp2uri.integrators.mcp_server
 - **Functions**: 10
@@ -67,15 +67,15 @@
 - **Classes**: 1
 - **File**: `base.py`
 
-### src.nlp2uri.systemmap.getv_uri
-- **Functions**: 9
-- **Classes**: 1
-- **File**: `getv_uri.py`
-
 ### src.nlp2uri.systemmap.resolve
 - **Functions**: 9
 - **Classes**: 1
 - **File**: `resolve.py`
+
+### src.nlp2uri.systemmap.getv_uri
+- **Functions**: 9
+- **Classes**: 1
+- **File**: `getv_uri.py`
 
 ### src.nlp2uri.cqrs.drivers.service_ops
 - **Functions**: 8
@@ -411,6 +411,9 @@ Key functions that process and transform data:
 ### src.nlp2uri.parse_nl.parse_text
 - **Output to**: src.nlp2uri.parse_nl._normalize_aliases, raw.lower, src.nlp2uri.parse_nl._parse_fallback, None.strip, ValueError
 
+### src.nlp2uri.cli_parser.build_parser
+- **Output to**: argparse.ArgumentParser, src.nlp2uri.cli_parser.add_common_args, parser.add_subparsers, sub.add_parser, src.nlp2uri.cli_parser.add_common_args
+
 ### src.nlp2uri.platforms.base.UriExecutor._parse_nlp2uri
 - **Output to**: urlparse, None.join, parse_qs, ValueError, parsed.path.lstrip
 
@@ -430,10 +433,6 @@ Key functions that process and transform data:
 ### src.nlp2uri.cqrs.drivers.service_ops.parse_service_name
 - **Output to**: urlparse, unquote, unquote, parsed.path.lstrip
 
-### src.nlp2uri.cqrs.drivers.container_docker.parse_container_uri
-> container://docker/name/action?tail=100 → runtime, name, action, params.
-- **Output to**: urlparse, unquote, unquote, unquote, parsed.path.split
-
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
@@ -449,8 +448,8 @@ Functions exposed as public API (no underscore prefix):
 - `src.nlp2uri.adapters.shell.ShellAdapter.handle` - 19 calls
 - `src.nlp2uri.systemmap.getv_uri.resolve_prompt_against_getv` - 18 calls
 - `src.nlp2uri.systemmap.getv_uri.compile_getv_uri` - 18 calls
-- `src.nlp2uri.host.artifact.build_artifact_actions` - 17 calls
 - `src.nlp2uri.compile.compile_uri_to_actions` - 17 calls
+- `src.nlp2uri.host.artifact.build_artifact_actions` - 17 calls
 - `src.nlp2uri.systemmap.index.build_uri_index` - 17 calls
 - `src.nlp2uri.systemmap.context.load_ir_from_arguments` - 16 calls
 - `src.nlp2uri.runtime.execute_uri` - 15 calls

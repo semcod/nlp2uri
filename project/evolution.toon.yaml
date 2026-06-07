@@ -1,5 +1,5 @@
 # code2llm/evolution | 397 func | 64f | 2026-06-07
-# generated in 0.01s
+# generated in 0.00s
 
 NEXT[4] (ranked by impact):
   [1] !! SPLIT           src/nlp2uri/compile.py
@@ -56,4 +56,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.6 → now CC̄=3.3
+  prev CC̄=3.3 → now CC̄=3.3

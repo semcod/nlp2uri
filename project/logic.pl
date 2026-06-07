@@ -1,5 +1,5 @@
 % ── Project Metadata ─────────────────────────────────────
-project_metadata('nlp2uri', '0.4.7', 'python').
+project_metadata('nlp2uri', '0.4.8', 'python').
 
 % ── Project Files ────────────────────────────────────────
 project_file('app.doql.less', 30, 'less').
@@ -31,8 +31,9 @@ project_file('src/nlp2uri/adapters/cli.py', 40, 'python').
 project_file('src/nlp2uri/adapters/mcp.py', 383, 'python').
 project_file('src/nlp2uri/adapters/rest.py', 88, 'python').
 project_file('src/nlp2uri/adapters/shell.py', 67, 'python').
-project_file('src/nlp2uri/cli.py', 200, 'python').
-project_file('src/nlp2uri/compile.py', 432, 'python').
+project_file('src/nlp2uri/cli.py', 168, 'python').
+project_file('src/nlp2uri/cli_parser.py', 113, 'python').
+project_file('src/nlp2uri/compile.py', 578, 'python').
 project_file('src/nlp2uri/config.py', 231, 'python').
 project_file('src/nlp2uri/cqrs/__init__.py', 9, 'python').
 project_file('src/nlp2uri/cqrs/base.py', 98, 'python').
@@ -51,6 +52,7 @@ project_file('src/nlp2uri/cqrs/event_store.py', 68, 'python').
 project_file('src/nlp2uri/cqrs/http_store.py', 53, 'python').
 project_file('src/nlp2uri/cqrs/plugins.py', 65, 'python').
 project_file('src/nlp2uri/cqrs/registry.py', 98, 'python').
+project_file('src/nlp2uri/desktop_apps.py', 61, 'python').
 project_file('src/nlp2uri/host/__init__.py', 16, 'python').
 project_file('src/nlp2uri/host/artifact.py', 95, 'python').
 project_file('src/nlp2uri/host/endpoint.py', 35, 'python').
@@ -78,17 +80,18 @@ project_file('src/nlp2uri/schemes/http.py', 23, 'python').
 project_file('src/nlp2uri/schemes/ide.py', 36, 'python').
 project_file('src/nlp2uri/schemes/util.py', 48, 'python').
 project_file('src/nlp2uri/service.py', 152, 'python').
-project_file('src/nlp2uri/systemmap/__init__.py', 69, 'python').
+project_file('src/nlp2uri/systemmap/__init__.py', 78, 'python').
 project_file('src/nlp2uri/systemmap/compile.py', 180, 'python').
 project_file('src/nlp2uri/systemmap/context.py', 48, 'python').
 project_file('src/nlp2uri/systemmap/encode.py', 16, 'python').
+project_file('src/nlp2uri/systemmap/export.py', 150, 'python').
 project_file('src/nlp2uri/systemmap/fallback.py', 53, 'python').
 project_file('src/nlp2uri/systemmap/getv_load.py', 98, 'python').
 project_file('src/nlp2uri/systemmap/getv_uri.py', 226, 'python').
-project_file('src/nlp2uri/systemmap/index.py', 268, 'python').
+project_file('src/nlp2uri/systemmap/index.py', 352, 'python').
 project_file('src/nlp2uri/systemmap/load.py', 47, 'python').
-project_file('src/nlp2uri/systemmap/resolve.py', 123, 'python').
-project_file('src/nlp2uri/systemmap/uri.py', 94, 'python').
+project_file('src/nlp2uri/systemmap/resolve.py', 190, 'python').
+project_file('src/nlp2uri/systemmap/uri.py', 124, 'python').
 project_file('tests/conftest.py', 18, 'python').
 project_file('tests/integration/test_xdg_handler.py', 99, 'python').
 project_file('tests/test_adapters.py', 120, 'python').
@@ -109,7 +112,7 @@ project_file('tests/test_resource_driver.py', 44, 'python').
 project_file('tests/test_rest_server.py', 48, 'python').
 project_file('tests/test_schemas_registry.py', 53, 'python').
 project_file('tests/test_service.py', 27, 'python').
-project_file('tests/test_systemmap.py', 174, 'python').
+project_file('tests/test_systemmap.py', 272, 'python').
 project_file('tree.sh', 2, 'shell').
 
 % ── Python Functions ─────────────────────────────────────
@@ -136,8 +139,6 @@ python_function('schemas/codegen/scaffold_scheme.py', 'openapi_yaml', 2, 1, 2).
 python_function('schemas/codegen/scaffold_scheme.py', 'readme_md', 2, 2, 4).
 python_function('schemas/codegen/scaffold_scheme.py', 'scaffold_scheme', 2, 4, 12).
 python_function('schemas/codegen/scaffold_scheme.py', 'main', 0, 4, 11).
-python_function('src/nlp2uri/cli.py', '_add_common_args', 1, 3, 1).
-python_function('src/nlp2uri/cli.py', '_build_parser', 0, 1, 5).
 python_function('src/nlp2uri/cli.py', '_platform', 1, 2, 1).
 python_function('src/nlp2uri/cli.py', '_emit', 1, 3, 4).
 python_function('src/nlp2uri/cli.py', '_request_from_args', 1, 3, 4).
@@ -145,17 +146,38 @@ python_function('src/nlp2uri/cli.py', '_with_platform', 1, 2, 2).
 python_function('src/nlp2uri/cli.py', '_run_config', 1, 3, 10).
 python_function('src/nlp2uri/cli.py', '_run_shell', 1, 5, 9).
 python_function('src/nlp2uri/cli.py', '_run_adapter_command', 1, 4, 8).
+python_function('src/nlp2uri/cli.py', '_run_envmap', 1, 4, 8).
 python_function('src/nlp2uri/cli.py', '_run_execute', 1, 5, 10).
-python_function('src/nlp2uri/cli.py', 'main', 1, 4, 7).
+python_function('src/nlp2uri/cli.py', '_dispatch_command', 1, 6, 7).
+python_function('src/nlp2uri/cli.py', 'main', 1, 1, 3).
+python_function('src/nlp2uri/cli_parser.py', 'add_common_args', 1, 3, 1).
+python_function('src/nlp2uri/cli_parser.py', 'build_parser', 0, 1, 5).
 python_function('src/nlp2uri/compile.py', 'compile_uri_to_actions', 2, 13, 17).
 python_function('src/nlp2uri/compile.py', '_query_params', 1, 3, 3).
 python_function('src/nlp2uri/compile.py', '_first_available', 1, 3, 1).
 python_function('src/nlp2uri/compile.py', '_open_uri', 2, 5, 2).
-python_function('src/nlp2uri/compile.py', '_compile_app', 5, 16, 15).
-python_function('src/nlp2uri/compile.py', '_compile_settings_panel', 2, 5, 4).
-python_function('src/nlp2uri/compile.py', '_compile_terminal', 2, 16, 3).
-python_function('src/nlp2uri/compile.py', '_compile_settings', 1, 5, 3).
-python_function('src/nlp2uri/compile.py', '_compile_launch_app', 2, 7, 3).
+python_function('src/nlp2uri/compile.py', '_compile_app_settings', 3, 5, 3).
+python_function('src/nlp2uri/compile.py', '_compile_app_file_open', 3, 2, 5).
+python_function('src/nlp2uri/compile.py', '_compile_app_open_with_path', 3, 2, 6).
+python_function('src/nlp2uri/compile.py', '_compile_app_named', 6, 6, 3).
+python_function('src/nlp2uri/compile.py', '_compile_app_open', 4, 3, 3).
+python_function('src/nlp2uri/compile.py', '_compile_app', 5, 4, 5).
+python_function('src/nlp2uri/compile.py', '_windows_settings_panel_uri', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_macos_settings_panel_uri', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_linux_settings_panel_actions', 2, 3, 3).
+python_function('src/nlp2uri/compile.py', '_compile_settings_panel', 2, 3, 4).
+python_function('src/nlp2uri/compile.py', '_linux_terminal_actions', 2, 8, 2).
+python_function('src/nlp2uri/compile.py', '_macos_terminal_actions', 2, 2, 1).
+python_function('src/nlp2uri/compile.py', '_windows_terminal_actions', 2, 4, 2).
+python_function('src/nlp2uri/compile.py', '_compile_terminal', 2, 5, 5).
+python_function('src/nlp2uri/compile.py', '_windows_settings_actions', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_macos_settings_actions', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_linux_settings_actions', 1, 3, 3).
+python_function('src/nlp2uri/compile.py', '_compile_settings', 1, 3, 3).
+python_function('src/nlp2uri/compile.py', '_linux_launch_app_actions', 2, 4, 3).
+python_function('src/nlp2uri/compile.py', '_macos_launch_app_actions', 2, 1, 1).
+python_function('src/nlp2uri/compile.py', '_windows_launch_app_actions', 2, 1, 1).
+python_function('src/nlp2uri/compile.py', '_compile_launch_app', 2, 4, 4).
 python_function('src/nlp2uri/compile.py', '_capture_outfile', 1, 1, 3).
 python_function('src/nlp2uri/compile.py', '_linux_screen_capture', 2, 3, 2).
 python_function('src/nlp2uri/compile.py', '_macos_screen_capture', 2, 1, 1).
@@ -166,10 +188,20 @@ python_function('src/nlp2uri/compile.py', '_macos_window_capture', 2, 2, 1).
 python_function('src/nlp2uri/compile.py', '_windows_window_capture', 2, 2, 1).
 python_function('src/nlp2uri/compile.py', '_compile_window_capture', 3, 4, 5).
 python_function('src/nlp2uri/compile.py', '_compile_screenshot', 4, 4, 4).
-python_function('src/nlp2uri/compile.py', '_compile_window_move', 2, 7, 4).
-python_function('src/nlp2uri/compile.py', '_compile_window', 4, 11, 6).
-python_function('src/nlp2uri/compile.py', '_compile_legacy_nlp2uri', 2, 7, 12).
-python_function('src/nlp2uri/compile.py', '_desktop_id_for_app', 1, 7, 6).
+python_function('src/nlp2uri/compile.py', '_linux_window_move_actions', 1, 3, 2).
+python_function('src/nlp2uri/compile.py', '_macos_window_move_actions', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_windows_window_move_actions', 1, 1, 1).
+python_function('src/nlp2uri/compile.py', '_compile_window_move', 2, 5, 6).
+python_function('src/nlp2uri/compile.py', '_linux_window_focus_actions', 2, 3, 3).
+python_function('src/nlp2uri/compile.py', '_macos_window_focus_actions', 2, 1, 1).
+python_function('src/nlp2uri/compile.py', '_windows_window_focus_actions', 2, 1, 1).
+python_function('src/nlp2uri/compile.py', '_compile_window_focus', 2, 5, 5).
+python_function('src/nlp2uri/compile.py', '_compile_window', 4, 5, 4).
+python_function('src/nlp2uri/compile.py', '_legacy_nlp2uri_settings', 3, 1, 1).
+python_function('src/nlp2uri/compile.py', '_legacy_nlp2uri_app_open', 3, 1, 2).
+python_function('src/nlp2uri/compile.py', '_legacy_nlp2uri_app_focus', 3, 1, 1).
+python_function('src/nlp2uri/compile.py', '_legacy_nlp2uri_capture', 4, 1, 2).
+python_function('src/nlp2uri/compile.py', '_compile_legacy_nlp2uri', 2, 5, 9).
 python_function('src/nlp2uri/config.py', 'payload_keys', 0, 1, 0).
 python_function('src/nlp2uri/config.py', '_yaml_scalar', 1, 8, 4).
 python_function('src/nlp2uri/config.py', '_parse_scalar', 1, 8, 3).
@@ -190,6 +222,11 @@ python_function('src/nlp2uri/cqrs/plugins.py', '_parse_entry_point_name', 1, 4, 
 python_function('src/nlp2uri/cqrs/plugins.py', 'load_driver_plugins', 0, 7, 8).
 python_function('src/nlp2uri/cqrs/plugins.py', 'resolve_driver_class', 3, 2, 2).
 python_function('src/nlp2uri/cqrs/registry.py', 'default_registry', 0, 1, 2).
+python_function('src/nlp2uri/desktop_apps.py', 'desktop_id_candidate_names', 1, 1, 2).
+python_function('src/nlp2uri/desktop_apps.py', '_exact_desktop_match', 2, 3, 1).
+python_function('src/nlp2uri/desktop_apps.py', '_fuzzy_desktop_match', 2, 3, 2).
+python_function('src/nlp2uri/desktop_apps.py', 'find_desktop_id_in_dir', 1, 3, 4).
+python_function('src/nlp2uri/desktop_apps.py', 'desktop_id_for_app', 1, 3, 4).
 python_function('src/nlp2uri/host/artifact.py', 'is_artifact_uri', 1, 1, 2).
 python_function('src/nlp2uri/host/artifact.py', '_decode', 1, 2, 1).
 python_function('src/nlp2uri/host/artifact.py', 'resolve_artifact_path', 1, 12, 12).
@@ -278,6 +315,10 @@ python_function('src/nlp2uri/systemmap/context.py', 'load_ir_from_arguments', 1,
 python_function('src/nlp2uri/systemmap/context.py', '_coerce_ir', 1, 2, 2).
 python_function('src/nlp2uri/systemmap/encode.py', 'encode_segment', 1, 1, 1).
 python_function('src/nlp2uri/systemmap/encode.py', 'encode_path', 1, 1, 2).
+python_function('src/nlp2uri/systemmap/export.py', '_require_env2llm', 0, 2, 3).
+python_function('src/nlp2uri/systemmap/export.py', '_ir_field', 3, 2, 3).
+python_function('src/nlp2uri/systemmap/export.py', 'apply_desktop_uri_mapping', 1, 9, 7).
+python_function('src/nlp2uri/systemmap/export.py', 'write_environment_map', 1, 9, 26).
 python_function('src/nlp2uri/systemmap/fallback.py', 'resolve_prompt_with_fallback', 2, 6, 4).
 python_function('src/nlp2uri/systemmap/getv_load.py', 'getv_available', 0, 1, 0).
 python_function('src/nlp2uri/systemmap/getv_load.py', 'getv_missing_message', 0, 2, 0).
@@ -298,7 +339,19 @@ python_function('src/nlp2uri/systemmap/getv_uri.py', 'get_getv_var_value', 1, 9,
 python_function('src/nlp2uri/systemmap/index.py', '_model_dump', 1, 3, 6).
 python_function('src/nlp2uri/systemmap/index.py', '_ir_field', 3, 2, 3).
 python_function('src/nlp2uri/systemmap/index.py', '_add_entry', 1, 3, 4).
-python_function('src/nlp2uri/systemmap/index.py', 'build_uri_index', 1, 31, 20).
+python_function('src/nlp2uri/systemmap/index.py', '_index_environment', 3, 2, 5).
+python_function('src/nlp2uri/systemmap/index.py', '_index_runtimes', 2, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_commands', 3, 6, 5).
+python_function('src/nlp2uri/systemmap/index.py', '_index_resources', 2, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_access', 2, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_artifacts', 3, 4, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_policies', 3, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_schedules', 2, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_generated_services', 2, 3, 4).
+python_function('src/nlp2uri/systemmap/index.py', '_index_deploy', 3, 2, 2).
+python_function('src/nlp2uri/systemmap/index.py', '_index_desktop', 2, 7, 7).
+python_function('src/nlp2uri/systemmap/index.py', '_index_validations', 3, 4, 4).
+python_function('src/nlp2uri/systemmap/index.py', 'build_uri_index', 1, 6, 15).
 python_function('src/nlp2uri/systemmap/index.py', '_get_id', 1, 1, 1).
 python_function('src/nlp2uri/systemmap/index.py', '_get_id_field', 2, 4, 4).
 python_function('src/nlp2uri/systemmap/load.py', 'env2llm_available', 0, 1, 0).
@@ -306,8 +359,13 @@ python_function('src/nlp2uri/systemmap/load.py', 'env2llm_missing_message', 0, 2
 python_function('src/nlp2uri/systemmap/load.py', 'load_system_map_from_doql', 1, 2, 3).
 python_function('src/nlp2uri/systemmap/load.py', 'load_system_map_from_example', 1, 3, 3).
 python_function('src/nlp2uri/systemmap/resolve.py', '_normalize_token', 1, 1, 3).
-python_function('src/nlp2uri/systemmap/resolve.py', '_name_variants', 1, 3, 2).
-python_function('src/nlp2uri/systemmap/resolve.py', 'resolve_prompt_against_system_map', 2, 26, 10).
+python_function('src/nlp2uri/systemmap/resolve.py', '_name_variants', 1, 6, 5).
+python_function('src/nlp2uri/systemmap/resolve.py', '_match_command_entry', 2, 16, 11).
+python_function('src/nlp2uri/systemmap/resolve.py', '_match_resource_entry', 2, 7, 4).
+python_function('src/nlp2uri/systemmap/resolve.py', '_match_runtime_entry', 2, 5, 2).
+python_function('src/nlp2uri/systemmap/resolve.py', '_entry_hits', 2, 1, 3).
+python_function('src/nlp2uri/systemmap/resolve.py', '_dedupe_hits', 1, 4, 3).
+python_function('src/nlp2uri/systemmap/resolve.py', 'resolve_prompt_against_system_map', 2, 4, 6).
 python_function('src/nlp2uri/systemmap/uri.py', '_get', 3, 4, 4).
 python_function('src/nlp2uri/systemmap/uri.py', '_get_list', 2, 5, 4).
 python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_runtime', 1, 1, 2).
@@ -321,6 +379,9 @@ python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_validation', 1, 1, 2).
 python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_schedule', 1, 1, 2).
 python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_generated_service', 1, 1, 2).
 python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_environment', 1, 1, 1).
+python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_desktop_session', 0, 1, 0).
+python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_desktop_window_focus', 1, 3, 2).
+python_function('src/nlp2uri/systemmap/uri.py', 'uri_for_desktop_window_screenshot', 1, 2, 2).
 python_function('tests/conftest.py', 'isolated_config', 2, 1, 6).
 python_function('tests/integration/test_xdg_handler.py', 'test_xdg_custom_scheme_handler', 1, 7, 12).
 python_function('tests/test_adapters.py', 'test_cli_adapter_plan', 0, 3, 4).
@@ -429,6 +490,9 @@ python_function('tests/test_systemmap.py', 'test_resolve_fallback_system_map_fir
 python_function('tests/test_systemmap.py', 'test_resolve_fallback_desktop_when_no_ir_match', 0, 3, 3).
 python_function('tests/test_systemmap.py', 'test_resolve_fallback_desktop_without_ir', 0, 3, 2).
 python_function('tests/test_systemmap.py', 'test_env2llm_roundtrip_index', 1, 2, 9).
+python_function('tests/test_systemmap.py', 'test_apply_desktop_uri_mapping_and_index', 0, 8, 10).
+python_function('tests/test_systemmap.py', 'test_write_environment_map_includes_desktop_uris', 2, 5, 9).
+python_function('tests/test_systemmap.py', 'test_resolve_koru_mcp_command_aliases', 0, 6, 2).
 
 % ── Python Classes ───────────────────────────────────────
 python_class('src/nlp2uri/adapters/base.py', 'AdapterRequest').

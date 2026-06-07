@@ -1,4 +1,6 @@
 # Byte-compiled / optimized / DLL files
+.code2llm_cache/__init___1780820973447988900_772.pkl
+.code2llm_cache/pyproject_1780820972255116134_2641.pkl
 .code2llm_cache/__init___1780819863283033574_2342.pkl
 .code2llm_cache/cli_1780819863290033603_5016.pkl
 .code2llm_cache/cli_parser_1780819863473034369_3875.pkl
